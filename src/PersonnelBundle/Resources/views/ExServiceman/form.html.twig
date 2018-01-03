@@ -1,0 +1,498 @@
+{% extends "@Personnel/Default/base_form_page.html.twig" %}
+{% set pageTitle = 'Ex-Service Create' %}
+{% block received_funds_heading %}
+    <li>
+        <a data-toggle="tab" href="#tab_received_fund">
+            <i class="fa fa-money"></i> Received funds </a>
+    </li>
+{% endblock %}
+
+{% block personal_info %}
+<div class="row">
+        <div class="col-sm-12">
+                <div class="col-sm-12">
+                        <div class="col-sm-12" style="background:#f0f6fa;">
+                                <h4> ব্যক্তিগত তথ্য </h4>
+                        </div>
+                </div>
+        </div>
+        <div class="col-sm-12">
+                <div class="col-sm-4">
+                    {{ form_row(form.identityNumber) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.tsNumber) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.office) }}
+                </div>
+        </div>
+        <div class="col-sm-12">
+                <div class="col-sm-4">
+                    {{ form_row(form.service) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.corp) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.rank) }}
+                </div>
+        </div>
+        <div class="col-sm-12">
+                <div class="col-sm-4">
+                    {{ form_row(form.trade) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.dispensary) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.name) }}
+                </div>
+        </div>
+        <div class="col-sm-12">
+                <div class="col-sm-4">
+                    {{ form_row(form.dateOfBirth) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.joiningDate) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.retirementDate) }}
+                </div>
+        </div>
+        <div class="col-sm-12">
+                <div class="col-sm-4">
+                    {{ form_row(form.retirementReason) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.lastServedUnit) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.disciplineStatus) }}
+                </div>
+        </div>
+        <div class="col-sm-12" id="disabilityReason">
+                <div class="col-sm-12">
+                    {{ form_row(form.disabilityReason) }}
+                </div>
+        </div>
+        <div class="col-sm-12">
+                <div class="col-sm-4">
+                    {{ form_row(form.reservistLastDate) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.mobileNumber) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.email) }}
+                </div>
+        </div>
+        <div class="col-sm-12">
+                <div class="col-sm-4">
+                    {{ form_row(form.bloodGroup) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.nid) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.religion) }}
+                </div>
+        </div>
+        <div class="col-sm-12">
+                <div class="col-sm-4">
+                        <div class="col-sm-4" style="margin-top: 8px;">লিঙ্গ</div>
+                    {% for key, g in form.gender.children %}
+                            <div class="col-sm-3">
+                                {{ form_widget(g) }}
+                            </div>
+                    {% endfor %}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.inheritName) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.inheritRelation) }}
+                </div>
+        </div>
+        <div class="col-sm-12">
+                <div class="col-sm-4">
+                    {{ form_row(form.inheritBirthDate) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.inheritNID) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.dateOfWedding) }}
+                </div>
+        </div>
+        <div class="col-lg-12">
+                <div class="col-sm-4">
+                    {{ form_row(form.nationality) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.reEmployment) }}
+                </div>
+        </div>
+        <div class="col-sm-12"><div class="col-sm-12"><hr></div></div>
+        <div class="col-sm-12">
+                <div class="col-sm-4">
+                        <div class="col-sm-4" style="margin-top: 8px;">মৃত/জীবিত</div>
+                    {% for key, d in form.deceased.children %}
+                            <div class="col-sm-3">
+                                {{ form_widget(d) }}
+                            </div>
+                    {% endfor %}
+                </div>
+                <div id="deceasedReason">
+                        <div class="col-sm-4">
+                            {{ form_row(form.deceasedDate) }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form_row(form.deceasedPlace) }}
+                        </div>
+                        <div class="col-sm-12">
+                            {{ form_row(form.deceasedReason) }}
+                        </div>
+                </div>
+        </div>
+        <div class="col-sm-12"><div class="col-sm-12"><hr></div></div>
+        <div class="col-sm-12">
+                <div class="col-sm-4">
+                        <div class="col-sm-4" style="margin-top: 8px;">মুক্তিযোদ্ধা</div>
+                    {% for key, f in form.freedomFighter.children %}
+                            <div class="col-sm-3">
+                                {{ form_widget(f) }}
+                            </div>
+                    {% endfor %}
+                </div>
+                <div class="col-sm-4">
+                        <div class="col-sm-4" style="margin-top: 8px;">বৈদেশিক মিশন</div>
+                    {% for key, u in form.unMission.children %}
+                            <div class="col-sm-3">
+                                {{ form_widget(u) }}
+                            </div>
+                    {% endfor %}
+                </div>
+                <div class="col-sm-4">
+                        <div class="col-sm-4" style="margin-top: 8px;">শান্তিনিবাস বসবাস</div>
+                    {% for key, s in form.shantiNebas.children %}
+                            <div class="col-sm-3">
+                                {{ form_widget(s) }}
+                            </div>
+                    {% endfor %}
+                </div>
+        </div>
+        <div class="col-sm-12"><div class="col-sm-12"><hr></div></div>
+        <div class="col-sm-12">
+                <div class="col-sm-12">
+                        <div class="col-sm-12" style="background:#f0f6fa;">
+                                <h4> জরুরি যোগাযোগ </h4>
+                        </div>
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.emergencyName) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.emergencyRelation) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.emergencyNumber) }}
+                </div>
+                <div class="col-sm-12">
+                    {{ form_row(form.emergencyAddress) }}
+                </div>
+        </div>
+        <div class="col-sm-12"><div class="col-sm-12"><hr></div></div>
+        <div class="col-sm-12">
+                <div class="col-sm-12">
+                        <div class="col-sm-12" style="background:#f0f6fa;">
+                                <h4> বর্তমান ঠিকানা </h4>
+                        </div>
+                </div>
+                <div class="col-sm-8">
+                    {{ form_row(form.village) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.postOffice) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.postCode) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.district) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.upazila) }}
+                </div>
+        </div>
+        <div class="col-sm-12">
+                <div class="col-sm-12">
+                        <div class="col-sm-12" style="background:#f0f6fa;">
+                                <h4> স্থায়ী ঠিকানা </h4>
+                        </div>
+                </div>
+                <div class="col-sm-8">
+                    {{ form_row(form.permanentVillage) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.permanentPostOffice) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.permanentPostCode) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.permanentDistrict) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.permanentUpazila) }}
+                </div>
+                <div class="col-sm-12"><hr></div>
+        </div>
+        <div class="col-sm-12">
+                <div class="col-sm-12">
+                        <div class="col-sm-12" style="background:#f0f6fa;">
+                                <h4> শিক্ষাগত যোগ্যতা (বেসামরিক/সামরিক) </h4>
+                        </div>
+                        <div id="tab_educational_info" class="tab-pane">
+                            {{ form_row(form.educations) }}
+                        </div>
+                </div>
+        </div>
+        <div class="col-sm-12">
+                <div class="col-sm-12">
+                        <div class="col-sm-12" style="background:#f0f6fa;">
+                                <h4> পিতামাতার তথ্য </h4>
+                        </div>
+                        <div class="row">
+                                <div class="col-lg-12">
+                                        <table class="table collection-form-control table-striped table-bordered table-hover table-header-fixed table-checkable order-column">
+                                                <tr>
+                                                        <th width="15%">নাম</th>
+                                                        <th width="8%">এনওকে%</th>
+                                                        <th width="14%">যোগাযোগের নম্বর</th>
+                                                        <th width="14%">পেশা</th>
+                                                        <th width="15%">ঠিকানা</th>
+                                                </tr>
+                                                <tr id="personnel_form_parents_1">
+                                                        <td class="form-group">{{ form_widget(form.fathersName) }}</td>
+                                                        <td class="form-group">{{ form_widget(form.fathersNokPercentage) }}</td>
+                                                        <td class="form-group">{{ form_widget(form.fathersMobileNumber) }}</td>
+                                                        <td class="form-group">{{ form_widget(form.fathersOccupation) }}</td>
+                                                        <td class="form-group">{{ form_widget(form.fathersAddress) }}</td>
+                                                </tr>
+                                                <tr id="personnel_form_parents_2">
+                                                        <td class="form-group">{{ form_widget(form.mothersName) }}</td>
+                                                        <td class="form-group">{{ form_widget(form.mothersNokPercentage) }}</td>
+                                                        <td class="form-group">{{ form_widget(form.mothersMobileNumber) }}</td>
+                                                        <td class="form-group">{{ form_widget(form.mothersOccupation) }}</td>
+                                                        <td class="form-group">{{ form_widget(form.mothersAddress) }}</td>
+                                                </tr>
+                                        </table>
+                                </div>
+                        </div>
+                </div>
+        </div>
+        <div class="col-sm-12">
+                <div class="col-sm-12">
+                        <div class="col-sm-12" style="background:#f0f6fa;">
+                                <h4> স্ত্রী ও সন্তানাদির তথ্য</h4>
+                        </div>
+                        <div id="tab_families" class="tab-pane">
+                            {{ form_row(form.families) }}
+                        </div>
+                </div>
+        </div>
+        <div class="col-sm-12">
+                <div class="col-sm-12">
+                        <div class="col-sm-12" style="background:#f0f6fa;">
+                                <h4> বিশেষ রোগ </h4>
+                        </div>
+                        <div id="tab_specialdiseases_info" class="tab-pane">
+                            {{ form_row(form.specialDiseases) }}
+                        </div>
+                </div>
+        </div>
+        <div class="col-sm-12"><div class="col-sm-12"><hr></div></div>
+                <div class="col-sm-12">
+                        <div class="col-sm-12">
+                                <div class="col-sm-12" style="background:#f0f6fa;">
+                                        <h4> অবসরজনিত তথ্য </h4>
+                                </div>
+                        </div>
+                        <div class="col-sm-12">
+                                <div class="col-sm-4" style="margin-top: 8px;">অবসর গ্রহণের পর বসবাসের প্রকৃতি</div>
+                            {% for key, l in form.afterRetirementCityOrVillage.children %}
+                                    <div class="col-sm-2">
+                                        {{ form_widget(l) }}
+                                    </div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form_row(form.afterRetirementLivingNature) }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form_row(form.afterRetirementSourceOfIncome) }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form_row(form.afterRetirementPlantingLand) }}
+                        </div>
+                </div>
+        <div class="col-sm-12"><div class="col-sm-12"><hr></div></div>
+
+</div>
+{% endblock %}
+
+{% block other_info %}
+        <div class="col-sm-12">
+                <div class="col-sm-12">
+                        <div class="col-sm-12" style="background:#f0f6fa;">
+                                <h4> অন্নান্ন তথ্য </h4>
+                        </div>
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.identificationMark) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.telephoneNumber) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.height) }}
+                </div>
+                {#<div class="col-sm-4">#}
+                    {#{{ form_row(form.chestMeasurement) }}#}
+                {#</div>#}
+                {#<div class="col-sm-4">#}
+                    {#{{ form_row(form.servingType) }}#}
+                {#</div>#}
+                <div class="col-sm-4">
+                    {{ form_row(form.designation) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.joiningPlace) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.pensionRate) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.remarks) }}
+                </div>
+        </div>
+{% endblock %}
+
+{% block received_funds %}
+    <div id="tab_received_fund" class="tab-pane">
+        {{ form_row(form.receivedFunds) }}
+    </div>
+{% endblock %}
+
+{% block additional_info %}
+        <div class="col-sm-12">
+                <div class="col-sm-12">
+                        <div class="col-sm-12" style="background:#f0f6fa;">
+                        <h4> উত্তরাধিকারীর বর্তমান ঠিকানা </h4>
+                        </div>
+                </div>
+                <div class="col-sm-8">
+                    {{ form_row(form.additionalInfo.inheritVillage) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.additionalInfo.inheritPostOffice) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.additionalInfo.inheritPostCode) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.additionalInfo.inheritDistrict) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.additionalInfo.inheritUpazila) }}
+                </div>
+        </div>
+        <div class="col-sm-12">
+                <div class="col-sm-12">
+                        <div class="col-sm-12" style="background:#f0f6fa;">
+                                <h4> উত্তরাধিকারীর স্থায়ী ঠিকানা </h4>
+                        </div>
+                </div>
+                <div class="col-sm-8">
+                    {{ form_row(form.additionalInfo.inheritPermanentVillage) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.additionalInfo.inheritPermanentPostOffice) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.additionalInfo.inheritPermanentPostCode) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.additionalInfo.inheritPermanentDistrict) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_row(form.additionalInfo.inheritPermanentUpazila) }}
+                </div>
+                <div class="col-sm-12"><hr></div>
+        </div>
+        <div class="col-sm-12">
+                <div class="col-sm-12">
+                    {{ form_row(form.additionalInfo.inheritGuardian) }}
+                </div>
+                <div class="col-sm-12">
+                    {{ form_row(form.additionalInfo.inheritOccupation) }}
+                </div>
+                <div class="col-sm-12">
+                    {{ form_row(form.additionalInfo.childrenInfo) }}
+                </div>
+
+                <div class="col-sm-3" style="margin-top: 8px;">{{ form_label(form.additionalInfo.fixedOrCurrentAsset) }}</div>
+                    {% for key, f in form.additionalInfo.fixedOrCurrentAsset %}
+                        <div class="col-sm-1">
+                        {{ form_widget(f) }}
+                        </div>
+                    {% endfor %}
+                <div class="col-sm-12">
+                    {{ form_row(form.additionalInfo.assetInfo) }}
+                </div>
+                <div class="col-sm-12">
+                    {{ form_row(form.additionalInfo.amountOfLand) }}
+                </div>
+                <div class="col-sm-12">
+                    {{ form_row(form.additionalInfo.totalIncome) }}
+                </div>
+                <div class="col-sm-12">
+                    {{ form_row(form.additionalInfo.monthlyIncome) }}
+                </div>
+                <div class="col-sm-12">
+                    {{ form_row(form.additionalInfo.pensionInfo) }}
+                </div>
+                <div class="col-sm-12">
+                    {{ form_row(form.additionalInfo.loanInfo) }}
+                </div>
+                <div class="col-sm-12">
+                    {{ form_row(form.additionalInfo.commutationInfo) }}
+                </div>
+                <div class="col-sm-12">
+                    {{ form_row(form.additionalInfo.missionIncome) }}
+                </div>
+
+        </div>
+{% endblock %}
+
+ {% block document_ready %}
+         $('#personnel_form_retirementReason').val() == 'Medical Ground' ?
+         $("#disabilityReason").show() : $("#disabilityReason").hide();
+
+         $('#personnel_form_retirementReason').on('change', function() {
+         if ( this.value == 'Medical Ground'){
+         $("#disabilityReason").show(); }else{ $("#disabilityReason").hide();}
+         });
+
+         if ( document.getElementById('personnel_form_deceased_0').checked) {
+         $("#deceasedReason").show(); }else { $("#deceasedReason").hide();}
+
+         $('#personnel_form_deceased_0').on('change', function() {
+         if (this.value){ $("#deceasedReason").show(); }
+         });
+
+         $('#personnel_form_deceased_1').on('change', function() {
+         if (this.value){ $("#deceasedReason").hide();}
+         });
+ {% endblock %}

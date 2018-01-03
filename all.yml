@@ -1,0 +1,3 @@
+- include: playbook.yml
+- include: playbook.yml PROJECT_DIR=/var/www/basbtest PRODUCTION_MODE=true
+- include: dev.yml

@@ -1,0 +1,96 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Cheque Issue' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block header_title %}{{ pageTitle }}{% endblock header_title %}
+
+{% block body %}
+
+    <style>
+        #voucher-list tr:first-child .remove{
+            display: none;
+        }
+    </style>
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">Cheque Issue</span>
+                    </div>
+                </div>
+
+                <div class="portlet-body">
+
+                    {{ form_start(form, {attr: {class: 'jq-validate', id: 'cheque-issue-form'}}) }}
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-2 ">Fund Type</label>
+                            <div class="col-sm-10">
+                                {{ chequeIssue.fundType.name }}
+                            </div>
+                        </div>
+
+                        {{ form_row(form.sanctions) }}
+                        {{ form_row(form.chequeDate) }}
+
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-bordered">
+                            <tr><td colspan="2" class="text-center">Balance</td></tr>
+                            {% for fundHeadId, row in fundHeadBalance %}
+                            <tr>
+                                <td style="word-wrap: break-word">{{ row.name }}</td>
+                                <td>{{ row.balance|en_number_format }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+
+                    <table class="table table-bordered" id="voucher-detail">
+                        {% include '@Account/ChequeIssue/_voucher_row.html.twig' %}
+                    </table>
+
+                    {{ form_row(form.attachments) }}
+
+                    <div class="form-actions margin-top-20">
+                        <div class="col-md-12 text-right">
+                            <button class="btn green">Save</button>
+                        </div>
+                    </div>
+
+                    {{ form_end(form) }}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style>
+        #voucher-list .col-md-7.control-label, #voucher-list .col-md-5 {
+            padding-left: 3px;
+            padding-right: 3px;
+        }
+        #voucher-list td, #voucher-list .form-control{
+            padding: 3px;
+        }
+    </style>
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/account/js/check-issue.js') }}"></script>
+{% endblock include_javascripts %}
+
+{% block document_ready %}
+    {{ parent() }}
+    CheckIssue.init();
+    CheckIssue.setHeadAmount({{ fundHeadBalance|json_encode|raw }});
+{% endblock %}

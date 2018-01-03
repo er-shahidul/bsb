@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+    <h4 class="modal-title">{{ title }}</h4>
+</div>
+<div class="modal-body">
+    <div class="col-md-12">
+        <div class="form-horizontal">
+            {% if reconciliationMonths is empty %}
+                <div class="col-md-12">
+                    No valid reconciliation month available.
+                </div>
+            {% else %}
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">Select Fund</label>
+                    <select name="bankAccount" id="bankAccount" class="form-control">
+                        {% for fundType in fundTypes %}
+                            {% set selected = reconciliationMonths[fundType.id] is not defined ? 'disabled="disabled"' : '' %}
+                            <option rel="{{ fundType.id }}" value="{{ path(route, {fundType: fundType.id}) }}" {{ selected }}>{{ fundType.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <label class="control-label">Reconciliation Month is:</label>
+                {% for fundType in fundTypes %}
+                    {% if reconciliationMonths[fundType.id] is defined %}
+                    <div style="display: none" class="month-{{ fundType.id }}">{{ reconciliationMonths[fundType.id].string }}</div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+    {% if reconciliationMonths is not empty %}
+    <button type="button" class="btn green" onclick="$(this).parents('.modal').find('select').val() !== null ? location.href=$(this).parents('.modal').find('select').val() : ';'">Go</button>
+    {% endif %}
+</div>

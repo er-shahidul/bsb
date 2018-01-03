@@ -1,0 +1,99 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Bank Reconciliation View' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            <div class="portlet light">
+                <div class="portlet-body">
+
+                    <label class="col-sm-2">
+                        <strong>Reconciliation Month</strong>
+                    </label>
+                    <div class="col-sm-4 margin-bottom-10">
+                        {{ reconciliation.monthName }}
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <label class="col-sm-2">
+                        <strong>Fund Type</strong>
+                    </label>
+                    <div class="col-sm-4 margin-bottom-10">
+                        {{ reconciliation.fundType.name }}
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <label class="col-sm-2">
+                        <strong>Description</strong>
+                    </label>
+                    <div class="col-sm-4 margin-bottom-10">
+                        {{ reconciliation.description|raw }}
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <h4>Payment Vouchers</h4>
+                    <table class="table table-striped table-bordered table-advance table-hover">
+                        <thead>
+                        <tr>
+                            <th width="200">Cheque Number</th>
+                            <th width="200">Amount</th>
+                            <th width="200">Reconciliation Date</th>
+                        </tr>
+                        </thead>
+                        <tbody id="voucher-list">
+                        {% for voucher in reconciliation.vouchers %}
+                            <tr>
+                                <td>{{ voucher.chequeNumber }}</td>
+                                <td>{{ voucher.amount|en_number_format }}</td>
+                                <td>{{ voucher.reconciliationDate|date('Y-m-d') }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        {% if reconciliation.vouchers is empty %}
+                            <tr>
+                                <td class="text-center" colspan="4">No vouchers selected</td>
+                            </tr>
+                        {% endif %}
+                    </table>
+
+                    <h4>Attachments</h4>
+                    {% include "@App/_template/_attachments_list.html.twig" with {attachments: reconciliation.attachments} %}
+
+                    <div class="form-actions">
+                        {% block workflow_content %}
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+
+                                    {% if is_granted('edit:cheque_reconciliation_workflow', reconciliation) %}
+                                        <a class="btn btn-primary" href="{{ path('account_reconciliation_edit', {id: reconciliation.id}) }}">Edit</a>
+                                    {% endif %}
+
+                                    {% include '@Budget/CommonViewBlock/_workflow_action.html.twig' with {entity: reconciliation, workflow_name: 'cheque_reconciliation_workflow', entityClass: 'AccountBundle:ChequeReconciliation', title: 'Reconciliation Workflow'} %}
+
+                                </div>
+                                {% include '@Budget/CommonViewBlock/_workflow_comments.html.twig' with {remarks: reconciliation.stepRemarks} %}
+                            </div>
+                        {% endblock workflow_content %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/account/js/reconciliation-entry.js') }}"></script>
+{% endblock include_javascripts %}
+
+{% block document_ready %}
+    {{ parent() }}
+
+    ReconciliationEntry.init();
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Budget Update' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }} of financial year {{ budget.financialYear.label }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    <form action="{{ path('budget_update', {id: budget.id}) }}" method="post" class="budget-form">
+
+                        <table class="table table-striped table-bordered table-hover table-header-fixed table-checkable order-column">
+                            <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th>Code</th>
+                                <th>Account Head</th>
+                                <th>FY {{ budgetYear - 2 }} - {{ budgetYear - 1 }}</th>
+                                <th>FY {{ budgetYear - 1 }} - {{ budgetYear }}</th>
+                                <th>FY {{ budgetYear }}-{{ budgetYear + 1 }}</th>
+                                <th>Remarks</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% set sl = 1 %}
+                            {% for parentHead in budgetHead %}
+                                <tr class="odd gradeX">
+                                    <td colspan="7" style="background-color: #c1cbd0"><strong>{{ parentHead.titleEn }}</strong></td>
+                                </tr>
+
+                                {% for childHead in parentHead.child %}
+                                    <tr class="odd gradeX">
+                                        <td width="50">{{ sl }}</td>
+                                        <td width="80">{{ childHead.code }}</td>
+                                        <td>{{ childHead.titleEn }}</td>
+                                        <td class="text-right" width="150">{{ previousBudgetAmount['data'][childHead.id]['amount']|default('0') }}</td>
+                                        <td class="text-right" width="150">{{ currentBudgetAmount['data'][childHead.id]['amount']|default('0') }}</td>
+                                        <td class="text-right" width="150"><input class="amount form-control input-small" type="text" name="budgetDetail[{{ budgetAmount[childHead.id]['id'] }}]" value="{{ budgetAmount[childHead.id]['requestAmount'] }}"></td>
+                                        <td><input class="form-control" name="budgetDetailRemark[{{ budgetAmount[childHead.id]['id'] }}]" value="{{ budgetAmount[childHead.id]['remark'] }}"></td>
+                                    </tr>
+                                    {% set sl = sl + 1 %}
+                                {% endfor %}
+                            {% endfor %}
+                            </tbody>
+
+                            <tr>
+                                <th colspan="3"></th>
+                                <th class="text-right">{{ previousBudgetAmount['total']['amount'] }}</th>
+                                <th class="text-right">{{ currentBudgetAmount['total']['amount'] }}</th>
+                                <th class="text-right total-amount"></th>
+                                <th></th>
+                            </tr>
+                        </table>
+
+                        <div class="form-actions margin-top-20">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <button type="submit" class="btn yellow" name="save-sa-draft" value="yes">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('budget_update') }}">
+                        <input type="hidden" name="_referrer" value="{{ app.request.server.get('HTTP_REFERER')|default(path('budget_list')) }}">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/budget/js/dasb_budget.js') }}"></script>
+{% endblock include_javascripts %}
+
+{% block document_ready %}
+    {{ parent() }}
+    DASBBudget.updateInit();
+{% endblock %}

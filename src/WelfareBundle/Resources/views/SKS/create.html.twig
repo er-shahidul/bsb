@@ -1,0 +1,25 @@
+{% extends "@Welfare/create_application.html.twig" %}
+
+{% block page_title %} {{ parent() }} SKS Application{% endblock %}
+
+{% block application_title %}SKS Application{% endblock %}
+
+{% block sks_application_type %}
+
+    <div class="form-group">
+        <label class="col-md-4 control-label"><strong>Application Type : </strong></label>
+        {% if sksTypes is defined and application == null %}
+        <div class="col-md-6">
+            <select class="form-control" name="type">
+                {% for sksType in sksTypes %}
+                    <option value="{{ sksType.id }}" {{ sksType.id == type ? 'selected' : '' }}>{{ sksType.id }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+        {% if application != null %}
+            <div class="form-control-static">{{ application.type.id }}</div>
+        {% endif %}
+    </div>
+
+{% endblock %}

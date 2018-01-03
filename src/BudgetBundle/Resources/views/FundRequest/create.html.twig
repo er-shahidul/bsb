@@ -1,0 +1,98 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Additional Budget Demand' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }} {{ budget.id is null ? 'Create' : 'Update' }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label text-right">Account Head</label>
+                            <div class="col-md-6">
+                                {{ form_widget(budgetHeadForm.budgetHeads) }}
+                            </div>
+                            <div class="col-md-3">
+                                <a href="javascript:;" class="btn btn-icon-only green" id="add-more">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <form action="{{ budget.id ? path('budget_fund_request_update', {id: budget.id}) : path('budget_fund_request_create') }}" method="post" class="fund-request-form">
+
+                        <table class="table table-striped table-bordered table-hover table-header-fixed table-checkable order-column">
+                            <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th>Code</th>
+                                <th>Account Head</th>
+                                {#<th>FY {{ budgetYear - 2 }} - {{ budgetYear - 1 }}</th>
+                                <th>FY {{ budgetYear - 1 }} - {{ budgetYear }}</th>#}
+                                <th>FY {{ budgetYear }}-{{ budgetYear + 1 }}</th>
+                                <th>Revise FY {{ budgetYear }}-{{ budgetYear + 1 }}</th>
+                                <th>Expense Amount</th>
+                                <th>Request Amount</th>
+                                <th>Remarks</th>
+                            </tr>
+                            </thead>
+                            <tbody id="budgetDetailsContainer" data-prototype="
+                        {% filter escape %}
+                        {{ include('@Budget/FundRequest/budget-detail-protptype.html.twig') }}
+                        {% endfilter %}">
+
+                            {% set sl = 1 %}
+
+                            {% for i, budgetDetail in budget.budgetDetails %}
+                                {{ include('@Budget/FundRequest/budget-detail-protptype.html.twig') }}
+                                {% set sl = sl + 1 %}
+                            {% else %}
+                                <tr class="no-record"><td colspan="10">Please select a budget head</td></tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+
+                        <div class="form-actions margin-top-20">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <button class="btn green" name="save">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('budget_fund_request') }}">
+                        <input type="hidden" name="_referrer" value="{{ app.request.server.get('HTTP_REFERER')|default(path('budget_fund_request_list')) }}">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/budget/js/fund_request.js') }}"></script>
+{% endblock include_javascripts %}
+
+{% block document_ready %}
+    {{ parent() }}
+    FundRequest.init();
+{% endblock %}

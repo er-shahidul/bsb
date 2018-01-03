@@ -1,0 +1,64 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Payment Entry Detail' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    <div class="row form-horizontal">
+                        <table class="table table-striped table-bordered table-advance table-hover">
+                            <tr>
+                                <th>Voucher date</th>
+                                <th>Amount</th>
+                                <th>Description</th>
+                                <th>Fund type</th>
+                            </tr>
+                            <tr>
+                                <td>{{ sanctionPayment.voucherDate|date('Y-m-d') }}</td>
+                                <td>{{ sanctionPayment.amount|en_number_format }}</td>
+                                <td>{{ sanctionPayment.description }}</td>
+                                <td>{{ sanctionPayment.fundType.name }}</td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                    <h4>Attachments</h4>
+                    {% include "@App/_template/_attachments_list.html.twig" with {attachments: sanctionPayment.attachments} %}
+
+                    <div class="form-actions">
+                        {% block workflow_content %}
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+
+                                    {% if is_granted('edit:sanction_payment_workflow:draft', sanctionPayment) %}
+                                        <a class="btn btn-primary" href="{{ path('account_sanction_payment_edit', {id: sanctionPayment.id}) }}">Edit</a>
+                                    {% endif %}
+
+                                    {% include '@Budget/CommonViewBlock/_workflow_action.html.twig' with {entity: sanctionPayment, workflow_name: 'sanction_payment_workflow', entityClass: 'AccountBundle:SanctionPayment', title: 'Budget Workflow'} %}
+
+                                </div>
+                                {% include '@Budget/CommonViewBlock/_workflow_comments.html.twig' with {remarks: sanctionPayment.stepRemarks} %}
+                            </div>
+                        {% endblock workflow_content %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}

@@ -1,0 +1,50 @@
+services:
+#    budget.example:
+#        class: BudgetBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    BudgetBundle\Policy\Budget:
+        tags:
+            - {name: app.policy_group}
+
+    BudgetBundle\Permission\Provider\SecurityPermissionProvider:
+        tags:
+            - { name: user.permission_provider, alias: budget }
+
+    BudgetBundle\Form\BudgetExpenseForm:
+        tags: [form.type]
+
+    BudgetBundle\Form\Type\BudgetHeadType:
+        tags: [form.type]
+
+    BudgetBundle\Manager\:
+        resource: '../../Manager/*'
+        autowire: true
+
+    BudgetBundle\Listener\:
+        resource: '../../Listener/*'
+        autowire: true
+        autoconfigure: true
+
+    BudgetBundle\Workflow\:
+        resource: '../../Workflow/*'
+        autowire: true
+        autoconfigure: true
+        public: false
+        tags:
+            - {name: app.workflow_definition}
+
+    BudgetBundle\Datatables\:
+        resource: '../../Datatables/*'
+        autowire: true
+        autoconfigure: true
+
+    BudgetBundle\Twig\:
+        resource: '../../Twig/*'
+        autowire: true
+        autoconfigure: true
+
+    BudgetBundle\Validator\Constraints\CheckMaxExpenseValidator:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: validator.constraint_validator, alias: budget_max_expense }

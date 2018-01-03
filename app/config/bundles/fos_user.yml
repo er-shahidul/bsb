@@ -1,0 +1,14 @@
+fos_user:
+    db_driver: orm # other valid values are 'mongodb' and 'couchdb'
+    firewall_name: main
+    user_class: UserBundle\Entity\User
+    from_email:
+        address: "%admin_email%"
+        sender_name: "%admin_name%"
+    group:
+        group_class:    UserBundle\Entity\Group
+        group_manager:  fos_user.group_manager.default
+        form:
+            type:               fos_user_group
+            name:               fos_user_group_form
+            validation_groups:  [Registration, Default]

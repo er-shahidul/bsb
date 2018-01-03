@@ -1,0 +1,9 @@
+{% set path = data is not empty ? (image.relativePath ~ '/' ~ data ) : image.defaultImage %}
+<img class="{{ image_class }}" src="{{ asset(path) }}"
+        {% if image.holderWidth is not same as('') %}
+            width="{{ image.holderWidth }}"
+        {% endif %}
+        {% if image.holderHeight is not same as('') %}
+            height="{{ image.holderHeight }}"
+        {% endif %}
+/>

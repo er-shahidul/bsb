@@ -1,0 +1,164 @@
+<div class="page-header-menu">
+    <div class="container">
+        <!-- BEGIN MEGA MENU -->
+        <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
+        <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
+        <div class="hor-menu  ">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="{{ path('homepage') }}">Dashboard</a>
+                </li>
+
+                <li aria-haspopup="true" class="menu-dropdown mega-menu-dropdown  ">
+                    <a href="javascript:;"> Modules
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="dropdown-menu" style="min-width: 900px">
+                        <li>
+                            <div class="mega-menu-content">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <ul class="mega-menu-submenu">
+                                            {% if is_granted(['ROLE_BUDGET', 'DASB_USER']) %}
+                                            <li>
+                                                <a href="{{ path('budget_dashboard') }}">
+                                                    <i class="fa fa-money"></i> Budget Management
+                                                </a>
+                                            </li>
+                                            {% endif %}
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-archive"></i> Archive Management
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('personnel_dashboard') }}">
+                                                    <i class="fa fa-users"></i> Personnel Management
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="icon-settings"></i> ID Card Management
+                                                </a>
+                                            </li>
+                                            {% if is_granted(['ROLE_ACCOUNT', 'DASB_USER']) %}
+                                            <li>
+                                                <a href="{{ path('account_dashboard') }}">
+                                                    <i class="fa fa-calculator"></i> Accounts Management
+                                                </a>
+                                            </li>
+                                            {% endif %}
+                                            <li>
+                                                <a href="{{ path('leave_dashboard') }}">
+                                                    <i class="icon-settings"></i> Leave Management
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('movement_dashboard') }}">
+                                                    <i class="icon-settings"></i> Movement Management
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="icon-settings"></i> Monthly Activities Management
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <ul class="mega-menu-submenu">
+                                            <li>
+                                                <a href="{{ path('welfare_dashboard') }}">
+                                                    <i class="icon-settings"></i> Welfare Management
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('welfare_dashboard_micro_credit') }}">
+                                                    <i class="icon-settings"></i> Micro Credit Management
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('funeral_dashboard') }}">
+                                                    <i class="icon-settings"></i> Funeral Management
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{url('correspondence_inbox')}}">
+                                                    <i class="icon-settings"></i> Daily Correspondence
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-truck"></i> Vehicle & POL Management
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="icon-settings"></i> Daily Programme Management
+                                                </a>
+                                            </li>
+
+                                            {% if is_granted(['ROLE_MEDICINE', 'DASB_USER']) %}
+                                            <li>
+                                                <a href="{{ path('medical_dashboard') }}">
+                                                    <i class="fa fa-wheelchair"></i> Patient and Medicine Management
+                                                </a>
+                                            </li>
+                                            {% endif %}
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-building-o"></i> Defense Colony Land Management
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-building-o"></i> Shanti Nibash Management
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-building-o"></i> Shashastra Bahini Polly Management
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <ul class="mega-menu-submenu">
+                                            {% if is_granted('ROLE_OFFICE_ADMIN') or is_granted('ROLE_ADMIN')  %}
+                                            <li>
+                                                <a href="{{ path('users_home') }}">
+                                                    <i class="icon-users"></i> User Management
+                                                </a>
+                                            </li>
+                                            {% endif %}
+                                            {% if is_granted('ROLE_ADMIN') %}
+                                            <li>
+                                                <a href="{{ path('devnet_policy_manager_form') }}">
+                                                    <i class="fa fa-file-text"></i> Policy Letter Management
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('master_data_dashboard') }}">
+                                                    <i class="fa fa-file-text"></i> Master Data
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('audit_log_list') }}">
+                                                    <i class="fa fa-file-text"></i> Audit Log
+                                                </a>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+
+            </ul>
+        </div>
+        <!-- END MEGA MENU -->
+    </div>
+</div>

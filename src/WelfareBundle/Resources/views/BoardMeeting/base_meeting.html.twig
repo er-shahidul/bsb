@@ -1,0 +1,59 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Meeting' %}
+{% block page_title %}{{ parent() }}{% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+
+            {% include '@App/layout-component/flash.html.twig' %}
+
+            <div class="portlet light">
+
+                <div class="portlet-body">
+
+                    {% include 'WelfareBundle:BoardMeeting:meeting_info.html.twig' %}
+
+                    <div class="row ">
+                        <div class="col-sm-12">
+                            {% block list_title %}
+                            {% endblock %}
+                            <h5>Application Date from {{ dateRange['start']|date('d M Y')|default('N/A') }} to {{ dateRange['end']|date('d M Y')|default('N/A') }}</h5>
+                            <h5>Number of applications: {{ applicationCount }}</h5>
+                        </div>
+                        <div class="col-sm-12">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    {% include 'WelfareBundle:BoardMeeting:_meeting_list_header.html.twig' %}
+                                </thead>
+                                <tbody>
+                                    {% include 'WelfareBundle:BoardMeeting:_meeting_list.html.twig' %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="form-actions margin-top-20">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                {% if (is_granted('edit:board_meeting', meeting)) %}
+                                    <a class="btn btn-primary" href="{{ path('board_meeting_edit', {id: meeting.id}) }}">Edit</a>
+                                {% endif %}
+                                {% block workflowAction %}
+                                    {#{% include '@Budget/CommonViewBlock/_workflow_action.html.twig' with {entity: meeting, workflow_name: 'board_meeting', entityClass: 'BoardMeetingBundle:BoardMeeting', title: 'BSCR Board Meeting'} %}#}
+                                {% endblock workflowAction %}
+                            </div>
+                        </div>
+                    </div>
+                    {% include '@Budget/CommonViewBlock/_workflow_comments.html.twig' with {remarks: meeting.stepRemarks} %}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}

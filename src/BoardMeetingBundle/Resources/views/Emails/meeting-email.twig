@@ -1,0 +1,12 @@
+<b>Dear {{ member.name }},</b>
+<br/>
+<p>
+    You have been selected as {{ member.chairman ? 'the chairman' : 'a member' }} of a board meeting.
+    Board meeting will be held on {{ meeting.date|date('jS F, Y') }} Please click the following <a href="{{ url('board_meeting_authenticate', {'member': member.id, '_token': token}) }}">link</a> for participating
+    the meeting on given date.
+</p>
+
+<p>It is a system generated email. Please do not reply.</p>
+
+Thanks <br/>
+<b>BASB Administrator</b>

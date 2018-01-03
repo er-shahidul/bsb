@@ -1,0 +1,68 @@
+<div class="office-expense-body">
+<div align="center" class="bold">বিএএসবি ও ডিএএসবি অনুযায়ী বাজেট বণ্টন ও খরচ পরিসংখ্যান ({{ date|date('d-m-Y')|bn_number }} পর্যন্ত)</div><br/>
+<table class="table margin-bottom-10">
+
+    <thead>
+        <tr class="text-center bold">
+            <th class="code-no-size">কোড নং</th>
+            <th class="details-size">বিবরণ</th>
+            <th class="amount-size">বাজেট/সংশোধিত বাজেট</th>
+            {% for office in offices %}
+                <th class="amount-size">{{ office.name }}</th>
+            {% endfor %}
+            <th class="amount-size">মোট উপবরাদ্দ</th>
+            <th class="amount-size">বিএএসবি'র অবশিষ্ট</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for parentHead in budgetHead %}
+        <tr>
+            <td colspan="2">{{ parentHead.code|bn_number }} <u class="bold">{{ parentHead.titleEn }}</u></td>
+            {% for office in offices %}
+                <td></td>
+            {% endfor %}
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+            {% for childHead in parentHead.child %}
+            <tr>
+                <td>{{ childHead.code|bn_number }}</td>
+                <td>{{ childHead.titleEn }}</td>
+                <td class="text-right">{{ budgetAmount['data'][childHead.id]['amount']|default(0)|decodeBudgetAmount|bn_number_format }}</td>
+                {% for office in offices %}
+                    <td class="text-right">{{ officeExpense[office.id][childHead.id]|default(0)|bn_number_format }}</td>
+                {% endfor %}
+                <td class="text-right">{{ headExpense[childHead.id]|default(0)|bn_number_format }}</td>
+                <td class="text-right">{{ (budgetAmount['data'][childHead.id]['amount']|default(0)|decodeBudgetAmount - headExpense[childHead.id]|default(0))|bn_number_format }}</td>
+            </tr>
+            {% endfor %}
+            <tr class="bold">
+                <td colspan="2">উপ-মোট</td>
+                <td class="text-right">{{ budgetParentHead[parentHead.id]['amount']|default(0)|decodeBudgetAmount|bn_number_format }}</td>
+                {% for office in offices %}
+                    <td class="text-right">{{ officeExpenseSubHead[office.id][parentHead.id]|default(0)|bn_number_format }}</td>
+                {% endfor %}
+                <td class="text-right">{{ headExpenseSubHead[parentHead.id]|default(0)|bn_number_format }}</td>
+                <td class="text-right">{{ (budgetParentHead[parentHead.id]['amount']|default(0)|decodeBudgetAmount - headExpenseSubHead[parentHead.id]|default(0))|bn_number_format }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+
+    <tfoot>
+        <tr class="bold">
+            <th colspan="2" class="text-left">সর্বমোট</th>
+            <th class="text-right">{{ budgetTotalAmount['amount']|default(0)|decodeBudgetAmount|bn_number_format }}</th>
+            {% for office in offices %}
+                <th class="text-right">{{ officeExpenseTotal[office.id]|default(0)|bn_number_format }}</th>
+            {% endfor %}
+            <th class="text-right">{{ headExpenseTotal|default(0)|bn_number_format }}</th>
+            <th class="text-right">{{ (budgetTotalAmount['amount']|default(0)|decodeBudgetAmount - headExpenseTotal|default(0))|bn_number_format }}</th>
+        </tr>
+    </tfoot>
+
+</table>
+</div>
+
+

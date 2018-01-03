@@ -1,0 +1,49 @@
+services:
+#    welfare.example:
+#        class: WelfareBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    WelfareBundle\Policy\WelfarePolicy:
+        tags:
+            - {name: app.policy_group}
+
+    WelfareBundle\Manager\:
+        resource: '../../Manager/*'
+        autowire: true
+
+    WelfareBundle\Listener\:
+        resource: '../../Listener/*'
+        autowire: true
+        autoconfigure: true
+
+    WelfareBundle\Workflow\:
+        resource: '../../Workflow/*'
+        autowire: true
+        autoconfigure: true
+        public: false
+        tags:
+            - {name: app.workflow_definition}
+
+    validator.bscr_max_grant:
+        class: WelfareBundle\Validator\Constraints\BSCRMaxGrantValidator
+        arguments: ["@devnet_policy_manager.policy_repository"]
+        tags:
+            - { name: validator.constraint_validator, alias: bscr_max_grant }
+
+    validator.rcel_max_grant:
+        class: WelfareBundle\Validator\Constraints\RCELMaxGrantValidator
+        arguments: ["@devnet_policy_manager.policy_repository"]
+        tags:
+            - { name: validator.constraint_validator, alias: rcel_max_grant }
+
+    validator.micro_credit_max_grant:
+        class: WelfareBundle\Validator\Constraints\MicroCreditMaxGrantValidator
+        arguments: ["@devnet_policy_manager.policy_repository"]
+        tags:
+            - { name: validator.constraint_validator, alias: micro_credit_max_grant }
+
+    validator.welfare_service_id_exists:
+        class: WelfareBundle\Validator\Constraints\ServiceIdExistsValidator
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: validator.constraint_validator, alias: welfare_service_id_exists }
+

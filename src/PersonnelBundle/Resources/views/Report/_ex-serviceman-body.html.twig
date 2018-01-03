@@ -1,0 +1,95 @@
+<div align="center" class="bold"></div><br/>
+<table class="table margin-bottom-10">
+    <thead>
+        <tr class="text-center bold">
+            <th>ক্রমিক</th>
+            <th>সৈনিক নং </th>
+            <th>পদবী</th>
+            <th>কোর / রেজিমেন্ট </th>
+            <th>ট্রেড </th>
+            <th>নাম , পিতা - মাতার নাম ও উত্তরাধিকারী নাম </th>
+            <th>স্ত্রী ও সন্তানাদির নাম </th>
+            <th>সম্পর্ক </th>
+            <th>জন্ম তারিখ </th>
+            <th>স্থায়ী ঠিকানা </th>
+            <th>জন্ম তারিখ ভর্তিকালীন বয়স </th>
+            <th>ভর্তি, অব্যাহতি এবং অবসরের তারিখ </th>
+            <th>অবসরের কারণ </th>
+            <th>শেষ কর্মস্থল / ইউনিট </th>
+            <th>শৃঙ্খলার মান </th>
+            <th>শিক্ষাগত যোগ্যতা </th>
+            <th>টিএস নম্বর ও জাতীয় পরিচয়পত্রের নম্বর </th>
+            <th>রিজাভিস্ট সময়সীমার শেষ তারিখ </th>
+            <th>মন্তব্য (বিশেষ দক্ষতা ,কম্পিউটার পারদর্শী , কার পাজেরো , জীপ্ চালাতে পারে ) . মুক্তিযোদ্ধা , অসহায় পঙ্গু হলে পঙ্গুত্বের কারণ উল্লেখ করতে হবে </th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if app.request.query.get('search') is empty %}
+        <tr>
+            <td colspan="19" class="text-center">Please select search option</td>
+        </tr>
+    {% endif %}
+    {% for exServiceMan  in exServiceMans %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ exServiceMan.identityNumber }}</td>
+            <td>{{ exServiceMan.rank }}</td>
+            <td>{{ exServiceMan.corp }}</td>
+            <td>{{ exServiceMan.trade }}</td>
+            <td>
+                {{ exServiceMan.name }}<br/>
+                {{ exServiceMan.fathersName }}<br/>
+                {{ exServiceMan.mothersName }}<br/>
+            </td>
+            <td>
+                {% for f in exServiceMan.families %}
+                        {{ f.name }}<br/>
+                {% endfor %}
+            </td>
+            <td>
+                {% for f in exServiceMan.families %}
+                    {{ f.relationType }}<br/>
+                {% endfor %}
+            </td>
+            <td>{{ exServiceMan.dateOfBirth|date('d-m-Y')|bn_number  }}</td>
+            <td>
+                {{ exServiceMan.permanentVillage }}, {{ exServiceMan.permanentPostOffice }}, {{ exServiceMan.permanentPostCode }},<br/>
+                {{ exServiceMan.permanentUpazila }}, {{ exServiceMan.permanentDistrict }}.
+            </td>
+            <td>{{ date( exServiceMan.dateOfBirth|date ).diff( exServiceMan.joiningDate ).format('%Y')|default('') }}</td>
+            <td>
+                ভর্তি:{{ exServiceMan.joiningDate|date('d-m-Y')|bn_number }} <br/>
+                অবসর: {{ exServiceMan.retirementDate|date('d-m-Y')|bn_number }}
+            </td>
+            <td>{{ exServiceMan.retirementReason }}</td>
+            <td>
+                {{ exServiceMan.lastServedUnit }}
+            </td>
+            <td>
+                {{ exServiceMan.disciplineStatus }}
+            </td>
+            <td>
+                {% for e in exServiceMan.educations %}
+                        {{ e.degree }}<br/>
+                {% endfor %}
+            </td>
+            <td>
+                টিএস:{{ exServiceMan.tsNumber }} <br/>
+                জাতীয় পরিচয়পত্: {{ exServiceMan.nid }}
+            </td>
+            <td>
+                {{ exServiceMan.reservistLastDate|date('d-m-Y')|bn_number }}
+            </td>
+            <td>
+                {{ exServiceMan.remarks }}
+            </td>
+        </tr>
+    {% else %}
+        {% if app.request.query.get('search') is not empty %}
+            <tr>
+                <td colspan="19" class="text-center">No record found</td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+    </tbody>
+</table>

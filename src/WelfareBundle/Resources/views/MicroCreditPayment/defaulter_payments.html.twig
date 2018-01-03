@@ -1,0 +1,28 @@
+{% extends "WelfareBundle:MicroCreditPayment:base_index.html.twig" %}
+{% block page_title %}{{ parent() }} | Micro Credit Defaulter Payments{% endblock %}
+
+{% block portletTitle %}
+    {{ parent() }}
+    Micro-credit Defaulter Payments
+{% endblock %}
+
+{% block defaulter_set %}
+<form id="form-request-defaulter" action="">
+    <div class="portlet-body">
+        {{ sg_datatables_render_html(datatable) }}
+    </div>
+    <div class="form-group">
+        <div class="col-md-2">
+            <div class="input-group">
+                <select name="option" id="" class="form-control input-small">
+                    <option value="">Defaulter</option>
+                    <option value="">Not Defaulter</option>
+                </select>
+                <span class="input-group-btn">
+                    <button id="btn-request-defaulter" data-url="{{ path('welfare_micro_credit_request_defaulter') }}" class="btn btn-success" type="button">Set</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

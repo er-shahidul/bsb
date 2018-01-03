@@ -1,0 +1,144 @@
+{% extends "@App/base.html.twig" %}
+
+{% block page_title %}{{ parent() }} | {% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row">
+        <div class="col-sm-12">
+
+            {% include '@App/layout-component/flash.html.twig' %}
+
+            {% if errorMessage is defined and errorMessage != '' %}
+                <div class="alert alert-danger fade in">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    {{ errorMessage }}
+                </div>
+            {% endif %}
+
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">
+                            Micro-credit Payment
+                        </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    {% if application == null  %}
+                    <div class="col-md-6">
+                        <form class="form-horizontal">
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><strong>Soldier No. : </strong></label>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                            <div>
+                                                <input id="newpassword" class="form-control" name="service-id" placeholder="Soldier No." value="{{ app.request.query.get('service-id') }}">
+                                            </div>
+                                            <span class="input-group-btn">
+                                            <button id="genpassword" class="btn btn-success"><i class="fa fa-arrow-right fa-fw"></i> Search</button>
+                                        </span>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    {% endif %}
+
+                    {% if application != null  %}
+                    <div class="col-md-12">
+                        {% include '@Welfare/MCInstallment/recipient.html.twig' %}
+                    </div>
+                    {% endif %}
+
+                    {% if payment != null  %}
+                    <div class="col-md-12  hidden-print margin-top-20">
+                        <table class="table table-striped table-bordered table-advance">
+                            <tr>
+                                <td>
+                                    <div class="form-actions margin-top-20">
+                                        <div class="form-horizontal">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-6"><strong>Payment Amount (TK)</strong>:</label>
+                                                    <div class="col-md-6">
+                                                        <p class="form-control-static"> {{ payment.paymentAmount|number_format }} </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-6"><strong>Date</strong>:</label>
+                                                    <div class="col-md-6">
+                                                        <p class="form-control-static"> {{ payment.date|date('d-m-Y') }} </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-6"><strong>Reference No.</strong>:</label>
+                                                    <div class="col-md-6">
+                                                        <p class="form-control-static"> {{ payment.referenceNo|default('N/A') }} </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row hidden-print">
+                                            <div class="col-md-12 text-right">
+
+                                                {% if (is_granted('ROLE_DASB_CLERK') and 'draft' == payment.status) %}
+                                                    <a class="btn btn-primary" href="{{ path('welfare_micro_credit_payment_receive_edit', {id: payment.id}) }}">Edit</a>
+                                                {% endif %}
+
+                                                {% include '@Budget/CommonViewBlock/_workflow_action.html.twig' with {entity: payment, workflow_name: 'welfare_micro_credit_payment', entityClass: 'WelfareBundle:MicroCreditPayment', title: 'Micro-credit Payment Workflow'} %}
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-12 hidden-print">
+                        <h4>Attachments</h4>
+                        {% include "@App/_template/_attachments_list.html.twig" with {attachments: payment.attachments} %}
+                    </div>
+                    {% endif %}
+
+                    {% if application != null  %}
+                        <div class="col-md-12">
+                            <h3>Payment History</h3>
+                            {% include '@Welfare/MicroCreditPayment/payment_history.html.twig' %}
+                        </div>
+                    {% endif %}
+
+                    {% if payment != null  %}
+                        {% include '@Budget/CommonViewBlock/_workflow_comments.html.twig' with {remarks: payment.stepRemarks} %}
+                    {% endif %}
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .form-group {margin-bottom: auto;}
+    </style>
+{% endblock %}

@@ -1,0 +1,36 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    BoardMeetingBundle\Service\BoardManager:
+        arguments: ['%secret%', '@doctrine.orm.entity_manager']
+        public: true
+
+    BoardMeetingBundle\Listener\:
+        resource: '../../Listener/*'
+        autowire: true
+        autoconfigure: true
+
+    BoardMeetingBundle\Workflow\:
+        resource: '../../Workflow/*'
+        autowire: true
+        autoconfigure: true
+        public: false
+        tags:
+            - {name: app.workflow_definition}
+
+    BoardMeetingBundle\Security\:
+        resource: '../../Security/*'
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    BoardMeetingBundle\Listener\BoardMeetingApprovedSubscriber:
+        arguments:
+            $adminEmail: '%admin_email%'
+            $adminName: '%admin_name%'
+
+    board_meeting.user_authenticator: '@BoardMeetingBundle\Security\BoardMemberAuthenticator'
+    board_meeting.user_provider: '@BoardMeetingBundle\Security\BoardMemberUserProvider'

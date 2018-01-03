@@ -1,0 +1,44 @@
+{% set nonReconciledVouchersLength = nonReconciledVouchers|length + 1 %}
+<table class="table width-100">
+    <thead>
+    <tr class="text-center">
+        <th width="50">ক্রমিক</th>
+        <th width="150">বিবরণ</th>
+        <th width="100">টাকা</th>
+        <th width="50">ক্রমিক</th>
+        <th>বিবরণ</th>
+        <th width="100">টাকা</th>
+    </tr>
+    </thead>
+    {% if nonReconciledVouchers is not empty %}
+    <tbody>
+    <tr>
+        <td class="text-center" rowspan="{{ nonReconciledVouchersLength }}">{{ '1'|bn_number }}</td>
+        <td rowspan="{{ nonReconciledVouchersLength }}">লেজার অনুযায়ী স্থিতি</td>
+        <td class="text-right" rowspan="{{ nonReconciledVouchersLength }}">{{ ledgerBalance|bn_number_format }}</td>
+        <td class="text-center">{{ '1'|bn_number }}</td>
+        <td>ব্যাংক অনুযায়ী স্থিতি</td>
+        <td class="text-right">{{ (bankBalance+nonReconciledVouchersTotal)|bn_number_format }}</td>
+    </tr>
+    {% for voucher in nonReconciledVouchers %}
+    <tr>
+        <td class="text-center">{{ (loop.index + 1)|bn_number }}</td>
+        <td>{{ voucher.voucherNumber }}</td>
+        <td class="text-right">-{{ voucher.amount|bn_number_format }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr class="bold">
+        <td class="text-center" colspan="2">সর্বেমোট</td>
+        <td class="text-right">{{ ledgerBalance|bn_number_format }}</td>
+        <td class="text-center" colspan="2">সর্বেমোট</td>
+        <td class="text-right">{{ bankBalance|bn_number_format }}</td>
+    </tr>
+    </tfoot>
+    {% else %}
+        <tr>
+            <td colspan="6" class="text-center">No data found</td>
+        </tr>
+    {% endif %}
+</table>

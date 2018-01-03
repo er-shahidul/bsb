@@ -1,0 +1,69 @@
+<div align="center" class="bold"></div><br/>
+<table class="table margin-bottom-10">
+    <thead>
+    <tr class="text-center bold">
+        <th rowspan="2">ক্রঃনং</th>
+        <th rowspan="2" style="width: 70px;">সেনা নং</th>
+        <th rowspan="2" style="width: 70px;">পদবী</th>
+        <th rowspan="2" style="width: 100px;">নাম</th>
+        <th rowspan="2">জন্ম তারিখ</th>
+        <th rowspan="2">ভর্তির তারিখ</th>
+        <th rowspan="2">মোবাইল / ইমেইল ঠিকানা</th>
+        <th rowspan="2">পূর্বের ০৩ বছরের এপিআর গ্রেডিং</th>
+        <th rowspan="2">শিক্ষাগত যোগ্যতা</th>
+        <th colspan="4">চাকুরীর বিবরণ</th>
+        <th rowspan="2" style="width: 100px;">মন্তব্য</th>
+    </tr>
+    <tr class="text-center bold">
+        <th style="width: 70px;">সংস্থা নাম</th>
+        <th style="width: 60px;">হইতে</th>
+        <th style="width: 60px;">পর্যন্ত</th>
+        <th style="width: 100px;">শাখা</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for civilian  in servingCivilians %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ civilian.identityNumber }}</td>
+            <td>{{ civilian.designation }}</td>
+            <td>{{ civilian.name }}</td>
+            <td>{{ civilian.dateOfBirth|date('d-m-Y')|bn_number }}</td>
+            <td>{{ civilian.joiningDate|date('d-m-Y')|bn_number }}</td>
+            <td>{{ civilian.mobileNumber }} / {{ civilian.email }}</td>
+            <td>
+                {% for g in civilian.aprGrading %}
+                    {{ g }}<br/>
+                {% endfor %}
+            </td>
+            <td>
+                {% for e in civilian.educations %}
+                    {{ e.degree }}<br/>
+                {% endfor %}
+            </td>
+            <td>
+                {% for u in civilian.employmentInformations %}
+                    {{ u.unit }}<br/>
+                {% endfor %}
+            </td>
+            <td>
+                {% for fd in civilian.employmentInformations %}
+                    {{ fd.fromDate|date('d-m-Y')|bn_number }}<br/>
+                {% endfor %}
+            </td>
+            <td>
+                {% for fd in civilian.employmentInformations %}
+                    {{ fd.toDate|date('d-m-Y')|bn_number }}<br/>
+                {% endfor %}
+            </td>
+            <td>
+                {% for u in civilian.employmentInformations %}
+                    {{ u.class }}<br/>
+                {% endfor %}
+            </td>
+            </td>
+            <td>{{ civilian.remarks }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,329 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Budget Dashboard' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    {% include '@App/layout-component/flash.html.twig' %}
+
+    <div class="col-md-12">
+
+        <div class="portlet box blue">
+
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart theme-font hide"></i>
+                    <span class="caption">Budget</span>
+                </div>
+            </div>
+
+            <div class="portlet-body">
+
+                <div class="row">
+                    {% if is_granted(['ROLE_BUDGET', 'DASB_USER']) %}
+
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Budget</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('budget_list') }}" class="btn btn-success btn-sm">View</a>
+                                </p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if is_granted(['ROLE_BUDGET']) %}
+
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">DASB Budget View</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('budget_requested_budget_list') }}" class="btn btn-success btn-sm">View</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Pre Budget</div>
+                                <div class="ribbon-content row">
+                                    <a href="{{ path('pre_budget_income_summary_list') }}"
+                                       class="btn btn-success btn-sm pull-left">Income</a>
+
+                                    <div class="width-48-percentage pull-right">
+                                        <a href="{{ path('pre_budget_summary_list') }}" class="btn btn-success btn-sm">Expense</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Budget Compilation</div>
+                                <div class="ribbon-content row">
+                                    <div class="width-48-percentage pull-left"><a href="{{ path('budget_income_summary_list') }}" class="btn btn-success btn-sm">Income</a>
+                                    </div>
+                                    <div class="width-48-percentage pull-right"><a href="{{ path('budget_summary_list') }}" class="btn btn-success btn-sm">Expense</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Budget Amendment</div>
+                                <div class="ribbon-content row">
+                                    <div class="width-48-percentage pull-left">
+                                        <a href="{{ path('budget_income_amendment_list') }}" class="btn btn-success btn-sm">Income</a>
+                                    </div>
+                                    <div class="width-48-percentage pull-right">
+                                        <a href="{{ path('budget_amendment_list') }}" class="btn btn-success btn-sm">Expense</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if is_granted(['ROLE_BUDGET', 'DASB_USER']) %}
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Additional Budget Demand</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('budget_fund_request_list') }}"
+                                       class="btn btn-success btn-sm">View</a>
+                                </p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="portlet box blue">
+
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart theme-font hide"></i>
+                    <span class="caption">Income / Expense</span>
+                </div>
+            </div>
+
+            <div class="portlet-body">
+                <div class="row">
+
+                    {% if is_granted(['ROLE_BUDGET', 'DASB_USER']) %}
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Non Tax Income</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('budget_income_list') }}" class="btn btn-success btn-sm">View</a>
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Expenses Register</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('budget_expense_list') }}" class="btn btn-success btn-sm">View</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Sanction Register</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('budget_expense_bill_sanction_list') }}"
+                                       class="btn btn-success btn-sm">View</a>
+                                </p>
+                            </div>
+                        </div>
+
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="portlet box yellow">
+
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart theme-font hide"></i>
+                    <span class="caption">Reports</span>
+                </div>
+            </div>
+
+            <div class="portlet-body">
+
+                <div class="row">
+
+                    {% if is_granted('ROLE_BUDGET') or is_granted('DASB_USER') %}
+                        <div class="col-lg-3 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Office Expense</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('budget_report_expense_of_month') }}"
+                                       class="btn btn-success btn-sm">View Report</a>
+                                </p>
+                            </div>
+                        </div>
+
+                    {% endif %}
+
+                    {% if is_granted(['ROLE_BUDGET']) %}
+
+                        <div class="col-lg-3 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Month Wise Expense</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('budget_report_monthly_expenses') }}"
+                                       class="btn btn-success btn-sm">View Report</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">All Office Expense</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('budget_report_all_office_expense_of_month') }}"
+                                       class="btn btn-success btn-sm">View Report</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Expense Summary</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('budget_report_budget_all_office_expense') }}"
+                                       class="btn btn-success btn-sm">View Report</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Pre Budget</div>
+                                <div class="ribbon-content row">
+                                    <div class="width-48-percentage pull-left">
+                                        <a href="{{ path('pre_budget_report_budget_income_form_1') }}"
+                                           class="btn btn-success btn-sm">Form-1</a>
+                                    </div>
+                                    <div class="width-48-percentage pull-right">
+                                        <a href="{{ path('pre_budget_report_budget_expense_form_3') }}"
+                                           class="btn btn-success btn-sm">Form-3</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Budget Request</div>
+                                <div class="ribbon-content row">
+                                    <div class="col-md-4">
+                                        <a href="{{ path('budget_report_budget_request_form_1') }}"
+                                           class="btn btn-success btn-sm">Form-1</a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="{{ path('budget_report_budget_request') }}"
+                                           class="btn btn-success btn-sm">Form-2</a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="{{ path('budget_report_budget_request_form_3') }}"
+                                           class="btn btn-success btn-sm">Form-3</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Budget Surrender</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('budget_report_surrender') }}"
+                                       class="btn btn-success btn-sm">View Report</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Budget Amendment</div>
+                                <div class="ribbon-content row">
+                                    <div class="col-md-4">
+                                        <a href="{{ path('budget_report_budget_amendment_form1') }}"
+                                           class="btn btn-success btn-sm">Form-1</a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="{{ path('budget_report_budget_amendment_form2') }}"
+                                           class="btn btn-success btn-sm">Form-2</a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="{{ path('budget_report_budget_amendment_form3') }}"
+                                           class="btn btn-success btn-sm">Form-3</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Budget Implementation Plan</div>
+                                <div class="ribbon-content row">
+                                    <div class="col-md-4">
+                                        <a href="{{ path('budget_report_quarterly_expense', {'type' : 'parent-head'}) }}"
+                                           class="btn btn-success btn-sm">Form-1</a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="{{ path('budget_report_quarterly_expense', {'type' : 'child-head'}) }}"
+                                           class="btn btn-success btn-sm">Form-2</a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="{{ path('budget_report_quarterly_income') }}"
+                                           class="btn btn-success btn-sm">Form-3</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Pre Budget Implementation Plan</div>
+                                <div class="ribbon-content row">
+                                    <div class="col-md-4">
+                                        <a href="{{ path('pre_budget_report_quarterly_expense', {'type' : 'parent-head'}) }}"
+                                           class="btn btn-success btn-sm">Form-1</a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="{{ path('pre_budget_report_quarterly_expense', {'type' : 'child-head'}) }}"
+                                           class="btn btn-success btn-sm">Form-2</a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="{{ path('pre_budget_report_quarterly_income') }}"
+                                           class="btn btn-success btn-sm">Form-3</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}

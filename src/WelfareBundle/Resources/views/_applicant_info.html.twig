@@ -1,0 +1,106 @@
+<div class="row">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">Applicant Information</div>
+        </div>
+        <div class="portlet-body">
+            <div class="row">
+                <div class="col-lg-9 col-md-9">
+                    {% if (not personnel.deceased) %}
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="control-label">Applicant Name: </label>
+                                <label class="control-label-value">{{ personnel.name|default('N/A') }}</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label">Personnel No.:</label>
+                                <label class="control-label-value">{{ personnel.identityNumber|default('N/A') }}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="control-label">Service Group: </label>
+                                <label class="control-label-value">{{ personnel.service|default('N/A') }}</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label">Corps/Regiment: </label>
+                                <label class="control-label-value">{{ personnel.corp.name|default('N/A') }}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="control-label">Rank: </label>
+                                <label class="control-label-value">{{ personnel.rank.name|default('N/A') }}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="control-label">Enrollment Date: </label>
+                                <label class="control-label-value">{{ personnel.joiningDate|date('jS F, Y')|default('N/A') }}</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label">Ts number :</label>
+                                <label class="control-label-value">{{ personnel.tsNumber|default('N/A') }}</label>
+                            </div>
+                        </div>
+                        {% if personnel.retirementDate %}
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="control-label">Retirement Date: </label>
+                                <label class="control-label-value">{{ personnel.retirementDate|date('jS F, Y')|default('N/A') }}</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label">Retirement Reason: </label>
+                                <label class="control-label-value">{{ personnel.retirementReason|default('N/A') }}</label>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-6">
+                                <a href="{{ path('ex_serviceman_view', {id: personnel.id}) }}">View more Details</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if (personnel.deceased) %}
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="control-label">Applicant Name: </label>
+                                <label class="control-label-value">{{ spouseInfo.name|default('N/A') }}</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label">Relation with soldier:</label>
+                                <label class="control-label-value">{{ spouseInfo.relationType|default('N/A') }}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="control-label">Applicant Address: </label>
+                                <label class="control-label-value">{{ spouseInfo.address|default('N/A') }}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="control-label">Soldier's date of death: </label>
+                                <label class="control-label-value">{{ personnel.deceasedDate|date('dS F, Y') }}</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="control-label">Soldier's death place: </label>
+                                <label class="control-label-value">{{ personnel.deceasedPlace|default('N/A') }}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="control-label">Soldier's death reason: </label>
+                                <label class="control-label-value">{{ personnel.deceasedReason|default('N/A') }}</label>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <img src="{{ asset(personnel.photoPath) }}" class="img-responsive" alt="" >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

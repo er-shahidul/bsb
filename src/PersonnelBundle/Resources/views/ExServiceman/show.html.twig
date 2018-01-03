@@ -1,0 +1,251 @@
+{% extends "@Personnel/Default/base_view_page.html.twig" %}
+{% set pageTitle = 'Ex-serviceman Service Book' %}
+
+{% block special_diseases %}
+    <div class="portlet-body">
+        <table class="table table-striped table-bordered table-advance table-hover">
+            <thead>
+            <th colspan="4">NOK Information</th>
+            </thead>
+            <tbody>
+            <tr>
+                <td>NOK Name:</td>
+                <td>{{ personnel.inheritName|default('N/A') }}</td>
+                <td>NOK NID:</td>
+                <td>{{ personnel.inheritNID|default('N/A') }}</td>
+            </tr>
+            <tr>
+                <td>NOK Relation:</td>
+                <td>{{ personnel.inheritRelation|default('N/A') }}</td>
+                <td>NOK Birth Date:</td>
+                <td>{{ personnel.inheritBirthDate|date('jS F, Y') }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="portlet-body">
+        <table class="table table-striped table-bordered table-advance table-hover">
+            <thead>
+                <th colspan="5">Medical Record</th>
+            </thead>
+            <tr>
+                <th width="20%" style="font-weight: normal;">রোগের নাম</th>
+                <th width="18%" style="font-weight: normal;">আক্ৰান্ত হবার তারিখ</th>
+                <th width="20%" style="font-weight: normal;">রোগ নিরুপনকারী কর্তৃপক্ষ</th>
+                <th width="20%" style="font-weight: normal;">চিকিৎসা</th>
+                <th width="20%" style="font-weight: normal;">মন্তব্য</th>
+            </tr>
+            <tbody>
+            {% for index, item in personnel.specialDiseases %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.affectedDate|date('d-m-Y') }}</td>
+                    <td>{{ item.provingBy }}</td>
+                    <td>{{ item.treatment }}</td>
+                    <td>{{ item.remark }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5" class="text-center"> No info</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block inherit_info %}
+
+    <li><span>Home Of Peace:</span> {{ personnel.shantiNebas ? 'Yes' : 'No' }}</li>
+    <li><span>Marriage Date:</span> {{ personnel.dateOfWedding ? personnel.dateOfWedding|date('jS F, Y') : "N/A" }}</li>
+    <li><span>Dispensary:</span> {{ personnel.dispensary.name|default('N/A') }}</li>
+
+{% endblock %}
+
+ {% block after_retiredment %}
+     <div class="portlet-body">
+         <table class="table table-striped table-bordered table-advance table-hover">
+             <thead>
+             <th colspan="4">After Retirement</th>
+             </thead>
+             <tbody>
+                 <tr>
+                     <td> Live (City/Village) :</td>
+                     <td>{{ personnel.afterRetirementCityOrVillage ? 'City' : 'Village' }}</td>
+                     <td> Living Nature :</td>
+                     <td>{{ personnel.afterRetirementLivingNature|default('N/A') }}</td>
+                 </tr>
+                 <tr>
+                     <td>Source Of Income</td>
+                     <td>{{ personnel.afterRetirementSourceOfIncome|default('N/A') }}</td>
+                     <td>Planting Land</td>
+                     <td>{{ personnel.afterRetirementPlantingLand|default('N/A') }}</td>
+                 </tr>
+             </tbody>
+         </table>
+     </div>
+ {% endblock %}
+
+{% block emergency_contact  %}
+    <h4 class="bold">Emergency Contact : </h4>
+    <ul class="list-unstyled span10">
+        <li><span>Name:</span> {{ personnel.emergencyName|default('N/A') }}
+        </li>
+        <li><span>Relation:</span> {{ personnel.emergencyRelation|default('N/A') }}
+        </li>
+        <li><span>Contact Number:</span> {{ personnel.emergencyNumber|default('N/A') }}
+        </li>
+        <li><span>Address:</span> {{ personnel.emergencyAddress|default('N/A') }}
+        </li>
+    </ul>
+{% endblock %}
+
+{% block death_info %}
+    {% if personnel.deceased == TRUE %}
+        <ul class="list-unstyled span10">
+            <li>
+                <span>Death Place:</span> {{ personnel.deceasedPlace|default('N/A') }}
+            </li>
+            <li>
+                <span>Death Reason:</span> {{ personnel.deceasedReason|default('N/A') }}
+            </li>
+        </ul>
+    {% endif %}
+{% endblock %}
+
+{% block received_funds_heading %}
+    <li>
+        <a href="#fund-received" data-toggle="tab">Received Funds</a>
+    </li>
+{% endblock %}
+
+{% block serviceman_age %}
+    {% if personnel.deceasedDate is not null %}
+        {{ personnel.dateOfBirth|time_span(personnel.deceasedDate) }}
+    {% else %}
+        {{ personnel.dateOfBirth|age }}
+    {% endif %}
+{% endblock %}
+
+{% block employment_info %}
+    <div class="col-sm-6">
+        <ul class="list-unstyled span10">
+            {#<li>#}
+                {#<span>Serving Type:</span> {{ personnel.servingType|default('N/A') }}#}
+            {#</li>#}
+            <li>
+                <span>Service Group:</span> {{ personnel.service|default('N/A') }}
+            </li>
+            <li><span>Rank:</span> {{ personnel.rank|default('N/A') }}</li>
+            <li>
+                <span>Regiment & corps.:</span> {{ personnel.corp|default('N/A') }}
+            </li>
+            <li>
+                <span>Discipline Status:</span> {{ personnel.disciplineStatus|default('N/A') }}
+            </li>
+            <li>
+                <span>Soldier No. :</span> {{ personnel.soldierNumber|default('N/A') }}
+            </li>
+            <li>
+                <span>Designation:</span> {{ personnel.designation|default('N/A') }}
+            </li>
+            <li>
+                <span>Trade:</span> {{ personnel.trade|default('N/A') }}
+            </li>
+            <li><span>DASB Office:</span> {{ personnel.office|default('N/A') }}
+            </li>
+            {#<li>#}
+                {#<span>Army Commando Course:</span> {{ personnel.armyCommandoCourse ? 'Yes' : 'No' }}#}
+            {#</li>#}
+            {#<li>#}
+                {#<span>Sniper Course:</span> {{ personnel.sniperCourse ? 'Yes' : 'No' }}#}
+            {#</li>#}
+            {#<li>#}
+                {#<span>Explosion Course:</span> {{ personnel.explosionCourse ? 'Yes' : 'No' }}#}
+            {#</li>#}
+            {#<li>#}
+                {#<span>Emanation Technician:</span> {{ personnel.emanationTechnician ? 'Yes' : 'No' }}#}
+            {#</li>#}
+            {#<li>#}
+                {#<span>BMA Or SI & T:</span> {{ personnel.bmaOrSIAndT ? 'Yes' : 'No' }}#}
+            {#</li>#}
+            <li><span>Remarks (Computer/Driving Expertise/Non-military license/Others):</span> {{ personnel.remarks|default('N/A') }}
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-6">
+        <ul class="list-unstyled span10">
+            <li>
+                <span>Joining Date:</span> {{ personnel.joiningDate|date('jS F, Y') }}
+            </li>
+            <li>
+                <span>Joining place:</span> {{ personnel.joiningPlace|default('N/A') }}
+            </li>
+            <li>
+                <span>Employment Period:</span> {{ personnel.joiningDate|time_span(personnel.retirementDate)|default('N/A') }}
+            </li>
+            <li>
+                <span>Last Served Unit:</span> {{ personnel.lastServedUnit|default('N/A') }}
+            </li>
+            <li>
+                <span>Retirement Date:</span> {{ personnel.retirementDate|date('jS F, Y') }}
+            </li>
+            <li>
+                <span>Retirement reason:</span> {{ personnel.retirementReason|default('N/A') }}
+            </li>
+            <li>
+                <span>Pension rate:</span> {{ personnel.pensionRate|default('N/A') }}
+            </li>
+            <li><span>Ts number:</span> {{ personnel.tsNumber|default('N/A') }}
+            </li>
+            <li>
+                <span>Freedom Fighter:</span> {{ personnel.freedomFighter? 'Yes' : 'No' }}
+            </li>
+            <li>
+                <span>Foreign Mission:</span> {{ personnel.unMission? 'Yes' : 'No' }}
+            </li>
+            <li>
+                <span>Reservist Last Date:</span> {{ personnel.reservistLastDate|date('jS F, Y') }}
+            </li>
+            {% if personnel.disabled == TRUE %}
+                <ul class="list-unstyled span10">
+                    <li>
+                        <span>Disabled Reason:</span> {{ personnel.disabilityReason|default('N/A') }}
+                    </li>
+                </ul>
+            {% endif %}
+
+            <li>
+                <span>Re Employment:</span> {{ personnel.reEmployment|default('N/A') }}
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block received_funds %}
+    <table class="table table-striped table-bordered table-advance table-hover">
+        <thead>
+        <tr>
+            <th width="20">#SN</th>
+            <th><i class="fa fa-question"></i> Fund name</th>
+            <th><i class="fa fa-calendar"></i> Date</th>
+            <th class="text-right"><i class="fa fa-bookmark"></i> Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for index, item in personnel.receivedFunds %}
+            <tr>
+                <td class="text-center">{{ index + 1 }}</td>
+                <td>{{ item.fundType }}</td>
+                <td>{{ item.date|date('d-m-Y') }}</td>
+                <td class="text-right">{{ item.amount }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6" class="text-center"> No info</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

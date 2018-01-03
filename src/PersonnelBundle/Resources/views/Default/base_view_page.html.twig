@@ -1,0 +1,468 @@
+{% extends "@App/base.html.twig" %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/global/css/profile.min.css') }}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PROFILE SIDEBAR -->
+            <div class="profile-sidebar">
+                <!-- PORTLET MAIN -->
+                <div class="portlet light profile-sidebar-portlet ">
+                    <!-- SIDEBAR USERPIC -->
+                    <div class="profile-userpic">
+                        <img src="{{ asset(personnel.photoPath) }}" class="img-responsive" alt=""></div>
+                    <!-- END SIDEBAR USERPIC -->
+                    <!-- SIDEBAR USER TITLE -->
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name">{{ personnel.name }}</div>
+                        <div class="profile-usertitle-job"> {{ personnel.designation }} </div>
+                    </div>
+                    {% if personnel.deceased is defined and personnel.deceased and personnel.deceasedDate is not empty %}
+                        <div class="profile-userbuttons">
+                            <span class="label label-danger">Deceased on {{ personnel.deceasedDate|date('jS F, Y') }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="portlet light ">
+                    <!-- STAT -->
+                    {#<div class="row list-separated profile-stat">
+                        <div class="col-md-4 col-sm-4 col-xs-6">
+                            <div class="uppercase profile-stat-title"> 0 </div>
+                            <div class="uppercase profile-stat-text"> Funds </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-6">
+                            <div class="uppercase profile-stat-title"> 0 </div>
+                            <div class="uppercase profile-stat-text"> Service </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-6">
+                            <div class="uppercase profile-stat-title"> 0 </div>
+                            <div class="uppercase profile-stat-text"> Medical </div>
+                        </div>
+                    </div>#}
+                    <!-- END STAT -->
+                </div>
+                <!-- END PORTLET MAIN -->
+            </div>
+            <!-- END BEGIN PROFILE SIDEBAR -->
+            <!-- BEGIN PROFILE CONTENT -->
+            <div class="profile-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="portlet light ">
+                            <div class="portlet-title tabbable-line">
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a href="#personal-info" data-toggle="tab">Personal </a>
+                                    </li>
+                                    <li>
+                                        <a href="#employment-info" data-toggle="tab">Employment </a>
+                                    </li>
+                                    {% block received_funds_heading %}
+                                    {% endblock %}
+                                    <li>
+                                        <a href="#educational-info" data-toggle="tab">Educational </a>
+                                    </li>
+                                    <li>
+                                        <a href="#training-info" data-toggle="tab">Training </a>
+                                    </li>
+                                    <li>
+                                        <a href="#career-info" data-toggle="tab">Career </a>
+                                    </li>
+                                    <li>
+                                        <a href="#services-info" data-toggle="tab">Services </a>
+                                    </li>
+                                    <li>
+                                        <a href="#family-information" data-toggle="tab">Family</a>
+                                    </li>
+                                    {% block professional_info %}
+                                    {% endblock %}
+                                    <li>
+                                        <a href="#attachments-information" data-toggle="tab">Attachments</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="tab-content">
+                                    <!-- GENERAL QUESTION TAB -->
+                                    {% block personal_info %}
+                                    <div class="tab-pane active" id="personal-info">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <ul class="list-unstyled span10">
+                                                    <li>
+                                                        <span>Date of Birth:</span> {{ personnel.dateOfBirth|date('jS F, Y') }}
+                                                    </li>
+                                                    <li>
+                                                        <span>Age:</span> {% block serviceman_age %} {{ personnel.dateOfBirth|age }} {% endblock %}
+                                                    </li>
+                                                    <li>
+                                                        <span>Identification mark:</span> {{ personnel.identificationMark|default('N/A') }}
+                                                    </li>
+                                                    <li><span>Gender:</span> {{ personnel.gender|default('N/A') }}</li>
+                                                    <li>
+                                                        <span>Blood group:</span> {{ personnel.bloodGroup|default('N/A') }}
+                                                    </li>
+                                                    <li>
+                                                        <span>Mobile number:</span> {{ personnel.mobileNumber|default('N/A') }}
+                                                    </li>
+                                                    <li>
+                                                        <span>Telephone number:</span> {{ personnel.telephoneNumber|default('N/A') }}
+                                                    </li>
+                                                    <li><span>Email:</span> <a
+                                                                href="mailto:{{ personnel.email }}">{{ personnel.email }}</a>
+                                                    </li>
+                                                    <li><span>National Id:</span> {{ personnel.nid|default('N/A') }}
+                                                    </li>
+                                                    <li>
+                                                        <span>Religion:</span> {{ personnel.religion|default('N/A') }}
+                                                    </li>
+
+                                                    <li><span>Height:</span> {{ personnel.height|default('N/A') }}</li>
+                                                    {#<li>#}
+                                                        {#<span>Avg. Chest Measurement:</span> {{ personnel.chestMeasurement|default('N/A') }}#}
+                                                    {#</li>#}
+                                                    <li>
+                                                        <span>Nationality:</span> {{ personnel.nationality|default('N/A') }}
+                                                    </li>
+                                                    {% block inherit_info %}
+                                                    {% endblock %}
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                {% block death_info %}{% endblock %}
+                                                <h4 class="bold">Present Address : </h4>
+                                                <ul class="list-unstyled span10">
+                                                    <li><span>District:</span> {{ personnel.district|default('N/A') }}
+                                                    </li>
+                                                    <li><span>Upazila:</span> {{ personnel.upazila|default('N/A') }}
+                                                    </li>
+                                                    <li><span>Post Office:</span> {{ personnel.postOffice|default('N/A') }}
+                                                    </li>
+                                                    <li><span>Village:</span> {{ personnel.village|default('N/A') }}
+                                                    </li>
+                                                </ul>
+                                                <h4 class="bold">Permanent Address : </h4>
+                                                <ul class="list-unstyled span10">
+                                                    <li><span>District:</span> {{ personnel.permanentDistrict|default('N/A') }}
+                                                    </li>
+                                                    <li><span>Upazila:</span> {{ personnel.permanentUpazila|default('N/A') }}
+                                                    </li>
+                                                    <li><span>Address:</span> {{ personnel.permanentPostOffice|default('N/A') }}
+                                                    </li>
+                                                    <li><span>Village:</span> {{ personnel.permanentVillage|default('N/A') }}
+                                                    </li>
+                                                </ul>
+                                            {% block emergency_contact  %}
+                                            {% endblock %}
+                                            </div>
+                                        </div>
+                                        {% block special_diseases %}
+                                        {% endblock %}
+                                        {% block after_retiredment %}
+                                        {% endblock %}
+                                    </div>
+
+                                    {% endblock %}
+                                    <!-- END GENERAL QUESTION TAB -->
+                                    <!-- Employment TAB -->
+                                    <div class="tab-pane" id="employment-info">
+                                        <div class="row">
+                                            {% block employment_info %}
+                                                <div class="col-sm-6">
+                                                    <ul class="list-unstyled span10">
+                                                        <li>
+                                                            <span>Serving Type:</span> {{ personnel.servingType|default('N/A') }}
+                                                        </li>
+                                                        <li><span>Service Group:</span> {{ personnel.service|default('N/A') }}
+                                                        </li>
+                                                        <li><span>Rank:</span> {{ personnel.rank|default('N/A') }}</li>
+                                                        <li><span>Regiment & corps.:</span> {{ personnel.corp|default('N/A') }}</li>
+                                                        <li>
+                                                            <span>Regimental No.:</span> {{ personnel.regimentalNumber|default('N/A') }}
+                                                        </li>
+                                                        <li>
+                                                            <span>Soldier No. :</span> {{ personnel.soldierNumber|default('N/A') }}
+                                                        </li>
+                                                        <li>
+                                                            <span>Designation:</span> {{ personnel.designation|default('N/A') }}
+                                                        </li>
+                                                        <li>
+                                                            <span>Trade:</span> {{ personnel.trade|default('N/A') }}
+                                                        </li>
+                                                        <li><span>DASB Office:</span> {{ personnel.office|default('N/A') }}
+                                                        </li>
+                                                        <li><span>Remarks (Computer/Driving Expertise/Non-military license/Others):</span> {{ personnel.remarks|default('N/A') }}</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <ul class="list-unstyled span10">
+                                                        <li>
+                                                            <span>Joining Date:</span> {{ personnel.joiningDate|date('jS F, Y') }}
+                                                        </li>
+                                                        <li>
+                                                            <span>Joining place:</span> {{ personnel.joiningPlace|default('N/A') }}
+                                                        </li>
+                                                        <li>
+                                                            <span>Employment Period:</span> {{ personnel.joiningDate|time_span(personnel.retirementDate)|default('N/A')  }}
+                                                        </li>
+                                                        <li>
+                                                            <span>Last Served Unit:</span> {{ personnel.lastServedUnit|default('N/A') }}
+                                                        </li>
+                                                        <li>
+                                                            <span>Retirement Date:</span> {{ personnel.retirementDate|date('jS F, Y') }}
+                                                        </li>
+                                                        <li>
+                                                            <span>Retirement reason:</span> {{ personnel.retirementReason|default('N/A') }}
+                                                        </li>
+                                                        <li>
+                                                            <span>Pension rate:</span> {{ personnel.pensionRate|default('N/A') }}
+                                                        </li>
+                                                        <li><span>Ts number:</span> {{ personnel.tsNumber|default('N/A') }}</li>
+                                                        <li><span>Performance:</span> {{ personnel.performance|default('N/A') }}</li>
+                                                        <li>
+                                                            <span>Reservist Last Date:</span> {{ personnel.reservistLastDate|date('jS F, Y') }}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            {% endblock %}
+                                        </div>
+                                    </div>
+                                    <!-- END Employment TAB -->
+                                    <!-- Fund TAB -->
+                                    <div class="tab-pane" id="fund-received">
+                                        <div class="portlet-body">
+                                            {% block received_funds %}
+                                            {% endblock %}
+                                        </div>
+                                    </div>
+                                    <!-- END Fund TAB -->
+
+                                    <!-- Education TAB -->
+                                    <div class="tab-pane" id="educational-info">
+                                        <div class="portlet-body">
+                                            <table class="table table-striped table-bordered table-advance table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th width="20">#SN</th>
+                                                    <th><i class="fa fa-graduation-cap"></i> Degree</th>
+                                                    <th><i class="fa fa-university"></i> Institution</th>
+                                                    <th><i class="fa"></i> Type </th>
+                                                    <th class="text-right"><i class="fa fa-star-o"></i> Grade</th>
+                                                    <th class="text-right"><i class="fa fa-calendar"></i> Passing Year</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for index, item in personnel.educations %}
+                                                    <tr>
+                                                        <td class="text-center">{{ index + 1 }}</td>
+                                                        <td>{{ item.degree }}</td>
+                                                        <td>{{ item.institution }}</td>
+                                                        <td>{{ item.educationType }}</td>
+                                                        <td class="text-right">{{ item.grade }}</td>
+                                                        <td class="text-right">{{ item.passingYear }}</td>
+                                                    </tr>
+                                                {% else %}
+                                                    <tr>
+                                                        <td colspan="6" class="text-center"> No info</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- END Education TAB -->
+
+
+                                    <!-- training TAB -->
+                                    <div class="tab-pane" id="training-info">
+                                        <div class="portlet-body">
+                                            <table class="table table-striped table-bordered table-advance table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th width="20">#SN</th>
+                                                    <th><i class="fa fa-leanpub"></i> Course</th>
+                                                    <th><i class="fa fa-university"></i> Institute</th>
+                                                    <th><i class="fa fa-clock-o"></i> Duration</th>
+                                                    <th><i class="fa fa-comment"></i> Remarks</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for index, item in personnel.trainings %}
+                                                    <tr>
+                                                        <td class="text-center">{{ index + 1 }}</td>
+                                                        <td>{{ item.course }}</td>
+                                                        <td>{{ item.institute }}</td>
+                                                        <td >{{ item.duration }}</td>
+                                                        <td >{{ item.remarks }}</td>
+                                                    </tr>
+                                                {% else %}
+                                                    <tr>
+                                                        <td colspan="6" class="text-center"> No info</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- END training TAB -->
+
+
+                                    <!-- career TAB -->
+                                    <div class="tab-pane" id="career-info">
+                                        <div class="portlet-body">
+                                            <table class="table table-striped table-bordered table-advance table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th width="20">#SN</th>
+                                                    <th><i class="fa fa-star"></i>Achievement</th>
+                                                    <th><i class="fa fa-calendar"></i> Date</th>
+                                                    <th><i class="fa fa-comment"></i> Remarks</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for index, item in personnel.careers %}
+                                                    <tr>
+                                                        <td class="text-center">{{ index + 1 }}</td>
+                                                        <td>{{ item.achievement }}</td>
+                                                        <td>{{ item.date|date('d-m-Y') }}</td>
+                                                        <td>{{ item.remarks }}</td>
+                                                    </tr>
+                                                {% else %}
+                                                    <tr>
+                                                        <td colspan="6" class="text-center"> No info</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- END career TAB -->
+
+
+                                    <!-- services TAB -->
+                                    <div class="tab-pane" id="services-info">
+                                        <div class="portlet-body">
+                                            <table class="table table-striped table-bordered table-advance table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th width="20">#SN</th>
+                                                    <th><i class="fa fa-star"></i>Posting/Promotion/Appt/Mission/STMK</th>
+                                                    <th><i class="fa fa-calendar"></i> Date</th>
+                                                    <th><i class="fa fa-comment"></i> Remarks</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for index, item in personnel.servicesInfo %}
+                                                    <tr>
+                                                        <td class="text-center">{{ index + 1 }}</td>
+                                                        <td>{{ item.posting }}</td>
+                                                        <td>{{ item.date|date('d-m-Y') }}</td>
+                                                        <td>{{ item.remarks }}</td>
+                                                    </tr>
+                                                {% else %}
+                                                    <tr>
+                                                        <td colspan="6" class="text-center"> No info</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- END services TAB -->
+
+                                    <!-- Family TAB -->
+                                    <div class="tab-pane" id="family-information">
+                                        <div class="portlet-body">
+                                            <table class="table table-striped table-bordered table-advance table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th width="20">#SN</th>
+                                                    <th>Name</th>
+                                                    <th>Relation</th>
+                                                    <th>NOK %</th>
+                                                    <th>Date Of Birth</th>
+                                                    <th>NID/Birth Certificate No</th>
+                                                    <th>Contact No</th>
+                                                    <th>Occupation</th>
+                                                    <th>Address</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for index, item in personnel.families %}
+                                                    <tr>
+                                                        <td class="text-center">{{ index + 1 }}</td>
+                                                        <td>{{ item.name }}</td>
+                                                        <td>{{ item.relationType }}</td>
+                                                        <td>{{ item.nokPercentage }}</td>
+                                                        <td>{{ item.dateOfBirth|date('d-m-Y') }}</td>
+                                                        <td>{{ item.nidOrBirthCertificate }}</td>
+                                                        <td>{{ item.mobileNumber }}</td>
+                                                        <td>{{ item.occupation }}</td>
+                                                        <td>{{ item.address }}</td>
+                                                    </tr>
+                                                {% else %}
+                                                    <tr>
+                                                        <td colspan="8" class="text-center"> No info</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- END Family TAB -->
+
+                                    <!-- services TAB -->
+                                    <div class="tab-pane" id="professional_info">
+                                        <div class="portlet-body">
+                                            <table class="table table-striped table-bordered table-advance table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th width="2%"># সিরিয়াল</th>
+                                                    <th width="15%"><i class="fa fa-star"></i> ইউনিট</th>
+                                                    <th width="15%"><i class="fa fa-calendar"></i> তারিখ হইতে</th>
+                                                    <th width="15%"><i class="fa fa-calendar"></i> তারিখ পর্যন্ত</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for index, item in personnel.employmentInformations %}
+                                                    <tr>
+                                                        <td class="text-center">{{ index + 1 }}</td>
+                                                        <td>{{ item.unit }}</td>
+                                                        <td>{{ item.fromDate|date('d-m-Y') }}</td>
+                                                        <td>{{ item.toDate|date('d-m-Y') }}</td>
+                                                    </tr>
+                                                {% else %}
+                                                    <tr>
+                                                        <td colspan="6" class="text-center"> No info</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- END services TAB -->
+
+                                    <!-- Family TAB -->
+                                    <div class="tab-pane" id="attachments-information">
+                                        <div class="portlet-body">
+                                            {% include "@App/_template/_attachments_list.html.twig" with {attachments: personnel.attachments} %}
+                                        </div>
+                                    </div>
+                                    <!-- END Family TAB -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END PROFILE CONTENT -->
+        </div>
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}

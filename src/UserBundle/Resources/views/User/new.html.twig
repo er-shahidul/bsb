@@ -1,0 +1,44 @@
+{% extends "@App/base.html.twig" %}
+
+{% block title %}{{ 'Users'|trans }} | {{ parent() }}{% endblock %}
+{% block pageTitle %}<h1>{{ 'Users'|trans }}</h1>{% endblock %}
+
+{% form_theme form '@User/_form_template/bootstrap_3_horizontal_layout_user.html.twig' ':form:checkbox.html.twig' %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ mode == 'create' ? 'Create' : 'Update' }} {{ 'User' }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class='table-data'>
+                        {% include "@User/User/new_content.html.twig" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script>
+        var userGroup = $('#user_form_groups');
+        userGroup.multiSelect({
+            afterSelect: function(val){
+                userGroup.multiSelect('deselect_all');
+                userGroup.find('option[value='+val[0]+']').prop('selected', true);
+                userGroup.multiSelect('refresh');
+            }
+        });
+    </script>
+{% endblock include_javascripts %}

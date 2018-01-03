@@ -1,0 +1,87 @@
+{% extends "@App/base.html.twig" %}
+
+{% block page_title %}{{ parent() }} | {% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row">
+        <div class="col-sm-12">
+
+            {% include '@App/layout-component/flash.html.twig' %}
+
+            {% if errorMessage is defined and errorMessage != '' %}
+                <div class="alert alert-danger fade in">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    {{ errorMessage }}
+                </div>
+            {% endif %}
+
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">
+                            Micro-credit Defaulters
+                        </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    {% if isSearchable %}
+                    <div class="col-md-12 hidden-print margin-top-20">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="dataTables_length" id="sample_1_length">
+                                    <label>Meeting
+                                        <select id="select-meeting" class="form-control  input-inline">
+                                            <option value="">Select</option>
+                                            {% for meeting in meetings %}<option value="{{ meeting.id }}">{{ meeting.subject }}</option>
+                                        {% endfor %}
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="search-result" style="max-height: 300px;overflow-y: scroll;display: none" >
+                            <table id="defaulter-search" class="table table-striped table-bordered table-advance" ></table>
+                            <button class="btn yellow btn-xs" id="add-defaulter" type="button" style="display: none">Add to defaulter list</button>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {{ form_start(form) }}
+                    <div class="col-md-12 margin-top-20">
+                        <h4> <strong> Defaulter List </strong> </h4>
+                        <div class="row">
+                            {{ defaulterListView|raw }}
+                            <button class="btn yellow btn-xs" id="remove-defaulter" type="button">Remove from defaulter list</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-actions margin-top-20">
+                            <div class="col-md-12 text-right">
+                                {{ form_row(form.save) }}
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/welfare/js/micro-credit.js') }}"></script>
+{% endblock %}
+
+
+

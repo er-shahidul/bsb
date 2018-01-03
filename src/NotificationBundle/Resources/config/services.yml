@@ -1,0 +1,8 @@
+services:
+    NotificationBundle\Manager\NotificationManager:
+        autowire: true
+        autoconfigure: true
+
+    NotificationBundle\Twig\NotificationExtension:
+        autowire: true
+        autoconfigure: true

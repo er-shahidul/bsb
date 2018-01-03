@@ -1,0 +1,28 @@
+{% extends '@App/report-base.html.twig' %}
+
+{%- block page_size %}A4-L{%- endblock  %}
+
+{% block page_header_footer %}
+    <htmlpagefooter name="everyPageFooter">
+        <div style="text-align:center">{PAGENO}</div>
+    </htmlpagefooter>
+{% endblock %}
+
+{% block report_header %}
+    <div class="text-center font-size-13">
+        <table class="width-100">
+            <tr>
+                <td width="40%">{{ fundType.name }} {{ (year~'-'~month~'-01')|date_bn('F Y') }}</td>
+                <td width="20%" class="text-center">পরিশোধ</td>
+                <td width="40%"></td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}
+
+{% block report_body %}
+
+    <div id="pdf-report-page">
+        {% include '@Account/Ledger/_receive-body.html.twig' %}
+    </div>
+{% endblock %}

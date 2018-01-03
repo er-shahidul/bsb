@@ -1,0 +1,13 @@
+services:
+    FuneralBundle\Workflow\:
+        resource: '../../Workflow/*'
+        autowire: true
+        autoconfigure: true
+        public: false
+        tags:
+            - {name: app.workflow_definition}
+
+    FuneralBundle\Listener\FuneralWorkflowListener:
+        arguments: ['@Doctrine\ORM\EntityManagerInterface', '@NotificationBundle\Manager\NotificationManager']
+        tags:
+            - { name: kernel.event_subscriber }

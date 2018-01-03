@@ -1,0 +1,167 @@
+<div class="row">
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">Service Details of Ex-Serviceman</div>
+        </div>
+        <div class="portlet-body">
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="control-label">Name: </label>
+                    <label class="control-label-value">{{ personnel.name }}</label>
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label">Personnel No.: </label>
+                    <label class="control-label-value">{{ personnel.identityNumber }}</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="control-label">Age: </label>
+                    <label class="control-label-value">
+                        {% if personnel.deceasedDate is not null %}
+                            {{ personnel.dateOfBirth|time_span(personnel.deceasedDate) }}
+                        {% else %}
+                            {{ personnel.dateOfBirth|age }}
+                        {% endif %}
+                    </label>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="control-label">Ts number :</label>
+                    <label class="control-label-value">{{ personnel.tsNumber|default('N/A') }}</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="control-label">Father's Name: </label>
+                    <label class="control-label-value">{{ personnel.fathersName|default('N/A') }}</label>
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label">Mother's Name: </label>
+                    <label class="control-label-value">{{ personnel.mothersName|default('N/A') }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <strong>Present Address</strong>
+                </div>
+                <div class="col-sm-6">
+                    <strong>Permanent Address</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="control-label">Village: </label>
+                    <label class="control-label-value">{{ personnel.village|default('N/A') }}</label>
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label">Village: </label>
+                    <label class="control-label-value">{{ personnel.permanentVillage|default('N/A') }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="control-label">Post: </label>
+                    <label class="control-label-value">{{ personnel.postOffice|default('N/A') }}</label>
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label">Post: </label>
+                    <label class="control-label-value">{{ personnel.permanentPostOffice|default('N/A') }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="control-label">Thana: </label>
+                    <label class="control-label-value">{{ personnel.upazila|default('N/A') }}</label>
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label">Thana: </label>
+                    <label class="control-label-value">{{ personnel.permanentUpazila|default('N/A') }}</label>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-sm-6">
+                    <label class="control-label">District: </label>
+                    <label class="control-label-value">{{ personnel.district|default('N/A') }}</label>
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label">District: </label>
+                    <label class="control-label-value">{{ personnel.permanentDistrict|default('N/A') }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="control-label">Regiment/Corps: </label>
+                    <label class="control-label-value">{{ personnel.corp.name|default('N/A') }}</label>
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label">Rank: </label>
+                    <label class="control-label-value">{{ personnel.rank|default('N/A') }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="control-label">Identification mark : </label>
+                    <label class="control-label-value">{{ personnel.identificationMark|default('N/A') }}</label>
+                </div>
+                <div class="col-sm-6">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="control-label">Last served unit : </label>
+                    <label class="control-label-value">{{ personnel.lastServedUnit|default('N/A') }}</label>
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label">Employment period : </label>
+                    <label class="control-label-value">{{ personnel.joiningDate|time_span(personnel.retirementDate)|default('N/A') }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="control-label">Enrollment Date : </label>
+                    <label class="control-label-value">{{ personnel.joiningDate|date('jS F, Y')|default('N/A') }}</label>
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label">Retirement date : </label>
+                    <label class="control-label-value">{{ personnel.retirementDate|date('jS F, Y')|default('N/A') }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <label class="control-label">Retirement reason : </label>
+                    <label class="control-label-value">{{ personnel.retirementReason|default('N/A') }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="control-label">Pension rate (if any) : </label>
+                    <label class="control-label-value">{{ personnel.pensionRate|default('N/A') }}</label>
+                </div>
+
+            </div>
+            {% if familyMembers is defined %}
+                <div class="row">
+                    <div class="col-sm-6"><strong>Family Information</strong></div>
+                </div>
+                {% for member in familyMembers %}
+                <div class="row col-lg-offset-1">
+                    <div class="col-sm-12">
+                        <label class="control-label">{{ member.relationType }}: </label>
+                        <label class="control-label-value">{{ member.name }}</label>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+

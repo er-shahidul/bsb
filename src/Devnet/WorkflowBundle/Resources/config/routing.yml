@@ -1,0 +1,31 @@
+devnet_workflow_apply:
+    path:     /workflow/{ref}/{name}/{transition}/apply
+    defaults: { _controller: DevnetWorkflowBundle:Default:apply }
+    methods: [GET,POST]
+
+devnet_workflow_my_workflow:
+    path:     /workflow/my-workflow/{id}
+    defaults: { _controller: DevnetWorkflowBundle:Default:myWorkflow }
+    methods: [GET]
+
+devnet_workflow_image:
+    path:     /workflow/{id}-{name}/{marking}/status.png
+    defaults: { _controller: DevnetWorkflowBundle:Default:statusImage }
+    methods: [GET]
+    requirements:
+          id: '\d+'
+
+devnet_workflow_entity_image:
+    path:     /workflow/{entity}/{id}/status.png
+    defaults: { _controller: DevnetWorkflowBundle:Default:myEntityStatusImage }
+    methods: [GET]
+    requirements:
+          id: '\d+'
+          entity: .+
+
+devnet_workflow_task_image:
+    path:     /workflow/{id}/status.png
+    defaults: { _controller: DevnetWorkflowBundle:Default:myTaskStatusImage }
+    methods: [GET]
+    requirements:
+          id: '\d+'

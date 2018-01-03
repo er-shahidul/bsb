@@ -1,0 +1,53 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Vouchers' %}
+{% block title %}{{ parent() }} | Users{% endblock %}
+{% block pageTitle %}<h1>{{ pageTitle }}</h1>{% endblock %}
+
+{% block header_title %}{{ pageTitle }}{% endblock header_title %}
+
+{% block body %}
+
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">List of {{ pageTitle }}</span>
+                    </div>
+
+                        <div class="actions">
+                            {% if is_granted('ROLE_ACCOUNT_CLERK') or is_granted('ROLE_DASB_CLERK') %}
+                            <a class="btn green" href="{{ path('account_sanction_payment_new') }}">
+                                <i class="fa fa-plus"></i> Create Payment Voucher</a>
+                            {% endif %}
+                        </div>
+                </div>
+                <div class="portlet-body">
+
+                    {{ sg_datatables_render_html(datatable) }}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block stylesheets  %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('css/datatable.css') }}">
+{% endblock %}
+
+{% block include_javascripts %}
+
+    {{ parent() }}
+
+    <script src="{{ asset('js/datatable.js') }}"></script>
+
+    {{ sg_datatables_render_js(datatable) }}
+
+{% endblock %}

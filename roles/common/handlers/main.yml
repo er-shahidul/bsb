@@ -1,0 +1,17 @@
+- name: change permission
+  file:
+    path: '{{PROJECT_DIR}}/{{item}}'
+    state: directory
+    mode: 0777
+    recurse: yes
+  become: true
+  with_items:
+    - 'var/cache'
+    - 'var/logs'
+    - 'var/sessions'
+
+- name: site up
+  become: true
+  file:
+    path: '{{PROJECT_DIR}}/var/maintenance.enable'
+    state: absent

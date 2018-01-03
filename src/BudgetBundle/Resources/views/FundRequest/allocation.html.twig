@@ -1,0 +1,101 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Fund Request Allocation' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }} for {{ budget.office.name }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    <form action="{{ path('budget_fund_request_allocation', {id: budget.id}) }}" method="post" class="budget-form">
+
+                        <table class="table table-striped table-bordered table-hover table-header-fixed table-checkable order-column">
+                            <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th>Code</th>
+                                <th>Account Head</th>
+                                <th>Budget {{ budgetYear }}-{{ budgetYear + 1 }}</th>
+                                <th>Revise Budget {{ budgetYear }}-{{ budgetYear + 1 }}</th>
+                                <th>Expense Amount</th>
+                                <th>Request Amount</th>
+                                <th>Remarks</th>
+                                <th>Remaining Amount</th>
+                                <th>Allocation Amount</th>
+                            </tr>
+                            </thead>
+                            <tbody id="budgetDetailsContainer" data-prototype="
+                        {% filter escape %}
+                        {{ include('@Budget/FundRequest/budget-detail-protptype.html.twig') }}
+                        {% endfilter %}">
+
+                            {% set sl = 1 %}
+
+                            {% for i, budgetDetail in budget.budgetDetails %}
+                                <tr class="odd gradeX" id="budget-detail-{{ budgetDetail.budgetHead.id|default('__head__') }}">
+                                    <td class="sl">{{ sl|default() }}</td>
+                                    <td class="code">{{ budgetDetail.budgetHead.code|default('') }}</td>
+                                    <td class="account-head">{{ budgetDetail.budgetHead.titleEn|default('') }}</td>
+                                    <td class="before-prev-head-amount">{{ budgetDetail.stats.beforePrev.amount|default(0) }}</td>
+                                    <td class="prev-head-amount">{{ budgetDetail.stats.prev.amount|default(0) }}</td>
+                                    <td class="head-amount">{{ budgetDetail.stats.current.amount|default(0) }}</td>
+                                    <td class="head-amendment">{{ budgetDetail.stats.revise.amount|default(0) }}</td>
+                                    <td class="expense">{{ budgetDetail.stats.expense|default(0) }}</td>
+                                    <td>{{ budgetDetail.requestAmount }}</td>
+                                    <td>{{ budgetDetail.remark }}</td>
+                                    <td class="remaining-amount">{{ budgetDetail.stats.headRemaining|default(0) }}</td>
+                                    <td><input class="amount form-control" name="data[{{ budgetDetail.id }}][amount]" value="{{ budgetDetail.amount|default(0) }}"></td>
+                                </tr>
+                                {% set sl = sl + 1 %}
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="11"></td>
+                                <td class="total-amount text-right"></td>
+                            </tr>
+                            </tfoot>
+
+                        </table>
+
+                        <div class="form-actions margin-top-20">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <button class="btn green" name="save">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('budget_fund_allocation') }}">
+                        <input type="hidden" name="_referrer" value="{{ app.request.server.get('HTTP_REFERER')|default(path('budget_fund_request_list')) }}">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/budget/js/dasb_budget.js') }}"></script>
+    <script src="{{ asset('bundles/budget/js/fund_request.js') }}"></script>
+{% endblock include_javascripts %}
+
+{% block document_ready %}
+    {{ parent() }}
+    FundRequest.allocationInit();
+{% endblock %}

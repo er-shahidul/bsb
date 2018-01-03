@@ -1,0 +1,132 @@
+{% extends '@App/report-base.html.twig' %}
+
+{%- block page_size %}A4-P{%- endblock  %}
+
+{% block page_header_footer %}
+    <sethtmlpageheader name="firstPageHeader" value="on" />
+    <htmlpageheader name="firstPageHeader">
+        <table class="width-100">
+            <tr>
+                <td class="width-33"></td>
+                <td class="width-33 text-center">সীমিত</td>
+                <td class="width-33 text-right">{% if type == 'child-head' %} ফরম-গ.১ {% endif %}</td>
+            </tr>
+        </table>
+    </htmlpageheader>
+
+    <htmlpageheader name="everyPageHeader">
+        <div style="text-align:center">সীমিত</div>
+    </htmlpageheader>
+    <htmlpagefooter name="everyPageFooter">
+        <div style="text-align:center">{PAGENO}<br>সীমিত</div>
+    </htmlpagefooter>
+{% endblock %}
+
+{% block report_header %}
+    <div class="text-center">
+       <h2>বাজেট বাস্তবায়ন পরিকল্পনা {% if type == 'parent-head' %}- সামারি {% endif %}<br> অনুন্নয়ন ব্যয় </h2>
+    </div>
+    <table class="margin-bottom-10">
+        <tr>
+            <td width="130">মন্ত্রণালয়/বিভাগ:</td>
+            <td width="250">১৯ প্রতিরক্ষা মন্ত্রণালয়</td>
+        </tr>
+        <tr>
+            <td>অধিদপ্তর:</td>
+            <td>১৯৩৫ আন্ত: বাহিনী ডিপার্টমেন্ট</td>
+        </tr>
+        <tr>
+            <td>অপারেশন ইউনিট/কর্মসূচি:</td>
+            <td>১২০ সশস্ত্র বাহিনী বোর্ড</td>
+        </tr>
+    </table>
+{% endblock %}
+
+{% block report_body %}
+    <div id="pdf-report-page">
+        <div class="text-right margin-bottom-5">
+            <span>(হাজার টাকায়)</span>
+        </div>
+        <table class="table width-100 margin-bottom-10">
+
+            <thead>
+            <tr>
+                <th rowspan="2" width="60">অর্থনেতিক<br>কোড</th>
+                <th rowspan="2" width="110">আইটেম</th>
+                <th colspan="4" class="th-border-bottom text-center">প্রাক্কলিত ব্যয়</th>
+                <th width="90" rowspan="2">মোট বাজেট বরাদ্দ/<br>প্রাক্কলিত ব্যয়</th>
+                <th rowspan="2" width="100">মন্তব্য</th>
+            </tr>
+            <tr>
+                <th width="70">প্রথম কোয়ার্টার</th>
+                <th width="70">দ্বিতীয় কোয়ার্টার</th>
+                <th width="70">তৃতীয় কোয়ার্টার</th>
+                <th width="70">চতুর্থ কোয়ার্টার</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td></td>
+                <td>রাজস্ব ব্যয়</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            {% for parentHead in budgetHead %}
+
+                {% include '@Budget/Report/_quater-wise-parent-row.html.twig' with {head: parentHead, data: parent, type: 'parent'} %}
+
+                {% if type == 'child-head' %}
+                    {% for childHead in parentHead.child %}
+                        {% include '@Budget/Report/_quater-wise-row-pdf.html.twig' with {head: childHead, data: child, type: 'child'} %}
+                    {% endfor %}
+                {% endif %}
+
+            {% endfor %}
+            </tbody>
+
+            <tfoot>
+            <tr class="bold">
+                <th></th>
+                <th class="text-left">মোট-অনুন্নয়ন ব্যয়</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr class="bold">
+                <th></th>
+                <th class="text-left">প্রাক্কলিত ব্যয়</th>
+                <th class="text-right">{{ firstQuarterTotal|default(0)|bn_number_format }}</th>
+                <th class="text-right">{{ secondQuarterTotal|default(0)|bn_number_format }}</th>
+                <th class="text-right">{{ thirdQuarterTotal|default(0)|bn_number_format }}</th>
+                <th class="text-right">{{ fourthQuarterTotal|default(0)|bn_number_format }}</th>
+                <th class="text-right">
+                    {{
+                    (firstQuarterTotal|default(0) +
+                    secondQuarterTotal|default(0) +
+                    thirdQuarterTotal|default(0) +
+                    fourthQuarterTotal|default(0))|bn_number_format
+                    }}
+                </th>
+                <th></th>
+            </tr>
+            <tr class="bold">
+                <th></th>
+                <th class="text-left">প্রকৃত</th>
+                <th class="text-right">{{ total['firstQuarter']|default(0)|encodeBudgetAmount|bn_number_format }}</th>
+                <th class="text-right">{{ total['secondQuarter']|default(0)|encodeBudgetAmount|bn_number_format }}</th>
+                <th class="text-right">{{ total['thirdQuarter']|default(0)|encodeBudgetAmount|bn_number_format }}</th>
+                <th class="text-right">{{ total['fourthQuarter']|default(0)|encodeBudgetAmount|bn_number_format }}</th>
+                <th class="text-right">{{ total['totalExpense']|default(0)|encodeBudgetAmount|bn_number_format }}</th>
+                <th></th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+{% endblock %}

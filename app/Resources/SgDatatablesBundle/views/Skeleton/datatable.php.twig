@@ -1,0 +1,90 @@
+<?php
+
+namespace {{ namespace }}\Datatables;
+
+{% block use_statements %}
+use AppBundle\Datatables\BaseDatatable;
+use Sg\DatatablesBundle\Datatable\AbstractDatatable;
+use Sg\DatatablesBundle\Datatable\Style;
+use Sg\DatatablesBundle\Datatable\Column\Column;
+use Sg\DatatablesBundle\Datatable\Column\BooleanColumn;
+use Sg\DatatablesBundle\Datatable\Column\ActionColumn;
+use Sg\DatatablesBundle\Datatable\Column\MultiselectColumn;
+use Sg\DatatablesBundle\Datatable\Column\VirtualColumn;
+use Sg\DatatablesBundle\Datatable\Column\DateTimeColumn;
+use Sg\DatatablesBundle\Datatable\Column\ImageColumn;
+use Sg\DatatablesBundle\Datatable\Filter\TextFilter;
+use Sg\DatatablesBundle\Datatable\Filter\NumberFilter;
+use Sg\DatatablesBundle\Datatable\Filter\SelectFilter;
+use Sg\DatatablesBundle\Datatable\Filter\DateRangeFilter;
+use Sg\DatatablesBundle\Datatable\Editable\CombodateEditable;
+use Sg\DatatablesBundle\Datatable\Editable\SelectEditable;
+use Sg\DatatablesBundle\Datatable\Editable\TextareaEditable;
+use Sg\DatatablesBundle\Datatable\Editable\TextEditable;
+{% endblock use_statements %}
+
+{% block class_definition %}
+/**
+ * Class {{ datatable_class }}
+ *
+ * @package {{ namespace }}\Datatables
+ */
+class {{ datatable_class }} extends BaseDatatable
+{% endblock class_definition %}
+{
+{% block class_body %}
+
+    public function getCustomLineFormatter()
+    {
+        $formatter = function($line){
+
+            return $line;
+        };
+
+        return $formatter;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureDataTable(array $options = array())
+    {
+        $this->actionButtonType = 'dropdown';
+        $this->features->set($this->getDefaultFeatures());
+        $this->options->set($this->getDefaultOptions());
+        $this->ajax->set($this->getDefaultAjax(['url' => $this->router->generate('')]));
+        $this->setDefaultExportButtons([1,2,3]);
+
+        $this->addActionButton('budget_expense_view', 'View', 'glyphicon-eye-open', ['id' => 'id']);
+
+        $this->columnBuilder
+            {% for field in fields -%}
+            ->add('{{ field.property }}', {{ field.column_type }}, array(
+                'title' => '{{ field.title }}',
+                {% if field.data is not null -%}
+                    'data' => '{{ field.data }}'
+                {% endif -%}
+                ))
+            {% endfor -%}
+        ;
+
+        $this->initActionButtons();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEntity()
+    {
+        return '{{ namespace }}\Entity{{ entity_namespace ? '\\' ~ entity_namespace : '' }}\{{ entity_class }}';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return '{{ datatable_name }}';
+    }
+{% endblock class_body %}
+}

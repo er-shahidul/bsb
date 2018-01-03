@@ -1,0 +1,58 @@
+{% extends "@App/base.html.twig" %}
+
+{% block title %}{{ parent() }} | Groups{% endblock %}
+{% block pageTitle %}<h1>Groups</h1>{% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ 'List of User Group'|trans }}</span>
+                    </div>
+                    <div class="actions">
+                        <a href="{{ path('group_create') }}" class="btn green">
+                            <i class="fa fa-plus"></i> {{ 'Create New User Group'|trans }}</a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    {{ datatable_render_html(datatable) }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="ajaxAssignRoleNessUser" role="basic" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="{{ asset('assets/layouts/layout3/img/loading-spinner-grey.gif') }}" alt="" class="loading">
+                    <span> &nbsp;&nbsp;Loading... </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block stylesheets  %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}">
+{% endblock %}
+
+{% block include_javascripts %}
+
+    {{ parent() }}
+
+    <script src="{{ asset('js/datatable.js') }}"></script>
+
+    {{ datatable_render_js(datatable) }}
+{% endblock %}

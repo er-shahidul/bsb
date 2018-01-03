@@ -1,0 +1,20 @@
+{
+  "name": "basb",
+  "version": "1.0.0",
+  "description": "Bangladesh Armed Forces Board Automation",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.3.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-css-resolve-relative-urls": "0.0.2",
+    "gulp-uglify": "^3.0.0",
+    "require-dir": "^0.3.1"
+  },
+  "scripts": {
+    "prebuild": "npm install && bin/console assets:install --relative",
+    "build": "gulp"
+  },
+  "license": "MIT"
+}

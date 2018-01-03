@@ -1,0 +1,219 @@
+/** notification-dialog **/
+.notification-dialog .modal-body{
+    padding: 0px 15px;
+}
+.notification-dialog .inbox .inbox-view-info {
+    color: #666;
+    padding: 10px 0;
+    border-top: none;
+    border-bottom: solid 1px #eee;
+}
+
+.container {
+    width: auto;
+}
+.page-header {
+    height: auto;
+}
+.page-head .page-title {
+    padding: 10px 0;
+}
+.page-content {
+    padding: 5px 0;
+}
+.breadcrumb {
+    padding: 0 0 7px;
+}
+.page-header .page-header-top {
+    height: auto;
+}
+.page-footer {
+    padding: inherit;
+}
+.page-logo h4 {
+    margin-bottom: 1px;
+    margin-top: 1px;
+}
+.page-header .page-header-top .page-logo {
+    width: 420px;
+    height: auto;
+    margin-bottom: 2px;
+    margin-top: 2px;
+}
+.page-header .page-header-top .top-menu {
+    float: right;
+    margin: auto;
+    padding: 0;
+}
+.container .page-content-inner {
+    background-color: #ffffff;
+}
+.page-sidebar {
+    margin: 15px 15px;
+}
+.custom-th thead tr th{
+    text-align: center;
+    vertical-align: middle;
+}
+
+.dataTables_wrapper .dataTables_processing{
+    position: absolute;
+    top: 50%
+}
+
+.page-header .page-header-top .page-logo img{
+    height: 50px;
+    width: 50px;
+    float: left;
+    margin-top: 2px;
+}
+
+.page-header .page-header-top .page-logo h4{
+    float: left;
+    margin-top: 17px;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.input-text{
+    padding: 7px 15px 0 15px;
+}
+
+.input-msmall{
+    width: 90px!important;
+}
+
+.bs-select.form-control{
+    height: 50px;
+}
+
+.budget-head-background{
+    background-color: #c1cbd0
+}
+
+.th-border-bottom{
+    border-bottom: 1px solid #e7ecf1 !important;
+}
+
+.width-48-percentage{
+    width: 48%
+}
+
+/** Sticky Table */
+.fixed-header-table thead th, .fixed-header-table>tbody>tr>th{
+    background-color: #c1cbd0;
+    z-index: 99;
+    border: 0 !important;
+}
+.fixed-header-table-container{
+    height: 500px;
+}
+#parent {
+    height: 300px;
+}
+
+#fixTable {
+    width: 1800px !important;
+}
+/** Datatable */
+.sg-datatables-individual-filtering{
+    width: 100%;
+}
+table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc, table.dataTable thead .sorting {
+    background: none;
+}
+
+.actions .dt-buttons{
+    float: right;
+}
+.actions .dt-buttons a{
+    line-height: 1.5 !important;
+    font-size: 13px;
+    padding: 4px 10px!important;
+    margin-left: 2px;
+}
+
+.sg-datatables-individual-filtering {
+    box-shadow: none!important;
+    height: 34px;
+    padding: 6px 12px;
+    background-color: #fff;
+    border: 1px solid #c2cad8;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #555;
+}
+
+.dataTables_wrapper table.table > tbody > tr.group {
+    background-color: #DDDDDD;
+    font-weight: bold;
+}
+
+/** Bootstrap Select */
+.dropdown-header {
+    font-size: 16px;
+    background-color: #ece9e9;
+}
+
+.dataTables_wrapper .filter-cancel-btn,
+[id*=-filter-cancel-]{
+    margin-top: -4px;
+    margin-left: -25px;
+}
+
+/** Budget Distribution */
+th.error-budget-remaining, tr.error-budget-remaining td{
+    color: #d91e18 !important;
+    border-top: 2px solid #d91e18 !important;
+    border-bottom: 2px solid #d91e18 !important;
+}
+
+/** Sanction Entry */
+
+#file-list-container li [class*=" fa-"]{
+    width: auto;
+    margin-left: 5px;
+}
+
+.overflow-contailer{
+    overflow: scroll;
+}
+
+@media print {
+    .overflow-contailer{
+        overflow: visible;
+    }
+
+    .tiny-printable th, .tiny-printable td{
+        font-size: 10px !important;
+        padding: 4px !important;
+    }
+
+    @page {
+        margin: 5mm;
+    }
+}
+
+/** Validation error in tab **/
+.ver-inline-menu li a.has-error {
+    border-left: solid 7px #FF0000;
+    color: #FF0000;
+}
+
+.ver-inline-menu li.active a.has-error {
+    color: white;
+    font-weight: 500;
+}
+
+.ver-inline-menu li a.has-error i {
+    color: #FF0000;
+}
+
+.ver-inline-menu li a.has-error::after {
+    content: "*";
+}

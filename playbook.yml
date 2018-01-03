@@ -1,0 +1,12 @@
+- hosts: basb
+  gather_facts: no
+  vars:
+    PROJECT_DIR: "/var/www/basb"
+    COMPOSER_OPT: ""
+    REVISION: "master"
+    PRODUCTION_MODE: false
+  roles:
+    - common
+    - code
+    - database
+    - prepare

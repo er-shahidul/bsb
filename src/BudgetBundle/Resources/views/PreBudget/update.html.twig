@@ -1,0 +1,105 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Pre Budget Update' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }} of Financial Year {{ budgetSummary.financialYear.label }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    <form action="{{ path('pre_budget_summary_update', {id: budgetSummary.id}) }}" method="post" class="budget-form">
+
+                        <div class="row">
+                            <div class="fixed-header-table-container">
+                                <table class="fixed-header-table table table-striped table-bordered table-hover table-header-fixed table-checkable order-column">
+                                    <thead>
+                                    <tr>
+                                        <th>SL</th>
+                                        <th>Code</th>
+                                        <th>Account Head</th>
+                                        <th>{{ financialYearLabel(budgetYear, true) }}</th>
+                                        <th>Projection for {{ financialYearLabel(budgetYear+1, true) }}</th>
+                                        <th>Projection for {{ financialYearLabel(budgetYear+2, true) }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% set sl = 1 %}
+                                    {% for parentHead in budgetHead %}
+                                        <tr class="odd gradeX">
+                                            <td colspan="6" style="background-color: #c1cbd0"><strong>{{ parentHead.titleEn }}</strong></td>
+                                        </tr>
+
+                                        {% for childHead in parentHead.child %}
+                                            <tr class="odd gradeX">
+                                                <td width="50">{{ sl }}</td>
+                                                <td width="80">{{ childHead.code }}</td>
+                                                <td>{{ childHead.titleEn }}</td>
+                                                <td class="text-right" width="150"><input rel="total-amount" class="amount request-amount form-control input-small" type="text" name="budget-detail[{{ budgetAmount[childHead.id]['id'] }}][current]" value="{{ budgetAmount[childHead.id]['requestAmount']|default(0) }}"></td>
+                                                <td class="text-right" width="150"><input rel="next-year-projection-total-amount" class="amount next-year-projection-amount form-control input-small" type="text" name="budget-detail[{{ budgetAmount[childHead.id]['id'] }}][next]" value="{{ budgetAmount[childHead.id]['nextYearProjectionAmount'] }}"></td>
+                                                <td class="text-right" width="150"><input rel="after-next-year-projection-total-amount" class="amount after-next-year-projection-amount form-control input-small" type="text" name="budget-detail[{{ budgetAmount[childHead.id]['id'] }}][after-next]" value="{{ budgetAmount[childHead.id]['afterNextYearProjectionAmount'] }}"></td>
+                                            </tr>
+                                            {% set sl = sl + 1 %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                    </tbody>
+
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th class="text-right total-amount"></th>
+                                        <th class="text-right next-year-projection-total-amount"></th>
+                                        <th class="text-right after-next-year-projection-total-amount"></th>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </div>
+
+                        <div class="form-actions margin-top-20">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <button type="submit" class="btn yellow" name="save" value="yes">Save</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('budget_update') }}">
+                        <input type="hidden" name="_referrer" value="{{ app.request.server.get('HTTP_REFERER')|default(path('pre_budget_summary_list')) }}">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/budget/js/basb_budget.js') }}"></script>
+    <script src="{{ asset('assets/global/plugins/tableHeadFixer.js') }}"></script>
+{% endblock include_javascripts %}
+
+{% block document_ready %}
+    {{ parent() }}
+    BASBBudget.budgetCompilationInit();
+
+    $('.fixed-header-table').tableHeadFixer({
+        "left" : 7,
+        'z-index': 99
+    });
+{% endblock %}

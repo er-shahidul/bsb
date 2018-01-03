@@ -1,0 +1,86 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Requisitions' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">List of {{ pageTitle }}</span>
+                    </div>
+
+                    {% if is_granted('ROLE_DASB_CLERK') %}
+
+                        <div class="actions">
+                            <a class="btn green" data-toggle="modal" href="#responsive">
+                                <i class="fa fa-plus"></i> Create New {{ pageTitle }}</a>
+                        </div>
+
+                        <div id="responsive" class="modal fade" tabindex="-1" data-width="500">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h4 class="modal-title">Medicine Requisition</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-md-12">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            {% if dispensariesForRequisition|length == 0 %}
+                                                Medicine requisition in progress for all dispensary
+                                            {% else %}
+                                                <label class="control-label">Select Dispensary</label>
+                                                <select name="fundtype" id="fundtype" class="form-control">
+                                                    {% for dispensary in dispensariesForRequisition %}
+                                                        <option value="{{ path('medical_requisition_create', {id: dispensary.id}) }}">{{ dispensary.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                                {% if dispensariesForRequisition|length > 0 %}
+                                <button type="button" class="btn green" onclick="location.href=$(this).parents('.modal').find('select').val()">Go</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="portlet-body">
+
+                    {{ sg_datatables_render_html(datatable) }}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block stylesheets  %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/datatable.css') }}">
+{% endblock %}
+
+{% block include_javascripts %}
+
+    {{ parent() }}
+
+    <script src="{{ asset('js/modal.js') }}"></script>
+    <script src="{{ asset('js/datatable.js') }}"></script>
+
+    {{ sg_datatables_render_js(datatable) }}
+
+{% endblock %}

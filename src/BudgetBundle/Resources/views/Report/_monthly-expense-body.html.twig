@@ -1,0 +1,43 @@
+<table width="100%" class="tiny-printable table table-striped table-bordered table-hover table-header-fixed table-checkable order-column">
+
+    <thead>
+    <tr class="text-center bold">
+        <th nowrap="" width="50">কোড নং</th>
+        <th nowrap="" width="100">বাজেট বরাদ্দ</th>
+        {% for monthName, monthData in monthsData %}
+            <th nowrap="">{{ monthName|date_bn_ex('M Y') }}</th>
+        {% endfor %}
+        <th width="75" nowrap="">জুন চূড়ান্ত {{ (year+1)|bn_number }}</th>
+        <th nowrap="" width="100">মোট খরচ</th>
+        <th nowrap="" width="100">অবশিষ্ট</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for parentHead in budgetHead %}
+        {% for childHead in parentHead.child %}
+            <tr class="odd gradeX">
+                <td class="text-center">{{ childHead.code|bn_number }}</td>
+                <td class="text-right">{{ budgetAmount[childHead.id]['amount']|default("")|decodeBudgetAmount|bn_number_format }}</td>
+                {% for monthName, monthData in monthsData %}
+                    <td class="text-right">{{ monthData[childHead.id]|default("")|bn_number_format }}</td>
+                {% endfor %}
+                <td class="text-right"></td>
+                <td class="text-right">{{ headExpense[childHead.id]|default("")|bn_number_format }}</td>
+                <td class="text-right">{{ (budgetAmount[childHead.id]['amount']|default("")|decodeBudgetAmount - headExpense[childHead.id]|default(""))|bn_number_format}}</td>
+            </tr>
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr class="bold">
+        <th style="min-height: 20px; display: table"></th>
+        <th class="text-right">{{ budgetTotalAmount['amount']|default("")|decodeBudgetAmount|bn_number_format }}</th>
+        {% for monthName, monthData in monthsData %}
+            <th class="text-right">{{ monthsTotalData[monthName]|default("")|bn_number_format }}</th>
+        {% endfor %}
+        <th class="text-right">{{ 0|bn_number_format }}</th>
+        <th class="text-right">{{ headExpenseTotal|default("")|bn_number_format }}</th>
+        <th class="text-right">{{ (budgetTotalAmount['amount']|default("")|decodeBudgetAmount - headExpenseTotal|default(""))|bn_number_format }}</th>
+    </tr>
+    </tfoot>
+</table>

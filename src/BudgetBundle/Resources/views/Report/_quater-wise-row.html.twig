@@ -1,0 +1,38 @@
+<tr>
+    <td>{{ head.code|bn_number }}</td>
+    <td>{{ head.titleEn }}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td></td>
+    <td>প্রাক্কলিত ব্যয়</td>
+    <td><input name="{{ type }}[{{ head.id ~'-first' }}]" class="form-control input-small number text-right column-first amount amount-{{ parentHead.id }}-first" rel="{{ parentHead.id }}-first" data-column="first" data-parent-id="total-head-{{ parentHead.id }}" value="{{ reportData[type][head.id ~'-first']|default(0)|number_format(2) }}"></td>
+    <td><input name="{{ type }}[{{ head.id ~'-second' }}]" class="form-control input-small number text-right column-second amount amount-{{ parentHead.id }}-second" rel="{{ parentHead.id }}-second" data-column="second" data-parent-id="total-head-{{ parentHead.id }}" value="{{ reportData[type][head.id ~'-second']|default(0)|number_format(2) }}"></td>
+    <td><input name="{{ type }}[{{ head.id ~'-third' }}]" class="form-control input-small number text-right column-third amount amount-{{ parentHead.id }}-third" rel="{{ parentHead.id }}-third" data-column="third" data-parent-id="total-head-{{ parentHead.id }}" value="{{ reportData[type][head.id ~'-third']|default(0)|number_format(2) }}"></td>
+    <td><input name="{{ type }}[{{ head.id ~'-fourth' }}]" class="form-control input-small number text-right column-fourth amount amount-{{ parentHead.id }}-fourth" rel="{{ parentHead.id }}-fourth" data-column="fourth" data-parent-id="total-head-{{ parentHead.id }}" value="{{ reportData[type][head.id ~'-fourth']|default(0)|number_format(2) }}"></td>
+    <td class="text-right">
+        <input type="hidden" class=" child-row-total" value="{{ data['budgetInfo'][head.id]['amount']|default(0)|number_format(2) }}">
+        {{ data['budgetInfo'][head.id]['amount']|default(0)|encodeBudgetAmount|bn_number_format }}
+    </td>
+    <td></td>
+</tr>
+<tr class="odd gradeX">
+    <td></td>
+    <td>প্রকৃত</td>
+    <td class="text-right">{{ data['firstQuarter'][head.id]|default(0)|encodeBudgetAmount|bn_number_format }}</td>
+    <td class="text-right">{{ data['secondQuarter'][head.id]|default(0)|encodeBudgetAmount|bn_number_format }}</td>
+    <td class="text-right">{{ data['thirdQuarter'][head.id]|default(0)|encodeBudgetAmount|bn_number_format }}</td>
+    <td class="text-right">{{ data['forthQuarter'][head.id]|default(0)|encodeBudgetAmount|bn_number_format }}</td>
+    <td class="text-right">{{
+        (data['firstQuarter'][head.id]|default(0) +
+        data['secondQuarter'][head.id]|default(0) +
+        data['thirdQuarter'][head.id]|default(0) +
+        data['forthQuarter'][head.id]|default(0))|encodeBudgetAmount|bn_number_format
+        }}</td>
+    <td></td>
+</tr>

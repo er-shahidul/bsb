@@ -1,0 +1,7 @@
+function rowCallback(nRow, aData, index) {
+    var $nRow = $(nRow);
+    if (aData.seen == false) {
+        $nRow.css({"font-weight": "bold"});
+    }
+    return nRow;
+}

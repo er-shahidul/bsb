@@ -1,0 +1,14 @@
+services:
+    _defaults:
+        autowire: false
+        autoconfigure: false
+
+    Devnet\PolicyManagerBundle\Manager\PolicyManager:
+        arguments: ["@devnet_policy_manager.policy_repository", "@form.factory", []]
+
+    devnet_policy_manager.policy_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - Devnet\PolicyManagerBundle\Entity\Policy
+        public: false

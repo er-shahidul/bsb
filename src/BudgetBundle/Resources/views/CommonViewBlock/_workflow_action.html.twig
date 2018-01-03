@@ -1,0 +1,9 @@
+{% for transition in workflow_transitions(entity, workflow_name) %}
+    <button class="btn btn-success workflow-action {{ transition.name|transition_option(workflow_name, 'class') }}"
+            data-workflow-title="{{ title|default('Workflow Action') }}"
+            data-workflow-url="{{ path('devnet_workflow_apply', {'name': workflow_name, 'transition': transition.name, 'ref': entity.id}) }}"
+            data-workflow-redirect="{{ path('my-tasks') }}"
+            data-workflow-entity="{{ entityClass }}">
+        {{ transition.name|transition_label(workflow_name) }}
+    </button>
+{% endfor %}

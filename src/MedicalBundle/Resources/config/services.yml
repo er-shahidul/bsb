@@ -1,0 +1,29 @@
+services:
+    MedicalBundle\Datatables\:
+        resource: '../../Datatables/*'
+        autowire: true
+        autoconfigure: true
+
+    MedicalBundle\Workflow\:
+        resource: '../../Workflow/*'
+        autowire: true
+        autoconfigure: true
+        public: false
+        tags:
+            - {name: app.workflow_definition}
+
+#
+#    MedicalBundle\EventSubscriber\:
+#        resource: '../../EventSubscriber/*'
+#        autowire: true
+#        autoconfigure: true
+#
+    MedicalBundle\Manager\:
+        resource: '../../Manager/*'
+        autowire: true
+#
+#    MedicalBundle\Form\:
+#        resource: '../../Form/*'
+#        arguments: ["@doctrine.orm.entity_manager"]
+#        tags:
+#            - { name: form.type }

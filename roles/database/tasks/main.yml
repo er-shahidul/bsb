@@ -1,0 +1,10 @@
+- name: Update Database
+  command: "bin/console doctrine:schema:update --force"
+  args:
+    chdir: "{{PROJECT_DIR}}"
+  when: COMPOSER_OPT == ""
+  notify:
+     - change permission
+     - site up
+  tags:
+     - db

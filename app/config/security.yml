@@ -1,0 +1,47 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: bcrypt
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+        board_meeting:
+            id: board_meeting.user_provider
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        board_meeting_login:
+            pattern: ^/board-meeting/authenticate/
+            security: false
+        board_meeting:
+            pattern: ^/board-meeting
+            stateless: true
+            simple_preauth:
+                authenticator: board_meeting.user_authenticator
+                provider: board_meeting
+        main:
+            pattern: ^/
+            simple_form:
+                authenticator: app_authenticator
+                login_path: /login
+                check_path: /login_check
+                #use_referer: true
+            logout:
+                path:   /logout
+                target: /login
+            anonymous:    true
+            provider: fos_userbundle
+
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/fp_js_form_validator, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/, role: ROLE_USER }

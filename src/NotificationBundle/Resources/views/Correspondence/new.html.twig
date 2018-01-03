@@ -1,0 +1,76 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'New Correspondence' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .notification-form-container .bs-select.form-control {
+            height:35px;
+        }
+        .has-error .btn-default.bs-placeholder {
+            border:solid red 1px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body notification-form-container">
+
+                    {{ form_start(form) }}
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Recipients</label>
+                        <div class="col-sm-10">
+                            {{ form_widget(form.users) }}
+                            <span id="recipients-error-span"></span>
+                        </div>
+                    </div>
+
+                    {{ form_rest(form) }}
+
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <input type="submit" value="Send" class="btn green" />
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block document_ready %}
+    {{ parent() }}
+    {#<script>#}
+        $('#notification_message').attr('required', true);
+        $('select').on('changed.bs.select', function (e, d) {
+            console.log($(e.currentTarget).val());
+            console.log(e.currentTarget.form);
+            $(e.currentTarget.form).validate().element($(e.currentTarget));
+        });
+
+    var instance = CKEDITOR.instances.notification_message;
+
+    instance.on('change', function() {
+        instance.updateElement();
+    });
+
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends '@App/report-base.html.twig' %}
+
+{%- block page_size %}A4-P{%- endblock  %}
+
+{% block page_header_footer %}
+    <sethtmlpageheader name="firstPageHeader" value="on" />
+    <htmlpageheader name="firstPageHeader">
+        <table class="width-100">
+            <tr>
+                <td class="width-33"></td>
+                <td class="width-33 text-center">সীমিত</td>
+                <td class="width-33 text-right"></td>
+            </tr>
+        </table>
+    </htmlpageheader>
+
+    <htmlpageheader name="everyPageHeader">
+        <div style="text-align:center">সীমিত</div>
+    </htmlpageheader>
+    <htmlpagefooter name="everyPageFooter">
+        <div style="text-align:center">{PAGENO}<br>সীমিত</div>
+    </htmlpagefooter>
+{% endblock %}
+
+{% block report_header %}
+    <table class="width-100 margin-bottom-10">
+        <tr>
+            <td class="width-33"></td>
+            <td class="width-33"></td>
+            <td class="width-33">
+                  <p>
+                      বাংলাদেশ সশস্ত্র বাহিনী বোর্ড<br>
+                      ১৬০ কাকরাইল , ঢাকা - ১০০০
+                  </p><br>
+                <p>
+                    তারালাপনি : ৯৩৩৬১৫৩<br>
+                    ফ্যাক্স : ৯৩৫৩৮২৮<br>
+                    ইমেইল : hq@basb.gov.bd
+                </p>
+                <br>
+                {{ "now"|bn_date("d F Y") }}<br>
+                {{ "now"|date_bn("d F Y") }}
+
+
+
+
+            </td>
+        </tr>
+
+    </table>
+    <div class="text-left margin-bottom-10">{{ potro_no|bn_number }}</div>
+    <div class="text-left font-size-13 underline margin-bottom-10">
+        {{ financialYearLabel(year)|bn_number }} সালের বরাদ্দকৃত অর্থের উদ্বৃত্ত অর্থ সমর্পন<br>
+    </div>
+    <div class="text-left margin-bottom-10">
+        বরাত :<br>
+        ক।  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; গণপ্রজাতন্ত্রী বাংলাদেশ সরকার, প্রতিরক্ষা মন্ত্রণালয় পত্র নং {{ mod_potro_no|bn_number }} তারিখ {{ mod_potro_date }}।<br><br>
+        ১।  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; বরাত ক এর মাধ্যমে অত্র সংস্থার অনুকূলে {{ financialYearLabel(year)|bn_number }} অর্থ বছরের জন্য সংশোধিত বাজেট বরাদ্দকৃত {{ budgetTotalAmount['amount']|default('')|decodeBudgetAmount|bn_number_format }} টাকা হতে, ৩০ জুন {{ (year + 1)|bn_number }} পর্যন্ত বিভিন্ন খাতে খরচের পর উদৃত্ত অর্থ নিম্মলিখিত ভাবে সমর্পন করা হলো :
+    </div>
+
+{% endblock %}
+
+{% block report_body %}
+
+    <div id="pdf-report-page">
+        {% include '@Budget/Report/_budget-surrender-body.html.twig' %}
+    </div>
+    <div class="text-left" style="margin-top: 50px">
+
+        বিতরণ :<br><br>
+        বহির্গমন :<br><br>
+        কার্যক্রম :<br><br>
+        <br>
+        {{ prapok_designation }}<br>
+        গণপ্রজাতন্ত্রী বাংলাদেশ সরকার<br>
+        প্রতিরক্ষা মন্ত্রণালয়, গণভবন কমপ্লেক্স<br>
+        শেরেবাংলা নগর, ঢাকা<br>
+        <br>
+        অবগতি:<br>
+        গণপ্রজাতন্ত্রী বাংলাদেশ সরকার<br>
+        কন্ট্রোলার জেনারেল ডিফেন্স ফাইন্যান্স এর কার্যালয়<br>
+        ১ম  ১২ তলা সরকারী অফিস ভবন ৪র্থ তলা<br>
+        সেগুনবাগিচা , ঢাকা -১০০০<br>
+        <br>
+        এফসি (বিবিধ)<br>
+        পুরাতন লগ এরিয়া সদর দপ্তর, ঢাকা সেনানিবাস<br>
+    </div>
+{% endblock %}

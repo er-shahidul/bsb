@@ -1,0 +1,117 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Leave Show' %}
+
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/global/css/profile.min.css') }}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="profile-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="portlet light ">
+                            <div class="portlet-title tabbable-line">
+                                <h3 class="text-capitalize">{{ leave_type }} Leave</h3>
+                            </div>
+                            <div class="portlet-body">
+
+                                    <div class="active" id="personal-info">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <ul class="list-unstyled span10">
+                                                    <li>
+                                                        <span>{% if leave_type == "civilian" %} BASB ID no {% else %} Personal No {% endif %}:</span> {{ leave.identityNumber.identityNumber|default('') }}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <ul class="list-unstyled span10">
+                                                    <li>
+                                                        <span>Name:</span> {{ leave.identityNumber.name|default('') }}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <ul class="list-unstyled span10">
+                                                    <li>
+                                                        <span>Leave Type:</span> {{ leave.typeOfLeave|default('') }}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <ul class="list-unstyled span10">
+                                                    <li>
+                                                        <span>Start Date:</span> {{ leave.startDate|date('jS F, Y') }}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <ul class="list-unstyled span10">
+                                                    <li>
+                                                        <span>End Date:</span> {{ leave.endDate|date('jS F, Y') }}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <ul class="list-unstyled span10">
+                                                    <li>
+                                                        <span>Number Of Days:</span> {{ leave.numberOfDate|default('') }}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <ul class="list-unstyled span10">
+                                                    <li>
+                                                        <span>Subject:</span> {{ leave.subject|default('') }}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <ul class="list-unstyled span10">
+                                                    <li>
+                                                        <span>Details:</span> {{ leave.details|default('') }}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="tab-pane" id="attachments-information">
+                                                <div class="portlet-body">
+                                                    {% include "@App/_template/_attachments_list.html.twig" with {attachments: leave.attachments} %}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-actions margin-top-20">
+                                            {% block workflow_content %}
+                                                <div class="row">
+
+                                                    <div class="col-md-12 text-right">
+
+                                                        {% if is_granted('edit:'~leave_type~'_leave', leave) %}
+                                                            <a class="btn btn-primary" href="{{ path(('leave_'~leave_type~'_edit'), {id: leave.id}) }}">Edit</a>
+                                                        {% endif %}
+
+                                                        {% include '@Budget/CommonViewBlock/_workflow_action.html.twig' with {entity: leave, workflow_name: leave_type ~'_leave', entityClass: entityClass, title: 'Leave Workflow'} %}
+                                                    </div>
+
+                                                    {% include '@Budget/CommonViewBlock/_workflow_comments.html.twig' with {remarks: leave.stepRemarks} %}
+
+                                                </div>
+                                            {% endblock workflow_content %}
+                                        </div>
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}

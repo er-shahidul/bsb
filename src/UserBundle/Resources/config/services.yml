@@ -1,0 +1,45 @@
+parameters:
+    user.permission.security_provider.class: UserBundle\Permission\Provider\SecurityPermissionProvider
+    user.permission_builder.class: UserBundle\Permission\PermissionBuilder
+
+services:
+#    user.example:
+#        class: UserBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    security.role_hierarchy:
+        class: UserBundle\Permission\RoleHierarchy
+        arguments: ["%security.role_hierarchy.roles%", "@user.permission_builder"]
+
+    user.permission.security_provider:
+        class: "%user.permission.security_provider.class%"
+        tags:
+            - { name: user.permission_provider, alias: user }
+
+    user.permission_builder:
+        class: "%user.permission_builder.class%"
+
+    user.registration.form.type:
+        class: UserBundle\Form\UserForm
+        tags:
+            - { name: form.type, alias: user_bundle_user_form }
+        arguments: ['%fos_user.model.user.class%', "@security.authorization_checker"]
+
+    fos_user.group.form.type:
+        class: UserBundle\Form\GroupForm
+        tags:
+            - { name: form.type, alias: fos_user_group }
+        arguments: [UserBundle\Entity\Group, '@user.permission_builder']
+
+    UserBundle\Listeners\LoginListener:
+        arguments: ['@session', '@security.authorization_checker', '@security.token_storage']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    UserBundle\Listeners\AuditLogProfileInfoSetter:
+        arguments: ['@security.token_storage']
+        tags:
+            - { name: doctrine.event_subscriber }
+
+imports:
+  - {resource: 'datatables.yml'}

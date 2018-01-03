@@ -1,0 +1,150 @@
+{% extends "@App/base.html.twig" %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">Funeral Application Form</span>
+                    </div>
+                </div>
+
+                <div class="portlet-body">
+                    <div class="profile">
+                        <div class="tabbable-line tabbable-full-width">
+                            {{ form_start(form, {'method': 'POST', 'attr': {'novalidate': 'novalidate', 'class': 'jq-validate'}}) }}
+                            <div class="row profile-account">
+                                <div class="col-md-12">
+                                    <input name="personal-no" type="hidden" value="{{ exServiceman.identityNumber }}">
+                                        <div class="row">
+                                            <div class="col-sm-12"><br/></div>
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-2">
+                                                    Personal No
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-control">
+                                                        {{ exServiceman.identityNumber }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    Name
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-control">
+                                                        {{ exServiceman.name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12"><br/></div>
+                                            <div class="col-sm-12">
+                                                    <div class="col-sm-2">
+                                                        Service Group
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-control">
+                                                            {{ exServiceman.service }}
+                                                        </div>
+                                                    </div>
+                                                <div class="col-sm-2">
+                                                    Rank
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-control">
+                                                        {{ exServiceman.rank }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12"><br/></div>
+                                            <div class="col-sm-12">
+                                                    <div class="col-sm-2">
+                                                        Regiment/Corps
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-control">
+                                                            {{ exServiceman.corp }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        Deceased Date
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        {{ form_widget(form.deceasedDate) }}
+                                                    </div>
+                                            </div>
+                                            <div class="col-sm-12"><br/></div>
+                                            <div class="col-sm-12">
+                                                    <div class="col-sm-2">
+                                                        Deceased Place
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        {{ form_widget(form.deceasedPlace) }}
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        Burial place
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        {{ form_widget(form.burialPlace) }}
+                                                    </div>
+                                            </div>
+                                            <div class="col-sm-12"><br/></div>
+                                            <div class="col-sm-12">
+                                                    <div class="col-sm-2">
+                                                        Amount
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        {{ form_widget(form.amount) }}
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        Responsible Base/Area/Unit
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        {{ form_widget(form.baseAreaUnit) }}
+                                                    </div>
+                                            </div>
+                                            <div class="col-sm-12"><br/></div>
+                                            <div class="col-sm-12">
+                                                    <div class="col-sm-2">
+                                                        Cause of Death
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        {{ form_widget(form.deceasedReason) }}
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        Details of Expenditure
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        {{ form_widget(form.expenditure) }}
+                                                    </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-11">
+                                                    {{ form_row(form.attachments) }}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 right">
+                                                <div class="col-sm-10" ></div>
+                                                <div class="col-sm-2" >
+                                                    {{ form_row(form.submit) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                <!--end col-md-9-->
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}

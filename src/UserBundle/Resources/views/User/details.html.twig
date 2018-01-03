@@ -1,0 +1,20 @@
+{% extends "@App/base.html.twig" %}
+
+{% block title %}{{ parent() }} : {{ 'User Details'|trans }} {% endblock %}
+
+{% block body %}
+
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-8">
+            {% include 'flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-body">
+                    <div class='table-data'>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

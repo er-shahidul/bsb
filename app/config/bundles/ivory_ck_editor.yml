@@ -1,0 +1,10 @@
+ivory_ck_editor:
+    configs:
+        minimal:
+            toolbar: "minimal"
+            removePlugins: "magicline"
+            contentsCss: "/assets/layouts/layout3/css/ckeditor.css"
+    toolbars:
+        configs:
+            minimal: [ ['Bold', 'Italic','NumberedList', 'BulletedList', '-', 'Outdent', 'Indent','HorizontalRule','Table']]
+            welfare_wysiwyg: [ ['Save', 'Bold', 'Italic','NumberedList', 'BulletedList', '-', 'Outdent', 'Indent','HorizontalRule','Table', 'Maximize']]

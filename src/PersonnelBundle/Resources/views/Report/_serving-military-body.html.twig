@@ -1,0 +1,77 @@
+<div align="center" class="bold"></div><br/>
+<table class="table margin-bottom-10">
+    <thead>
+        <tr class="text-center bold">
+            <th rowspan="2">ক্রঃনং</th>
+            <th rowspan="2" style="width: 70px;">সেনা নং</th>
+            <th rowspan="2" style="width: 70px;">পদবী</th>
+            <th rowspan="2" style="width: 100px;">নাম</th>
+            <th rowspan="2">জন্ম তারিখ</th>
+            <th rowspan="2">শৃংখলার বিবরণ</th>
+            <th colspan="3">চাকুরীর বিবরণ</th>
+            <th rowspan="2">বৈদেশিক মিশন</th>
+            <th rowspan="2">পূর্বের ০৩ বছরের এপিআর গ্রেডিং</th>
+            <th rowspan="2">জাতীয় পরিচয় পত্র নং</th>
+            <th rowspan="2">মোবাইল / ইমেইল ঠিকানা</th>
+            <th colspan="3">স্ত্রীর নাম ও সন্তানাদির বিবরণ</th>
+            <th rowspan="2" style="width: 100px;">মন্তব্য</th>
+        </tr>
+        <tr class="text-center bold">
+            <th style="width: 70px;">ইউনিট /সংস্থা</th>
+            <th style="width: 60px;">হইতে</th>
+            <th style="width: 60px;">পর্যন্ত</th>
+            <th style="width: 100px;">নাম</th>
+            <th style="width: 80px;">সম্পর্ক</th>
+            <th style="width: 80px;">জন্ম/বিবাহের তারিখ</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for military  in servingMilitares %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ military.identityNumber }}</td>
+            <td>{{ military.militaryProfile.rank }}</td>
+            <td>{{ military.name }}</td>
+            <td>{{ military.dateOfBirth|date('d-m-Y')|bn_number }}</td>
+            <td>{{ military.disciplineStatus }}</td>
+            <td>
+                {% for u in military.employmentInformations %}
+                    {{ u.unit }}<br/>
+                {% endfor %}
+            </td>
+            <td>
+                {% for fd in military.employmentInformations %}
+                    {{ fd.fromDate|date('d-m-Y')|bn_number }}<br/>
+                {% endfor %}
+            </td>
+            <td>
+                {% for fd in military.employmentInformations %}
+                    {{ fd.toDate|date('d-m-Y')|bn_number }}<br/>
+                {% endfor %}
+            </td>
+            <td>{{ military.unMission ? "Yes" : "No" }}</td>
+            <td>
+                {% for g in military.aprGrading %}
+                    {{ g }}<br/>
+                {% endfor %}
+            </td>
+            <td>{{ military.nid }}</td>
+            <td>{{ military.mobileNumber }} <br/>{{ military.email }}</td>
+            <td> {% for f in military.families %}
+                    {{ f.name }}<br/>
+                {% endfor %}
+            </td>
+            <td>{% for r in military.families %}
+                    {{ r.relationType }}<br/>
+                {% endfor %}
+            </td>
+            <td>
+                {% for dob in military.families %}
+                    {{ dob.dateOfBirth|date('d-m-Y')|bn_number }}<br/>
+                {% endfor %}
+            </td>
+            <td>{{ military.remarks }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

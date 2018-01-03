@@ -1,0 +1,83 @@
+{% extends "@Personnel/Default/base_view_page.html.twig" %}
+{% set pageTitle = 'Serving Military Service Book' %}
+{% block personal_info %}
+    {{ parent() }}
+    <div class="tab-pane active" id="personal-info">
+        <div class="row">
+            <div class="col-sm-6">
+                <ul class="list-unstyled span10">
+                    <span>Marriage Date:</span>  {{ personnel.dateOfWedding ? personnel.dateOfWedding|date('jS F, Y') : "N/A" }}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block professional_info %}
+    <li>
+        <a href="#professional_info" data-toggle="tab">Professional</a>
+    </li>
+{% endblock %}
+{% block employment_info %}
+    <div class="col-sm-6">
+        <ul class="list-unstyled span10">
+            {#<li>#}
+                {#<span>Serving Type:</span> {{ personnel.servingType|default('N/A') }}#}
+            {#</li>#}
+            <li><span>Service Group:</span> {{ personnel.militaryProfile.service|default('N/A') }}
+            </li>
+            <li><span>Rank:</span> {{ personnel.militaryProfile.rank|default('N/A') }}</li>
+            <li><span>Regiment & corps.:</span> {{ personnel.militaryProfile.corp|default('N/A') }}</li>
+            <li><span>DASB Office:</span> {{ personnel.office|default('N/A') }}
+            </li>
+            <li>
+                <span>Trade:</span> {{ personnel.trade }}
+            </li>
+            <li>
+                <span>Discipline Status:</span> {{ personnel.disciplineStatus }}
+            </li>
+            <li>
+                <span>Discipline Information:</span> {{ personnel.disciplineInformation }}
+            </li>
+            <li>
+                <span>Medical Classification:</span> {{ personnel.medicalClassification }}
+            </li>
+            <li>
+                <span>Remarks:</span> {{ personnel.remarks }}
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-6">
+        <ul class="list-unstyled span10">
+            <li>
+                <span>Soldier No. :</span> {{ personnel.soldierNumber|default('N/A') }}
+            </li>
+            <li>
+                <span>Designation:</span> {{ personnel.designation|default('N/A') }}
+            </li>
+            <li>
+                <span>Joining Date:</span> {{ personnel.joiningDate|date('jS F, Y') }}
+            </li>
+            <li>
+                <span>Joining place:</span> {{ personnel.joiningPlace|default('N/A') }}
+            </li>
+            <li>
+                <span>Employment Period:</span> {{ personnel.joiningDate|age|default('N/A')  }}
+            </li>
+            <li>
+                <span>Last Served Unit:</span> {{ personnel.lastServedUnit|default('N/A') }}
+            </li>
+            <li>
+                <span>Foreign Mission:</span> {{ personnel.unMission ? "Yes" : "No" }}
+            </li>
+            <li>
+                <span>Employment Cond.1/13:</span> {{ personnel.serviceCondition }}
+            </li>
+            <li>
+                <span>APR Grading of Previous 3 years:</span>
+                {% for g in personnel.aprGrading %}
+                    {{ g }}<br/>
+                {% endfor %}
+            </li>
+        </ul>
+    </div>
+{% endblock %}

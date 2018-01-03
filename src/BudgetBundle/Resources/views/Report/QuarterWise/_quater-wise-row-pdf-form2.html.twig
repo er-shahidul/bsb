@@ -1,0 +1,33 @@
+<tr>
+    <td class="text-center">{{ head.code|bn_number }}</td>
+    <td>{{ head.titleEn }}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    {% if(data['budgetInfo']) %}
+    {% if(data['budgetInfo'][head.id]['amount']|number_format=="0") %} {% set budgetInfo=0%}{% else %}{% set budgetInfo= data['budgetInfo'][head.id]['amount']%}{% endif %}
+    {% endif %}
+    <td></td>
+    <td>প্রাক্কলিত ব্যয়</td>
+    <td class="text-right">{{ reportData[type][head.id ~'-first']|default(0)|bn_number_format }}</td>
+    <td class="text-right">{{ reportData[type][head.id ~'-second']|default(0)|bn_number_format }}</td>
+    <td class="text-right">{{ reportData[type][head.id ~'-third']|default(0)|bn_number_format }}</td>
+    <td class="text-right">{{ reportData[type][head.id ~'-fourth']|default(0)|bn_number_format }}</td>
+    <td class="text-right child-row-total">{{ budgetInfo|default(0)|encodeBudgetAmount|bn_number_format }}</td>
+    <td></td>
+</tr>
+<tr class="odd gradeX">
+    <td></td>
+    <td>প্রকৃত</td>
+    <td class="text-right"></td>
+    <td class="text-right"></td>
+    <td class="text-right"></td>
+    <td class="text-right"></td>
+    <td class="text-right"></td>
+    <td></td>
+</tr>

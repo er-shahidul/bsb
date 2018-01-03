@@ -1,0 +1,47 @@
+{% extends "@Personnel/Default/base_view_page.html.twig" %}
+{% set pageTitle = 'Serving Civilian Service Book' %}
+{% block personal_info %}
+    {{ parent() }}
+    <div class="tab-pane active" id="personal-info">
+        <div class="row">
+            <div class="col-sm-6">
+                <ul class="list-unstyled span10">
+                    <span>Marriage Date:</span>  {{ personnel.dateOfWedding ? personnel.dateOfWedding|date('jS F, Y') : "N/A" }}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block employment_info %}
+    <div class="col-sm-6">
+        <ul class="list-unstyled span10">
+            {#<li>#}
+                {#<span>Serving Type:</span> {{ personnel.servingType|default('N/A') }}#}
+            {#</li>#}
+            <li>
+                <span>Designation:</span> {{ personnel.designation|default('N/A') }}
+            </li>
+            <li>
+                <span>BASB ID no. :</span> {{ personnel.identityNumber|default('N/A') }}
+            </li>
+            <li><span>DASB Office:</span> {{ personnel.office|default('N/A') }}
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-6">
+        <ul class="list-unstyled span10">
+            <li>
+                <span>Joining Date:</span> {{ personnel.joiningDate|date('jS F, Y') }}
+            </li>
+            <li>
+                <span>Last Served Unit:</span> {{ personnel.lastServedUnit|default('N/A') }}
+            </li>
+            <li>
+                <span>Joining place:</span> {{ personnel.joiningPlace|default('N/A') }}
+            </li>
+            <li>
+                <span>Employment Period:</span> {{ personnel.joiningDate|age|default('N/A')  }}
+            </li>
+        </ul>
+    </div>
+{% endblock %}

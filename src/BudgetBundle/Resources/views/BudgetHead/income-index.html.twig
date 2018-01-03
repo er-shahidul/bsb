@@ -1,0 +1,61 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Budget Income Head' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">List of {{ pageTitle }}s</span>
+                    </div>
+                    <div class="actions">
+                        <a class="btn green" data-toggle="modal" href="{{ path('budgethead_income_new') }}">
+                            <i class="fa fa-plus"></i> Create New {{ pageTitle }}</a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Title English</th>
+                            <th>Title Bangla</th>
+                            <th width="80">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for budgetHead in budgetHeads %}
+                            <tr style="background-color:#c1cbd0">
+                                <td>{{ budgetHead.code }}</td>
+                                <td>{{ budgetHead.titleEn }}</td>
+                                <td>{{ budgetHead.titleBn }}</td>
+                                <td>
+                                    <a class="btn btn-primary btn-xs" href="{{ path('budgethead_income_edit', { 'id': budgetHead.id }) }}">Edit</a>
+                                </td>
+                            </tr>
+
+                            {% for childHead in budgetHead.child %}
+                            <tr>
+                                <td style="padding-left: 20px">{{ childHead.code }}</td>
+                                <td>{{ childHead.titleEn }}</td>
+                                <td>{{ childHead.titleBn }}</td>
+                                <td>
+                                    <a class="btn btn-primary btn-xs" href="{{ path('budgethead_income_edit', { 'id': childHead.id }) }}">Edit</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

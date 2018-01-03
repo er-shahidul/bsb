@@ -1,0 +1,72 @@
+{% extends "@App/base.html.twig" %}
+
+{% block page_title %}{{ parent() }} | {% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row">
+        <div class="col-sm-12">
+
+            {% include '@App/layout-component/flash.html.twig' %}
+
+            {% if errorMessage is defined and errorMessage != '' %}
+                <div class="alert alert-danger fade in">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    {{ errorMessage }}
+                </div>
+            {% endif %}
+
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">
+                            Micro-credit Defaulters
+                        </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="col-md-12  hidden-print">
+                        <div class="form-actions margin-top-20">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+
+                                    {% if task is not defined %}
+                                        <a class="btn btn-primary" href="{{ path('welfare_mc_defaulter_register_index') }}">Go to Defaulter Register</a>
+                                    {% endif %}
+
+                                    {% if (is_granted('edit:mc_defaulter_register', register)) %}
+                                        <a class="btn btn-primary" href="{{ path('welfare_mc_defaulter_register_edit', {id: register.id}) }}">Edit</a>
+                                    {% endif %}
+
+                                    {% include '@Budget/CommonViewBlock/_workflow_action.html.twig' with {entity: register, workflow_name: 'mc_defaulter_register', entityClass: 'WelfareBundle:MCDefaulterRegister', title: 'Micro Credit Defaulter Register Workflow'} %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 margin-top-20">
+                        {{ defaulterListView|raw }}
+                    </div>
+
+                    <div class="col-md-12 hidden-print">
+                        {% include '@Budget/CommonViewBlock/_workflow_comments.html.twig' with {remarks: register.stepRemarks} %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/welfare/js/micro-credit.js') }}"></script>
+{% endblock %}
+
+
+

@@ -1,0 +1,30 @@
+{% extends '@App/report-base.html.twig' %}
+
+{%- block page_size %}Legal-L{%- endblock  %}
+
+{% block page_header_footer %}
+    <sethtmlpageheader name="firstPageHeader" value="on" />
+    <htmlpageheader name="firstPageHeader">
+        <table class="width-100">
+            <tr>
+                <td class="width-33"></td>
+                <td class="width-33 text-center">সীমিত</td>
+                <td class="width-33 text-right"></td>
+            </tr>
+        </table>
+    </htmlpageheader>
+
+    <htmlpageheader name="everyPageHeader">
+        <div style="text-align:center">সীমিত</div>
+    </htmlpageheader>
+    <htmlpagefooter name="everyPageFooter">
+        <div style="text-align:center">{PAGENO}<br>সীমিত</div>
+    </htmlpagefooter>
+{% endblock %}
+
+{% block report_body %}
+
+    <div id="pdf-report-page">
+        {% include '@Budget/Report/_all-office-expense-body.html.twig' %}
+    </div>
+{% endblock %}

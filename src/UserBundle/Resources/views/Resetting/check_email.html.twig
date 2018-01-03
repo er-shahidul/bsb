@@ -1,0 +1,10 @@
+{% extends "@App/base-login.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body %}
+<p>
+{{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
+</p>
+    <a href="{{ path('fos_user_security_login') }}">Back to Login</a>
+{% endblock %}

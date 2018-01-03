@@ -1,0 +1,12 @@
+services:
+    BudgetBundle\Datatables\BudgetDatatable:
+        parent: sg_datatables.datatable.abstract
+
+    BudgetBundle\Datatables\BudgetSummaryDatatable:
+        parent: sg_datatables.datatable.abstract
+
+    BudgetBundle\Datatables\BASBBudgetDatatable:
+        parent: sg_datatables.datatable.abstract
+
+    BudgetBundle\Datatables\BudgetExpenseDatatable:
+        parent: sg_datatables.datatable.abstract

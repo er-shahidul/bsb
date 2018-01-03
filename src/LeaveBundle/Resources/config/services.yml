@@ -1,0 +1,12 @@
+services:
+    LeaveBundle\Workflow\:
+        resource: '../../Workflow/*'
+        autowire: true
+        autoconfigure: true
+        public: false
+        tags:
+            - {name: app.workflow_definition}
+
+    LeaveBundle\Listener\LeaveWorkflowListener:
+        tags:
+            - { name: kernel.event_subscriber }

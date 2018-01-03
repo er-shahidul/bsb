@@ -1,0 +1,110 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Movement Show' %}
+
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/global/css/profile.min.css') }}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="profile-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="portlet light ">
+                            <div class="portlet-title tabbable-line">
+                                <h3 class="text-capitalize">{{ movement_type }} Movement</h3>
+                            </div>
+                            <div class="portlet-body">
+
+                                    <div class="active" id="personal-info">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <ul class="list-unstyled span10">
+                                                    <li>
+                                                        <span>Start Date:</span> {{ movement.startDate|date('jS F, Y') }}
+                                                    </li>
+                                                    <li>
+                                                        <span>Start Point:</span> {{ movement.startPoint|default('N/A') }}
+                                                    </li>
+                                                    <li>
+                                                        <span>Visitors:</span>
+                                                        {% for visitor in movement.visitors %}
+                                                            {{ visitor.name }} {% if not loop.last %},{% endif %}
+                                                        {% endfor %}
+                                                    </li>
+                                                    <li>
+                                                        <span>Travel By:</span> {{ movement.travelBy|default('N/A') }}
+                                                    </li>
+                                                    <li>
+                                                        <span>Transportation:</span> {{ movement.transportation|default('N/A') }}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <ul class="list-unstyled span10">
+                                                    <li>
+                                                        <span>End Date:</span> {{ movement.endDate|date('jS F, Y') }}
+                                                    </li>
+                                                    <li>
+                                                        <span>Destinations:</span>
+                                                        {% for destination in movement.destinations %}
+                                                            {{ destination.name }} {% if not loop.last %},{% endif %}
+                                                        {% endfor %}
+                                                    </li>
+                                                    <li>
+                                                        <span>Additional Members:</span> {{ movement.additionalMembers|default('N/A') }}
+                                                    </li>
+                                                    <li>
+                                                        <span>Travel Plan:</span> {{ movement.travelPlan|default('N/A') }}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <ul class="list-unstyled span10">
+                                                    <li>
+                                                        <span>Description:</span> {{ movement.description|default('N/A') }}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="tab-pane" id="attachments-information">
+                                                <div class="portlet-body">
+                                                    {% include "@App/_template/_attachments_list.html.twig" with {attachments: movement.attachments} %}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-actions margin-top-20">
+                                            {% block workflow_content %}
+                                                <div class="row abc">
+
+                                                    <div class="col-md-12 text-right">
+
+                                                        {% if is_granted('edit:'~movement_type~'_movement', movement) %}
+                                                            <a class="btn btn-primary" href="{{ path(('movement_'~movement_type~'_edit'), {id: movement.id}) }}">Edit</a>
+                                                        {% endif %}
+
+                                                        {% include '@Budget/CommonViewBlock/_workflow_action.html.twig' with {entity: movement, workflow_name: movement_type ~'_movement', entityClass: entityClass, title: 'Movement Workflow'} %}
+
+                                                    </div>
+
+                                                    {% include '@Budget/CommonViewBlock/_workflow_comments.html.twig' with {remarks: movement.stepRemarks} %}
+
+                                                </div>
+                                            {% endblock workflow_content %}
+                                        </div>
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}

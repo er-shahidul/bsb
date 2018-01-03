@@ -1,0 +1,106 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Requisition View' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }}</span>
+                    </div>
+                </div>
+
+                <div class="portlet-body">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4">
+                                <strong>Dispensary</strong>
+                            </label>
+                            <div class="col-sm-8 margin-bottom-10">
+                                {{ requisition.dispensary.name }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4">
+                                <strong>Created At</strong>
+                            </label>
+                            <div class="col-sm-8 margin-bottom-10">
+                                {{ requisition.createdAt|date('Y-m-d') }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <h4>Medicines</h4>
+                    <div class="col-md-12">
+                        <table class="table table-striped table-bordered table-advance table-hover">
+                            <thead>
+                            <tr>
+                                <th width="100">Medicine Name</th>
+                                <th width="50">Quantity</th>
+                                <th width="100">Medicine Name</th>
+                                <th width="50">Quantity</th>
+                            </tr>
+                            </thead>
+                            <tbody id="voucher-list">
+                                <tr>
+                                    {% for vd in requisition.requisitionDetails %}
+
+                                    <td>{{ medicines[vd.medicine.id] }}</td>
+                                    <td>{{ vd.requestAmount }}</td>
+
+                                    {% if loop.index is divisible by(2) %}
+                                        </tr>
+                                        <tr>
+                                    {% endif %}
+
+                                    {% endfor %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="form-actions">
+                        {% block workflow_content %}
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+
+                                    {% if is_granted('edit:medical_requisition_workflow', requisition) %}
+                                        <a class="btn btn-primary" href="{{ path('medical_requisition_update', {id: requisition.id}) }}">Edit</a>
+                                    {% endif %}
+
+                                    {% include '@Budget/CommonViewBlock/_workflow_action.html.twig' with {entity: requisition, workflow_name: 'medical_requisition_workflow', entityClass: 'MedicalBundle:Requisition', title: 'Requisition'} %}
+
+                                </div>
+                                {% include '@Budget/CommonViewBlock/_workflow_comments.html.twig' with {remarks: requisition.stepRemarks} %}
+                            </div>
+                        {% endblock workflow_content %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/account/js/reconciliation-entry.js') }}"></script>
+{% endblock include_javascripts %}
+
+{% block document_ready %}
+    {{ parent() }}
+
+    ReconciliationEntry.init();
+{% endblock %}

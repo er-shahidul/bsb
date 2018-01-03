@@ -1,0 +1,55 @@
+{% extends '@App/report-base.html.twig' %}
+
+{%- block page_size %}A4-L{%- endblock  %}
+
+{% block page_header_footer %}
+    <sethtmlpageheader name="firstPageHeader" value="on" />
+    <htmlpageheader name="firstPageHeader">
+        <table class="width-100">
+            <tr>
+                <td class="width-33"></td>
+                <td class="width-33 text-center">সীমিত</td>
+                <td class="width-33 text-right">ফরম - ১ </td>
+            </tr>
+        </table>
+    </htmlpageheader>
+
+    <htmlpageheader name="everyPageHeader">
+        <div style="text-align:center">সীমিত</div>
+    </htmlpageheader>
+    <htmlpagefooter name="everyPageFooter">
+        <div style="text-align:center">{PAGENO}<br>সীমিত</div>
+    </htmlpagefooter>
+{% endblock %}
+
+{% block report_header %}
+    <div class="text-center font-size-13 underline">
+        রাজস্ব প্রাপ্তির প্রাক্কলন প্রণয়ন
+    </div>
+    <table class="margin-bottom-10">
+        <tr>
+            <td colspan="3">সংবিধানিক কোড</td>
+        </tr>
+        <tr>
+            <td width="100">মন্ত্রণালয়/বিভাগ</td>
+            <td width="10">&nbsp;ঃ</td>
+            <td width="200">{{ section }}</td>
+        </tr>
+        <tr>
+            <td>প্রতিষ্ঠান</td>
+            <td width="10">&nbsp;ঃ</td>
+            <td>{{ institute }}</td>
+        </tr>
+        <tr>
+            <td>পরিচালন ইউনিট</td>
+            <td width="10">&nbsp;ঃ</td>
+            <td>{{ unit }}</td>
+        </tr>
+    </table>
+{% endblock %}
+
+{% block report_body %}
+    <div id="pdf-report-page">
+        {% include '@Budget/Report/_budget-amendment-form1-body.html.twig' %}
+    </div>
+{% endblock %}

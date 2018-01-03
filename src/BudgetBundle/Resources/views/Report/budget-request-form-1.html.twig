@@ -1,0 +1,95 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Budget Request Report' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block page_id %}pdf-report-page{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        {% include '@App/report.css.twig' %}
+    </style>
+{% endblock %}
+{% block body %}
+
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title hidden-print">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ (year is null) ? pageTitle : 'Budget Request Form 1 Report of ' ~ financialYearLabel(year, true) }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div>
+                        <form class="form hidden-print">
+                            <div class="form-group col-md-2">
+                                <label>Financial Year</label>
+                                {% include('@Budget/Report/_financial-year.html.twig') %}
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>&nbsp;</label><br />
+                                <button class="btn blue">Show Report</button>
+                                {% if year is not null %}
+                                <a data-toggle="modal" href="#print-dialog" class="btn blue" target="_blank">Generate Report</a>
+                                {% endif %}
+                            </div>
+                        </form>
+
+                        {% if year is not null %}
+                        <div class="modal fade" id="print-dialog" tabindex="-1" role="print-dialog" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                        <h4 class="modal-title">Download Report</h4>
+                                    </div>
+
+                                    {{ form_start(reportForm) }}
+                                        <div class="modal-body">
+                                            <div style="margin-left: 35px;margin-bottom: 20px;"> সংবিধানিক কোড </div>
+                                            {% for item in reportForm %}
+                                                {{ form_row(item) }}
+                                            {% endfor %}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn green" data-dismiss="modal" onclick="this.form.submit()">Generate Report</button>
+                                        </div>
+                                    {{ form_end(reportForm) }}
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    {% if year is null %}
+                        <div class="col-md-12">
+                            <table class="table table-striped table-bordered table-hover table-header-fixed table-checkable order-column">
+                                <tr>
+                                    <td>Please select financial year</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    {% else %}
+
+                    <div class="col-md-12">
+                        <div align="center" class="bold underline"><h4>রাজস্ব প্রাপ্তির প্রাক্কলন প্রণয়ন</h4></div><br/>
+                        {% include '@Budget/Report/_budget-request-form1-body.html.twig' %}
+                    </div>
+
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}

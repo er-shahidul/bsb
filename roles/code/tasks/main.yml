@@ -1,0 +1,27 @@
+- name: Update to latest code
+  git:
+    repo: 'git@github.com:devnet-limited/BASB.git'
+    dest: "{{PROJECT_DIR}}"
+    version: "{{REVISION}}"
+    clone: no
+    force: yes
+    update: yes
+  notify: change permission
+  tags:
+     - code
+
+- shell: echo test flush handlers start
+  notify: change permission
+
+- name: force all notified handlers to run at this point
+  meta: flush_handlers
+
+- name: Update dependencies
+  command: "composer install {{COMPOSER_OPT}}"
+  args:
+    chdir: "{{PROJECT_DIR}}"
+  notify:
+     - change permission
+     - site up
+  tags:
+     - dependencies

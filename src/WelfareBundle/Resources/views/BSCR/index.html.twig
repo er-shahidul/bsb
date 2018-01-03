@@ -1,0 +1,29 @@
+{% extends "@BoardMeeting/meeting-creator-base.html.twig" %}
+{% set pageTitle = 'BSCR Application' %}
+{% block heading_title %}List of {{ pageTitle }}{% endblock %}
+
+{% block action_buttons %}
+    {% if createButton and is_granted('ROLE_WELFARE_CLERK') %}
+        <a class="btn green" data-toggle="modal" href="#meeting-form-div"> Create Meeting </a>
+    {% endif %}
+    {% if is_granted('ROLE_DASB_CLERK') %}
+        <a class="btn green" href="{{ path('welfare_bscr_create') }}">New BSCR Application</a>
+    {% endif %}
+{% endblock %}
+
+{% block body_content %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    {{ sg_datatables_render_html(datatable) }}
+{% endblock %}
+
+{% block stylesheets  %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/datatable.css') }}">
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/datatable.js') }}"></script>
+
+    {{ sg_datatables_render_js(datatable) }}
+{% endblock %}

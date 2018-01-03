@@ -1,0 +1,75 @@
+{% extends "@App/base.html.twig" %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% form_theme meetingForm '@BoardMeeting/Default/_form_fields.html.twig' %}
+
+{% block body %}
+    <div class="modal fade bs-modal-lg modal-scroll" id="meeting-form-div" tabindex="-1" role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                {{ form_start(meetingForm) }}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Board Creation</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            {{ form_row(meetingForm.subject) }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ form_row(meetingForm.date) }}
+                        </div>
+                    </div>
+                    {{ form_row(meetingForm.members) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn green">Save changes</button>
+                </div>
+                {{ form_end(meetingForm) }}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row">
+        <div class="col-sm-12">
+
+            {% include '@App/layout-component/flash.html.twig' %}
+
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{% block heading_title %}{% endblock %}</span>
+                    </div>
+
+                        <div class="actions">
+                            {% block action_buttons %}
+                            {% endblock %}
+                        </div>
+                </div>
+
+                <div class="portlet-body">
+                    {% block body_content %}
+                    {% endblock %}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/boardmeeting/js/board-meeting.js') }}"></script>
+{% endblock include_javascripts %}
+
+{% block document_ready %}
+    {{ parent() }}
+    BoardMeeting.init('{{ url('board_meeting_create', {'type' : meetingType}) }}');
+{% endblock %}

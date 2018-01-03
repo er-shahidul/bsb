@@ -1,0 +1,14 @@
+<div class="inbox">
+    <div class="inbox-view-info">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="sbold">From: </span>
+                <img src="{{asset(notification.sender.image)}}" width="20px" class="inbox-author">
+                <span class="sbold">{{ notification.sendername }} </span>
+                on <span class="sbold">{{notification.date|date('jS F, Y h:i a')}}</span> </div>
+        </div>
+    </div>
+    <div class="inbox-view">
+        {{ notification.message|raw }}
+    </div>
+</div>

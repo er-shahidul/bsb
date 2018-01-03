@@ -1,0 +1,9 @@
+{% extends '@App/generic_error_layout.html.twig' %}
+{% block title %}Error {{ status_code }}!{% endblock %}
+{% block errorDetails %}
+    <h3>Oops! An Error Occurred.</h3>
+    <p>
+        The server returned a "{{ status_code }} {{ status_text }}".<br />
+        You can <a href="/">Return home</a>
+    </p>
+{% endblock %}

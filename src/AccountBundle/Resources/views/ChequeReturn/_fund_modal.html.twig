@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+    <h4 class="modal-title">{{ title }}</h4>
+</div>
+<div class="modal-body">
+    <div class="col-md-12">
+        <div class="form-horizontal">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label">Select Fund</label>
+                    <select name="bankAccount" id="bankAccount" class="form-control">
+                        {% for fundType in fundTypes %}
+                            <option rel="{{ fundType.id }}" value="{{ path(route, {id: fundType.id}) }}">{{ fundType.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+    <button type="button" class="btn green" onclick="location.href=$(this).parents('.modal').find('select').val()">Go</button>
+</div>

@@ -1,0 +1,121 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Welfare Intergration' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block header_title %}{{ pageTitle }}{% endblock header_title %}
+
+{% block body %}
+
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }}</span>
+                    </div>
+                </div>
+
+                <div class="portlet-body">
+
+                    {{ form_start(form, {attr: {class: 'jq-validate', id: 'form-integration'}}) }}
+
+                    {{ form_row(form.fundType) }}
+                    {{ form_row(form.description) }}
+                    {{ form_row(form.voucherDate) }}
+
+                    <table class="table table-bordered" id="voucher-detail">
+                        <thead>
+                        <tr>
+                            <th width="50">SL</th>
+                            <th width="150">Cheque Number</th>
+                            <th width="150">Amount</th>
+                            <th width="150">Payment To</th>
+                            <th width="150">Against</th>
+                            <th width="150">Account</th>
+                            <th width="250">Description</th>
+                            <th width="270">Fund Heads</th>
+                        </tr>
+                        </thead>
+                        <tbody id="voucher-list">
+                        {% for index, voucher in sanction.vouchers %}
+                            <tr>
+                                <td class="sl">{{ loop.index }}</td>
+                                <td class="form-group"><input data-rule-number="true" required="required" value="{{ voucher.chequeNumber|default('') }}" class="form-control input-sm cheque-number" name="chequeNumber[]"></td>
+                                <td class="form-group">{{ voucher.amount|en_number_format }}</td>
+                                <td class="form-group">{{ voucher.paymentTo|default('') }}</td>
+                                <td class="form-group">{{ voucher.paymentAgainst|default('') }}</td>
+                                <td class="form-group">
+                                    <select class="form-control input-sm" name="bankAccount[]" required>
+                                        {% for bankAccount in bankAccounts %}
+                                            <option class="form-control" {{ voucher and voucher.bankAccount == bankAccount.id ? 'selected' : '' }} value="{{ bankAccount.id }}">{{ bankAccount.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td class="form-group"><input name="description[]" value="{{ voucher.description|default('') }}" class="form-control input-sm"></td>
+                                <td class="form-group">
+                                    {% if fundHeads is defined %}
+                                        {% for fundHead in fundHeads %}
+                                            <div class="col-md-7 control-label text-left">{{ fundHead.name }}</div>
+                                            <div class="col-md-5">
+                                                <input data-num="{{ index }}" data-for="{{ fundHead.id }}" class="form-control amount" name="fundHead[{{ fundHead.id }}][]" value="{{ voucher.vd[fundHead.id]|default('') }}">
+                                            </div>
+                                        {% endfor %}
+                                        <div class="col-md-7 control-label bold">Total Amount</div>
+                                        <div class="col-md-5">
+                                            <div data-amount="{{ voucher.amount }}" class="form-control voucher-total bold text-right"></div>
+                                        </div>
+                                    {% else %}
+                                        Select a fund type
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button type="submit" class="btn green">Save</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{ form_end(form) }}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style>
+        #voucher-list .col-md-7.control-label, #voucher-list .col-md-5 {
+            padding-left: 3px;
+            padding-right: 3px;
+        }
+        #voucher-list td, #voucher-list .form-control{
+            padding: 3px;
+        }
+    </style>
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/account/js/account-integration.js') }}"></script>
+{% endblock include_javascripts %}
+
+{% block document_ready %}
+    {{ parent() }}
+    AccountIntegration.init();
+
+    $('#sanction_mapper_form_fundType').change(function(){
+        window.location.href = Routing.generate('account_integration_edit', {id: {{ ai.id }}, fundTypeId: $(this).val()})
+    });
+{% endblock %}

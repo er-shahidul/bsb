@@ -1,0 +1,59 @@
+{% block attachment_widget %}
+    <td class="sn"></td>
+    <td class="form-group">{{ form_widget(form.description) }}</td>
+    <td class="form-group">{{ form_widget(form.file) }}{{ form_errors(form.file) }}</td>
+    <td width="20px"><a class="remove" data-server="{{ server|default('') }}" href="javascript;"><i class="fa fa-close btn btn-xs red"></i></a></td>
+{% endblock %}
+{% block multi_attachment_row %}
+    <h4>{{ form.vars.label }}</h4>
+    <div class="row">
+        <div class="col-lg-12">
+            <table id="{{ form.vars.id }}-list"
+                   class="table collection-form-control table-striped table-bordered table-hover table-header-fixed table-checkable order-column"
+                   data-prototype="{{ form_widget(form.vars.prototype)|e }}">
+                <tr>
+                    <th width="30px">SN</th>
+                    <th>Description</th>
+                    <th>File</th>
+                    <th width="20px">
+                        <a href="javascript:;" class="add-new-collection-entry" data-ref="#{{ form.vars.id }}-list">
+                            <i class="fa fa-plus btn btn-sm green"></i>
+                        </a>
+                    </th>
+                </tr>
+                {% for i, item in form %}
+                    <tr>
+                        <td class="sn">{{ (i+1) }}</td>
+                        <td class="form-group">{{ form_widget(item.description) }}</td>
+                        <td class="form-group">
+                            {{ form_widget(item.file) }}
+                        </td>
+                        <td width="20px"><a class="remove" data-server="true" href="javascript;"><i class="fa fa-close btn btn-xs red"></i></a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block file_widget %}
+    {% spaceless %}
+
+        <div class="fileinput fileinput-new" data-provides="fileinput">
+            <div class="input-group input-large">
+                <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+                    <i class="fa fa-file fileinput-exists"></i>&nbsp;
+                    <span class="fileinput-filename">{% if file_name is defined and file_name is not null %}{{ file_name }}{% endif %}</span>
+                </div>
+                <span class="input-group-addon btn default btn-file">
+                <span class="fileinput-new"> Select file </span>
+                <span class="fileinput-exists"> Change </span>
+                    {% set attr = {'class':'default'} %}
+                    <input data-error-marker="#{{form.vars.id}}-error-marker" type="file" {{ block('widget_attributes') }} /> </span>
+                <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput">
+                    Remove </a>
+            </div>
+            <span id="{{form.vars.id}}-error-marker" class="help-block help-block-error"></span>
+        </div>
+    {% endspaceless %}
+{% endblock %}

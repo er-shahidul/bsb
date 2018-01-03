@@ -1,0 +1,36 @@
+<tr>
+    <td class="text-center">{{ head.code|bn_number }}</td>
+    <td>{{ head.titleEn }}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    {% if(reportData) %}
+    {% if(reportData[type][head.id ~'-first']=="0") %} {% set firstVal="0"|number_format(2)%}{% else %}{% set firstVal= reportData[type][head.id ~'-first']%}{% endif %}
+    {% if(reportData[type][head.id ~'-second']=="0") %} {% set secondVal="0"|number_format(2)%}{% else %}{% set secondVal= reportData[type][head.id ~'-second']%}{% endif %}
+    {% if(reportData[type][head.id ~'-third']=="0") %} {% set thirdVal="0"|number_format(2)%}{% else %}{% set thirdVal= reportData[type][head.id ~'-third']%}{% endif %}
+    {% if(reportData[type][head.id ~'-fourth']=="0") %} {% set fourthVal="0"|number_format(2)%}{% else %}{% set fourthVal= reportData[type][head.id ~'-fourth']%}{% endif %}
+    {% endif %}
+    <td></td>
+    <td>প্রাক্কলিত ব্যয়</td>
+    <td class="text-right">{{ firstVal|default(0)|bn_number_format }}</td>
+    <td class="text-right">{{ secondVal|default(0)|bn_number_format }}</td>
+    <td class="text-right">{{ thirdVal|default(0)|bn_number_format }}</td>
+    <td class="text-right">{{ fourthVal|default(0)|bn_number_format }}</td>
+    <td class="text-right">{{ data['budgetInfo'][head.id]['amount']|default(0)|encodeBudgetAmount|bn_number_format }}</td>
+    <td></td>
+</tr>
+<tr class="odd gradeX">
+    <td></td>
+    <td>প্রকৃত</td>
+    <td class="text-right"></td>
+    <td class="text-right"></td>
+    <td class="text-right"></td>
+    <td class="text-right"></td>
+    <td class="text-right"></td>
+    <td></td>
+</tr>

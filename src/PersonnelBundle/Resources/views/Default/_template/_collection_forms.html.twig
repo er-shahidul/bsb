@@ -1,0 +1,297 @@
+{% use 'bootstrap_3_layout.html.twig' %}
+
+{% block _personnel_form_receivedFunds_entry_widget %}
+    {% include "@Personnel/Default/_template/_fund_receive.html.twig" with {form: form} %}
+{% endblock %}
+
+{% block _personnel_form_photoFile_widget %}
+    {% spaceless %}
+        {% if url is not defined or url is empty %}
+            {% set existsClass = "new" %}
+        {% else %}
+            {% set existsClass = "exists" %}
+        {% endif %}
+        <div class="fileinput fileinput-{{existsClass}}" data-provides="fileinput">
+            <div class="fileinput-new thumbnail"
+                 style="max-width: 200px; max-height: 200px;">
+                {% if url is not defined or url is empty %}
+                    {% set imageUrl = "/assets/images/avatar-default.png" %}
+                {% else %}
+                    {% set imageUrl = url %}
+                {% endif %}
+                <img src="{{asset(imageUrl)}}" alt=""/></div>
+            <div class="fileinput-preview fileinput-exists thumbnail"
+                 style="max-width: 200px; max-height: 200px;">
+                {% if url is defined and url is not empty %}
+                    <img src="{{asset(url)}}" alt=""/>
+                {% endif %}
+            </div>
+            <div>
+                <span class="btn default btn-file">
+                    <span class="fileinput-new "> Select/Change image </span>
+                    <span class="fileinput-exists"> Select/Change image </span>
+                    <input type="file" {{ block('widget_attributes') }}> </span>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block _personnel_form_receivedFunds_row %}
+    <h4>{{ form.vars.label }} </h4>
+    <div class="row">
+        <div class="col-lg-12">
+            <table id="{{form.vars.id}}"
+                   class="table collection-form-control table-striped table-bordered table-hover table-header-fixed table-checkable order-column"
+                   data-prototype="{{ form_widget(form.vars.prototype)|e }}">
+                <tr>
+                    <th width="30px">সিরিয়াল</th>
+                    <th>তহবিল ধরন</th>
+                    <th width="200px">অর্থের পরিমাণ</th>
+                    <th>তারিখ</th>
+                    <th width="20px">
+                        <a href="javascript:;" class="add-new-collection-entry" data-ref="#{{ form.vars.id }}">
+                            <i class="fa fa-plus btn btn-sm green"></i>
+                        </a>
+                    </th>
+                </tr>
+                {% for index, fundField in form %}
+                    <tr>
+                        {% include "@Personnel/Default/_template/_fund_receive.html.twig" with {form: fundField, i:index+1, server: true} %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block _personnel_form_families_entry_widget %}
+    {% include "@Personnel/Default/_template/_family.html.twig" with {form: form} %}
+{% endblock %}
+
+{% block _personnel_form_families_row %}
+    <h4>{{ form.vars.label }} </h4>
+    <div class="row">
+        <div class="col-lg-12">
+            <table id="{{form.vars.id}}"
+                   class="table collection-form-control table-striped table-bordered table-hover table-header-fixed table-checkable order-column"
+                   data-prototype="{{ form_widget(form.vars.prototype)|e }}">
+                <tr>
+                    <th width="15%">নাম</th>
+                    <th width="14%">সম্পর্ক</th>
+                    <th width="8%">এনওকে%</th>
+                    <th width="15%">জন্ম তারিখ</th>
+                    <th width="15%">জন্ম নিবন্ধন/জাতীয় পরিচয়পত্র</th>
+                    <th width="14%">যোগাযোগের নম্বর</th>
+                    <th width="14%">পেশা </th>
+                    <th width="15%">ঠিকানা</th>
+                    <th width="2%">
+                        <a href="javascript:;" class="add-new-collection-entry" data-ref="#{{ form.vars.id }}">
+                            <i class="fa fa-plus btn btn-sm green"></i>
+                        </a>
+                    </th>
+                </tr>
+                {% for index, item in form %}
+                    <tr>
+                        {% include "@Personnel/Default/_template/_family.html.twig" with {form: item, i:index+1, server: true} %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block _personnel_form_employmentInformations_entry_widget %}
+    {% include "@Personnel/Default/_template/_employment.html.twig" with {form: form} %}
+{% endblock %}
+
+{% block _personnel_form_employmentInformations_row %}
+    <h4>{{ form.vars.label }} </h4>
+    <div class="row">
+        <div class="col-lg-12">
+            <table id="{{form.vars.id}}"
+                   class="table collection-form-control table-striped table-bordered table-hover table-header-fixed table-checkable order-column"
+                   data-prototype="{{ form_widget(form.vars.prototype)|e }}">
+                <tr>
+                    <th width="2%">সিরিয়াল</th>
+                    <th width="15%">ইউনিট</th>
+                    <th width="15%">তারিখ হইতে</th>
+                    <th width="15%">তারিখ পর্যন্ত</th>
+                    <th width="15%">শাখা</th>
+                    <th width="2%">
+                        <a href="javascript:;" class="add-new-collection-entry" data-ref="#{{ form.vars.id }}">
+                            <i class="fa fa-plus btn btn-sm green"></i>
+                        </a>
+                    </th>
+                </tr>
+                {% for index, item in form %}
+                    <tr>
+                        {% include "@Personnel/Default/_template/_employment.html.twig" with {form: item, i:index+1, server: true} %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block _personnel_form_specialDiseases_entry_widget %}
+    {% include "@Personnel/Default/_template/_special_disease.html.twig" with {form: form} %}
+{% endblock %}
+
+{% block _personnel_form_specialDiseases_row %}
+    <h4>{{ form.vars.label }} </h4>
+    <div class="row">
+        <div class="col-lg-12">
+            <table id="{{form.vars.id}}"
+                   class="table collection-form-control table-striped table-bordered table-hover table-header-fixed table-checkable order-column"
+                   data-prototype="{{ form_widget(form.vars.prototype)|e }}">
+                <tr>
+                    <th width="20%">রোগের নাম</th>
+                    <th width="18%">আক্ৰান্ত হবার তারিখ</th>
+                    <th width="20%">রোগ নিরুপনকারী কর্তৃপক্ষ</th>
+                    <th width="20%">চিকিৎসা</th>
+                    <th width="20%">মন্তব্য</th>
+                    <th width="2%">
+                        <a href="javascript:;" class="add-new-collection-entry" data-ref="#{{ form.vars.id }}">
+                            <i class="fa fa-plus btn btn-sm green"></i>
+                        </a>
+                    </th>
+                </tr>
+                {% for index, item in form %}
+                    <tr>
+                        {% include "@Personnel/Default/_template/_special_disease.html.twig" with {form: item, i:index+1, server: true} %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block _personnel_form_educations_entry_widget %}
+    {% include "@Personnel/Default/_template/_education.html.twig" with {form: form} %}
+{% endblock %}
+
+{% block _personnel_form_educations_row %}
+    <h4>{{ form.vars.label }}</h4>
+    <div class="row">
+        <div class="col-lg-12">
+            <table id="{{form.vars.id}}"
+                   class="table collection-form-control table-striped table-bordered table-hover table-header-fixed table-checkable order-column"
+                   data-prototype="{{ form_widget(form.vars.prototype)|e }}">
+                <tr>
+                    <th>সনদ</th>
+                    <th>প্রতিষ্ঠান</th>
+                    <th width="120px">প্রকার</th>
+                    <th width="120px">গ্রেড</th>
+                    <th width="100px">পাসের তারিখ</th>
+                    <th width="20px">
+                        <a href="javascript:;" class="add-new-collection-entry" data-ref="#{{ form.vars.id }}">
+                            <i class="fa fa-plus btn btn-sm green"></i>
+                        </a>
+                    </th>
+                </tr>
+                {% for index, item in form %}
+                    <tr id="{{ item.vars.id }}" data-index="{{ index }}">
+                        {% include "@Personnel/Default/_template/_education.html.twig" with {form: item, i:index+1, server: true} %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block _personnel_form_trainings_entry_widget %}
+    {% include "@Personnel/Default/_template/_training.html.twig" with {form: form} %}
+{% endblock %}
+
+{% block _personnel_form_trainings_row %}
+    <h4>{{ form.vars.label }}</h4>
+    <div class="row">
+        <div class="col-lg-12">
+            <table id="{{form.vars.id}}"
+                   class="table collection-form-control table-striped table-bordered table-hover table-header-fixed table-checkable order-column"
+                   data-prototype="{{ form_widget(form.vars.prototype)|e }}">
+                <tr>
+                    <th width="30px">সিরিয়াল</th>
+                    <th>কোর্স</th>
+                    <th>প্রতিষ্ঠান</th>
+                    <th width="200px">স্থিতিকাল</th>
+                    <th>মন্তব্য</th>
+                    <th width="20px">
+                        <a href="javascript:;" class="add-new-collection-entry" data-ref="#{{ form.vars.id }}">
+                            <i class="fa fa-plus btn btn-sm green"></i>
+                        </a>
+                    </th>
+                </tr>
+                {% for index, item in form %}
+                    <tr>
+                        {% include "@Personnel/Default/_template/_training.html.twig" with {form: item, i:index+1, server: true} %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block _personnel_form_careers_entry_widget %}
+    {% include "@Personnel/Default/_template/_career.html.twig" with {form: form} %}
+{% endblock %}
+
+{% block _personnel_form_careers_row %}
+    <h4>{{ form.vars.label }}</h4>
+    <div class="row">
+        <div class="col-lg-12">
+            <table id="{{form.vars.id}}"
+                   class="table collection-form-control table-striped table-bordered table-hover table-header-fixed table-checkable order-column"
+                   data-prototype="{{ form_widget(form.vars.prototype)|e }}">
+                <tr>
+                    <th width="30px">সিরিয়াল</th>
+                    <th>কৃতিত্ব</th>
+                    <th width="200px">তারিখ</th>
+                    <th>তমন্তব্য</th>
+                    <th width="20px">
+                        <a href="javascript:;" class="add-new-collection-entry" data-ref="#{{ form.vars.id }}">
+                            <i class="fa fa-plus btn btn-sm green"></i>
+                        </a>
+                    </th>
+                </tr>
+                {% for index, item in form %}
+                    <tr>
+                        {% include "@Personnel/Default/_template/_career.html.twig" with {form: item, i:index+1, server: true} %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block _personnel_form_servicesInfo_entry_widget %}
+    {% include "@Personnel/Default/_template/_service_info.html.twig" with {form: form} %}
+{% endblock %}
+
+{% block _personnel_form_servicesInfo_row %}
+    <h4>{{ form.vars.label }}</h4>
+    <div class="row">
+        <div class="col-lg-12">
+            <table id="{{form.vars.id}}"
+                   class="table collection-form-control table-striped table-bordered table-hover table-header-fixed table-checkable order-column"
+                   data-prototype="{{ form_widget(form.vars.prototype)|e }}">
+                <tr>
+                    <th width="30px">সিরিয়াল</th>
+                    <th>পোস্টিং/প্রোমোশন/ এ পি পি টি /মিশন/ এস টি এম কে</th>
+                    <th width="200px">তারিখ</th>
+                    <th>মন্তব্য</th>
+                    <th width="20px">
+                        <a href="javascript:;" class="add-new-collection-entry" data-ref="#{{ form.vars.id }}">
+                            <i class="fa fa-plus btn btn-sm green"></i>
+                        </a>
+                    </th>
+                </tr>
+                {% for index, item in form %}
+                    <tr>
+                        {% include "@Personnel/Default/_template/_service_info.html.twig" with {form: item, i:index+1, server: true} %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,30 @@
+<tr>
+    <td class="text-center">{{ head.code|bn_number }}</td>
+    <td>{{ head.titleEn }}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td></td>
+    <td>লক্ষ্যমাত্রা</td>
+    <td class="text-right">{{ reportData[type][head.id ~'-first']|default(0)|bn_number_format }}</td>
+    <td class="text-right">{{ reportData[type][head.id ~'-second']|default(0)|bn_number_format }}</td>
+    <td class="text-right">{{ reportData[type][head.id ~'-third']|default(0)|bn_number_format }}</td>
+    <td class="text-right">{{ reportData[type][head.id ~'-fourth']|default(0)|bn_number_format }}</td>
+    <td class="text-right child-row-total">{{ data['budgetInfo'][head.id]['amount']|default(0)|encodeBudgetAmount|bn_number_format }}</td>
+    <td></td>
+</tr>
+<tr class="odd gradeX">
+    <td></td>
+    <td>প্রকৃত</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>

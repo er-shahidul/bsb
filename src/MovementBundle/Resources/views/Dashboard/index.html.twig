@@ -1,0 +1,59 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Movement Dashboard' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block header_title %}{{ pageTitle }}{% endblock header_title %}
+
+{% block body %}
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="col-md-12">
+
+                <div class="portlet box blue">
+
+                    <div class="portlet-title">
+                        <div class="caption caption-md">
+                            <i class="icon-bar-chart theme-font hide"></i>
+                            <span class="caption">Movement Management</span>
+                        </div>
+                    </div>
+
+                    <div class="portlet-body">
+
+                    <div class="row">
+
+                            <div class="col-lg-2 col-md-4 col-xs-12">
+                                <div class="mt-element-ribbon bg-grey-steel">
+                                    <div class="ribbon ribbon-color-default uppercase">General Movement</div>
+                                    <p class="ribbon-content text-right">
+                                        <a href="{{ path('movement_general_list') }}" class="btn btn-success">View</a>
+                                    </p>
+                                </div>
+                            </div>
+
+                            {% if is_granted('ROLE_ESTABLISHMENT_CLERK') or is_granted('ROLE_DIRECTOR') %}
+                                <div class="col-lg-2 col-md-4 col-xs-12">
+                                    <div class="mt-element-ribbon bg-grey-steel">
+                                        <div class="ribbon ribbon-color-default uppercase">Director Movement</div>
+                                        <p class="ribbon-content text-right">
+                                            <a href="{{ path('movement_director_list') }}" class="btn btn-success">View</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <div class="col-lg-2 col-md-4 col-xs-12">
+                                <div class="mt-element-ribbon bg-grey-steel">
+                                    <div class="ribbon ribbon-color-default uppercase">Secretary Movement</div>
+                                    <p class="ribbon-content text-right">
+                                        <a href="{{ path('movement_secretary_list') }}" class="btn btn-success">View</a>
+                                    </p>
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}

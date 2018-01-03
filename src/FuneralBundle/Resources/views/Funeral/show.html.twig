@@ -1,0 +1,153 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Funeral Show' %}
+
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/global/css/profile.min.css') }}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="profile-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="portlet light ">
+                            <div class="portlet-title tabbable-line">
+                                <h3 class="text-capitalize">Funeral </h3>
+                            </div>
+                            <div class="portlet-body">
+                                    <div class="active" id="personal-info">
+                                        <div class="row">
+                                            <div class="col-sm-12"><br/></div>
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-2">
+                                                    Personal No :
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    {{ funeral.exServiceman.identityNumber|default('N/A') }}
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    Name :
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    {{ funeral.exServiceman.name|default('N/A') }}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12"><br/></div>
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-2">
+                                                    Service Group :
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    {{ funeral.exServiceman.service|default('N/A') }}
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    Rank :
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    {{ funeral.exServiceman.rank|default('N/A') }}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12"><br/></div>
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-2">
+                                                    Regiment/Corps :
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    {{ funeral.exServiceman.corp|default('N/A') }}
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    Deceased Date :
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    {{ funeral.deceasedDate|date('jS F, Y') }}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12"><br/></div>
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-2">
+                                                    Deceased Place :
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    {{ funeral.deceasedPlace|default('N/A') }}
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    Burial place :
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    {{ funeral.burialPlace|default('N/A') }}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12"><br/></div>
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-2">
+                                                    Amount :
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    {{ funeral.amount|default('N/A') }}
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    Responsible Base/Area/Unit :
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    {{ funeral.baseAreaUnit|default('N/A') }}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12"><br/></div>
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-2">
+                                                    Cause of Death :
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    {{ funeral.deceasedReason|default('N/A') }}
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    Details of Expenditure :
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    {{ funeral.expenditure|default('N/A') }}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12"><br/></div>
+                                            <div class="col-sm-12">
+                                                <div class="tab-pane" id="attachments-information">
+                                                    <div class="portlet-body">
+                                                        {% include "@App/_template/_attachments_list.html.twig" with {attachments: funeral.attachments} %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-actions margin-top-20">
+                                            {% block workflow_content %}
+                                                <div class="row">
+
+                                                    <div class="col-md-12 text-right">
+
+                                                        {% if is_granted('edit:funeral', funeral) %}
+                                                            <a class="btn btn-primary" href="{{ path(('funeral_edit'), {id: funeral.id}) }}">Edit</a>
+                                                        {% endif %}
+
+                                                        {% include '@Budget/CommonViewBlock/_workflow_action.html.twig' with {entity: funeral, workflow_name: 'funeral', entityClass: entityClass, title: 'Funeral Workflow'} %}
+                                                    </div>
+
+                                                    {% include '@Budget/CommonViewBlock/_workflow_comments.html.twig' with {remarks: funeral.stepRemarks} %}
+
+                                                </div>
+                                            {% endblock workflow_content %}
+                                        </div>
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}

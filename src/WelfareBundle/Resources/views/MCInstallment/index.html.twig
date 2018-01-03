@@ -1,0 +1,46 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Micro Credit Installment Installment' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row">
+        <div class="col-sm-12">
+
+            {% include '@App/layout-component/flash.html.twig' %}
+
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }}</span>
+                    </div>
+
+                    <div class="actions">
+                        {% block action_buttons %}
+                        {% endblock %}
+                    </div>
+                </div>
+
+                <div class="portlet-body">
+                    {% include '@Welfare/MCInstallment/recipient.html.twig' %}
+                    <h4>Installment Installments</h4>
+                    {% include '@Welfare/MCInstallment/installment.html.twig' %}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+    .form-group {margin-bottom: auto;}
+    </style>
+{% endblock %}
+
+
+

@@ -1,0 +1,60 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+    <h4 class="modal-title">Application Comments</h4>
+</div>
+{{ form is defined ? form_start(form, {'action': path('welfare_member_application_comments',
+    {application: application.id}), 'method': 'POST', 'attr': {'id' : 'form-comments', 'novalidate': 'novalidate'}}) }}
+<div class="modal-body">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <table class="table">
+                <tr>
+                    <th>Participant</th>
+                    <th>Comment</th>
+                    <th>Date</th>
+                </tr>
+                {% if application.memberComments %}
+                    {% for comment in application.memberComments %}
+                        <tr>
+                            <td>{{ comment['by']['name'] }} ({{ comment['by']['designation'] }})</td>
+                            <td>{{ comment['comment'] }}</td>
+                            <td>{{ comment['on'] }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="3" style="text-align: center">No comment found</td></tr>
+                {% endif %}
+            </table>
+
+
+        </div>
+    </div>
+    <div class="row" id="">
+        <div class="col-sm-12">
+
+            {% include '@App/layout-component/flash.html.twig' %}
+
+            {% if form is defined %}
+                {{ form_errors(form) }}
+                {{ form_row(form.memberComments) }}
+                {% if form.amount is defined %}
+                    {{ form_row(form.amount) }}
+                {% endif %}
+                {% if form.microCreditDetail.installmentAmount is defined %}
+                    {{ form_row(form.microCreditDetail.installmentAmount) }}
+                {% endif %}
+            {% endif %}
+            {{ policyText|raw }}
+        </div>
+
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+    {% if form is defined %}<button type="submit" class="btn green">Save changes</button>{% endif %}
+</div>
+{{ form is defined ? form_end(form) }}
+
+
+

@@ -1,0 +1,25 @@
+{% extends '@App/report-base.html.twig' %}
+
+{%- block page_size %}A4-L{%- endblock  %}
+
+{% block page_header_footer %}
+    <htmlpagefooter name="everyPageFooter">
+        <div style="text-align:center">{PAGENO}</div>
+    </htmlpagefooter>
+{% endblock %}
+
+{% block report_header %}
+    <div class="text-center font-size-13 underline">
+        রিকনসিলিয়েশন স্টেটমেন্ট
+    </div>
+    <div class="text-center">
+        {{ bankAccount.name }} {{ (year~'-'~month)|date_bn('F Y') }}
+    </div>
+{% endblock %}
+
+{% block report_body %}
+
+    <div id="pdf-report-page">
+        {% include '@Account/Report/reconciliation/_reconciliation-body.html.twig' %}
+    </div>
+{% endblock %}

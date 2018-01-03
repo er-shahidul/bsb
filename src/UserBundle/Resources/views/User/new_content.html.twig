@@ -1,0 +1,59 @@
+{{ form_start(form, {'method': 'POST', 'attr': {'novalidate': 'novalidate', 'data-ref': app.request.attributes.get('id')}}) }}
+
+    <h4>{{ 'User Login Information' }}</h4>
+
+    <div class="row">
+        <div class="col-sm-6">
+            {% if form.username is defined %}
+                {{ form_row(form.username, { 'attr': {'class': ''} }) }}
+            {% else %}
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">{{ "Username" }}</label>
+                    <div class="col-sm-8 bold" style="cursor:not-allowed;">
+                        <span class="form-control">{{ user.username }}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Role</label>
+                    <div class="col-sm-8 bold" style="cursor:not-allowed;">
+                        <span class="form-control">{{ user.groups[0].name }}</span>
+                    </div>
+                </div>
+            {% endif %}
+            {{ form_row(form.email, { 'attr': {'class': ''} }) }}
+            {% if form.plainPassword is defined %}
+                {{ form_row(form.plainPassword.first) }}
+            {% endif %}
+            {% if form.plainPassword is defined %}
+                {{ form_row(form.plainPassword.second, { 'attr': {'class': ''} }) }}
+            {% endif %}
+            {% if form.office is defined %}
+                {{ form_row(form.office) }}
+            {% endif %}
+            {{ form_row(form.profile, { 'attr': {'class': ''} }) }}
+            {% if form.dispensary is defined %}
+                {{ form_row(form.dispensary) }}
+            {% endif %}
+
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-4">
+                    <label class="mt-checkbox mt-checkbox-outline" for="{{ form.enabled.vars.id }}">
+                        {{form_widget(form.enabled)}} Enabled
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            {% if form.groups is defined %}
+                {{ form_row(form.groups) }}
+            {% endif %}
+        </div>
+
+    </div>
+
+    <hr>
+    {{ form_row(form.submit, { 'attr': {'class': 'btn green'} }) }}
+
+{{ form_end(form) }}

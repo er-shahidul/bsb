@@ -1,0 +1,57 @@
+{% extends "@App/base.html.twig" %}
+
+{% set pageTitle = medicine.id ? 'Edit Medicine' : 'Create Medicine' %}
+
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% form_theme form.enabled ':form:checkbox.html.twig' %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="profile">
+                        <div class="tabbable-line tabbable-full-width">
+                            {{ form_start(form, {'method': 'POST', 'attr': {'novalidate': 'novalidate', 'class': 'jq-validate'}}) }}
+
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    {{ form_row(form.name) }}
+                                    {{ form_row(form.accountUnit) }}
+                                    {{ form_row(form.sort) }}
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-2">
+                                            <label class="mt-checkbox mt-checkbox-outline"
+                                                   for="{{ form.enabled.vars.id }}">
+                                                {{ form_widget(form.enabled) }} Enabled
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-success uppercase pull-right">Submit</button>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Dashboard' %}
+{% block title %}{{ parent() }} | Users{% endblock %}
+{% block pageTitle %}<h1>{{ pageTitle }}</h1>{% endblock %}
+{% block page_title %}{{ pageTitle }}{% endblock %}
+
+{% block header_title %}{{ pageTitle }}{% endblock header_title %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+
+                <div class="portlet-body">
+
+                    <div class="col-lg-2 col-md-4 col-xs-12">
+                        <div class="mt-element-ribbon bg-grey-steel">
+                            <div class="ribbon ribbon-color-default uppercase">My Tasks</div>
+                            <p class="ribbon-content text-right">
+                                <a href="{{ path('my-tasks') }}" class="btn btn-success">Go</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    {% if is_granted(['ROLE_BUDGET', 'DASB_USER']) %}
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Budget Dashboard</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('budget_dashboard') }}" class="btn btn-success">Go</a>
+                                </p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if is_granted(['ROLE_ACCOUNT', 'DASB_USER']) %}
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Account Dashboard</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('account_dashboard') }}" class="btn btn-success">Go</a>
+                                </p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if is_granted(['ROLE_MEDICAL', 'DASB_USER']) %}
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Medical Dashboard</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('medical_dashboard') }}" class="btn btn-success">Go</a>
+                                </p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if is_granted(['ROLE_DASB_CLERK']) %}
+                    <div class="col-lg-2 col-md-4 col-xs-12">
+                        <div class="mt-element-ribbon bg-grey-steel">
+                            <div class="ribbon ribbon-color-default uppercase">Welfare Applications</div>
+                            <p class="ribbon-content text-right">
+                                <a href="{{ path('welfare_ex_serviceman_search') }}" class="btn btn-success">Go</a>
+                            </p>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}

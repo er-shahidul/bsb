@@ -1,0 +1,108 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Budget Amendment View' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">List of {{ pageTitle }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+
+                    <div class="row">
+                        <div style="overflow: scroll">
+                            <table class="table table-striped table-bordered table-hover table-header-fixed table-checkable order-column">
+                                <thead>
+                                <tr>
+                                    <th>SL</th>
+                                    <th>Code</th>
+                                    <th>Account Head</th>
+                                    <th class="text-right">Sanction Amount</th>
+                                    <th class="text-right">Distributed Amount</th>
+                                    <th class="text-right">Remaining Amount</th>
+                                    <th class="text-right">Amendment Amount</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% set sl = 1 %}
+                                {% for parentHead in budgetHead %}
+                                    <tr class="odd gradeX">
+                                        <td colspan="7" style="background-color: #c1cbd0"><strong>{{ parentHead.titleEn }}</strong></td>
+                                    </tr>
+
+                                    {% for childHead in parentHead.child %}
+                                        <tr class="odd gradeX">
+                                            <td width="50">{{ sl }}</td>
+                                            <td width="80">{{ childHead.code }}</td>
+                                            <td>{{ childHead.titleEn }}</td>
+                                            <td class="text-right" width="150">{{ budgetAmount['data'][childHead.id]['sanctionAmount']|default('')|number_format() }}</td>
+                                            <td class="text-right" width="150">{{ budgetAmount['data'][childHead.id]['distributedAmount']|default('')|number_format() }}</td>
+                                            <td class="text-right" width="150">{{ budgetAmount['data'][childHead.id]['remainingAmount']|default('')|number_format() }}</td>
+                                            <td class="text-right" width="150">{{ budgetAmount['data'][childHead.id]['amendmentRequestAmount'] }}</td>
+                                        </tr>
+                                        {% set sl = sl + 1 %}
+                                    {% endfor %}
+                                {% endfor %}
+                                </tbody>
+
+                                <tr>
+                                    <th colspan="3"></th>
+                                    <th class="text-right">{{ budgetAmount['total']['sanctionAmount']|default(0)|number_format() }}</th>
+                                    <th class="text-right">{{ budgetAmount['total']['distributedAmount']|default(0)|number_format() }}</th>
+                                    <th class="text-right">{{ budgetAmount['total']['remainingAmount']|default(0)|number_format() }}</th>
+                                    <th class="text-right total-amount">{{ budgetAmount['total']['amendmentRequestAmount']|default(0)|number_format() }}</th>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-actions margin-top-20">
+                        {% block workflow_content %}
+                            <div class="row">
+
+                                <div class="col-md-12 text-right">
+
+                                    {% if is_granted('edit:budget_compilation:amendmentrequest_wait_for_clerk', budgetSummary) %}
+                                        <a class="btn btn-primary" href="{{ path('budget_amendment_update', {id: budgetSummary.id}) }}">Edit</a>
+                                    {% endif %}
+
+                                    {% if 'amendmentrequest' in budgetSummary.status %}
+                                    {% include '@Budget/CommonViewBlock/_workflow_action.html.twig' with {entity: budgetSummary, workflow_name: 'budget_compilation', entityClass: 'BudgetBundle:BudgetSummary', title: 'Budget Workflow'} %}
+                                    {% endif %}
+                                </div>
+
+                                {% include '@Budget/CommonViewBlock/_workflow_comments.html.twig' with {remarks: budgetSummary.amendmentRemarks} %}
+
+                            </div>
+                        {% endblock workflow_content %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/budget/js/basb_budget.js') }}"></script>
+{% endblock include_javascripts %}
+
+{% block document_ready %}
+    {{ parent() }}
+    BASBBudget.budgetCompilationInit();
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Account Dashboard' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    {% include '@App/layout-component/flash.html.twig' %}
+
+    {% if is_granted('DASB_USER') or is_granted('ROLE_MEDICINE') %}
+        <div class="col-md-12">
+            <div class="portlet box blue">
+
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption">Accounts</span>
+                    </div>
+                </div>
+
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Medicine Requisition</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('medical_requisition_list') }}" class="btn btn-success">View</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="portlet box blue">
+
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption">Report</span>
+                    </div>
+                </div>
+
+                <div class="portlet-body">
+                    <div class="row">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="col-md-12 text-center">
+            <h2>You don't have permission to access account module</h2>
+        </div>
+    {% endif %}
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}

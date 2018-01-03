@@ -1,0 +1,11 @@
+{% extends "WelfareBundle:BoardMeeting:base_meeting.html.twig" %}
+
+{% block list_title %}
+    <h4><strong> Nominated Application List - {{ meeting.createdAt|date('M Y') }}</strong></h4>
+{% endblock %}
+
+{% block workflowAction %}
+    {% include '@Budget/CommonViewBlock/_workflow_action.html.twig' with {entity: meeting, workflow_name: 'board_meeting', entityClass: 'BoardMeetingBundle:BoardMeeting', title: 'BSCR Board Meeting'} %}
+{% endblock %}
+
+{% block page_title %}{{ parent() }} | {{ meeting.type|upper }} Meeting: {{ meeting.subject }} {% endblock %}

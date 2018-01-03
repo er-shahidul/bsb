@@ -1,0 +1,12 @@
+function draw_callback(settings){
+
+    var api = this.api();
+
+    setTimeout(function(){
+
+        api.buttons().container().appendTo( $('.actions' ) );
+        $('.dt-buttons a').addClass('btn green');
+
+    }, 10);
+
+}

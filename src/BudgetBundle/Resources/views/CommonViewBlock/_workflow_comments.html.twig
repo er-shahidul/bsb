@@ -1,0 +1,22 @@
+<div class="col-md-12 margin-top-20">
+    <table class="table">
+        <tr>
+            <th colspan="3" class="text-center">Action History</th>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <th>Date & Time</th>
+            <th>Remarks</th>
+        </tr>
+        {% for remark in remarks %}
+            <tr>
+                <td>{{ remark.by.fullName }} ({{ remark.by.designation|default('') }})</td>
+                <td>{{ remark.on }}</td>
+                <td>{{ remark.remarks }}</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="3">No comments available</td></tr>
+        {% endfor %}
+    </table>
+
+</div>

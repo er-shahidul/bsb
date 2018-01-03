@@ -1,0 +1,18 @@
+{% if (form.vars['data'] and form.vars['data'].readonly) %}
+    <td class="sn">{{ i|default('') }}</td>
+    <td class="form-group">{{ form.vars['data'].fundType }}</td>
+    <td class="form-group">{{ form.vars['data'].amount }}</td>
+    <td class="form-group">{{ form.vars['data'].date|date('Y-m-d') }}</td>
+    <td width="20px">
+        {{ form_widget(form.readonly) }}
+    </td>
+{% else %}
+    <td class="sn">{{ i|default('') }}</td>
+    <td class="form-group">{{ form_widget(form.fundType) }}</td>
+    <td class="form-group">{{ form_widget(form.amount) }}</td>
+    <td class="form-group">{{ form_widget(form.date) }}</td>
+    <td width="20px">
+        {{ form_widget(form.readonly) }}
+        <a class="remove" data-server="{{ server|default('') }}" href="javascript;"><i class="fa fa-close btn btn-xs red"></i></a>
+    </td>
+{% endif %}

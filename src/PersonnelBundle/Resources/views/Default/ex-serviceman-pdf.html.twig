@@ -1,0 +1,437 @@
+{% extends '@App/report-base.html.twig' %}
+
+{%- block page_size %}legal-P{%- endblock  %}
+
+{% block stylesheets %}
+    <style>
+        {#{% include '@App/report.css.twig' %}#}
+        table {
+            width: 100%;
+        }
+
+        .table {
+            margin-right: -10px;
+            margin-left: -10px
+        }
+
+        #pdf-report-page table.table_edu, #pdf-report-page .table_edu td, #pdf-report-page .table_edu th {
+            border: 1px solid black;
+            padding: 3px;
+            border-spacing: 0px;
+            border-collapse: collapse;
+        }
+
+        #pdf-report-page td, #pdf-report-page th {
+            font-size: 12px;
+            font-family: solaimanlipi;
+        }
+
+        table.table tbody td, table.table thead th {
+            height: 40px;
+
+        }
+
+        table.table_edu tbody td, table.table_edu thead th {
+            height: 30px;
+            font-weight: normal;
+        }
+
+        .width-35 {
+            width: 35%;
+        }
+
+        .width-30 {
+            width: 30%;
+        }
+
+        .width-25 {
+            width: 25%;
+        }
+
+        .width-20 {
+            width: 20%;
+        }
+
+        .width-15 {
+            width: 15%;
+        }
+
+        .width-10 {
+            width: 10%;
+        }
+
+        .border {
+            border: 1px solid #000000
+        }
+
+        h4 {
+            margin-bottom: 5px;
+        }
+    </style>
+{% endblock %}
+
+{% block report_header %}
+    <div class="text-center">
+
+        <div style="width: 100px;height: 70px; float: right; text-align: center;padding-top: 40px;" class="border">ছবি</div>
+        <div style="width: auto;float: right; text-align: center;"><h2>সশস্ত্র বাহিনীর অবসরপ্রাপ্ত সদস্যের জীবনবৃত্তান্ত</h2></div>
+    </div>
+
+{% endblock %}
+
+{% block report_body %}
+
+    <div class="width-100" id="pdf-report-page">
+        <h4>ব্যক্তিগত তথ্য</h4>
+        <table class="table width-100" style="border: none; border-spacing: 10px; border-collapse: separate;">
+
+            <tbody>
+            <tr>
+                <td class="width-15">ব্যক্তিগত নম্বর</td>
+                <td class="border width-35"></td>
+                <td class="width-15">টি এস নম্বর</td>
+                <td class="border width-35"></td>
+            </tr>
+            <tr>
+                <td class="width-15">বাহিনী</td>
+                <td class="border width-35"></td>
+                <td class="width-15">কোর/রেজিমেন্ট </td>
+                <td class="border width-35"></td>
+            </tr>
+            <tr>
+                <td class="width-15">পদবী</td>
+                <td class="border width-35"></td>
+                <td class="width-15">ট্রেড</td>
+                <td class="border width-35"></td>
+            </tr>
+            <tr>
+                <td class="width-15">বিশেষ যোগ্যতা</td>
+                <td colspan="3" class="width-35">
+                    <input type="checkbox"> আর্মি কমান্ডো কোর্স <input type="checkbox"> স্নাইপার কোর্স <input type="checkbox"> বিস্ফোরক কোর্স
+                    <input type="checkbox"> এ্যামোনিশন টেকনিশিয়ান <input type="checkbox"> বিএমএ অথবা এস আই&টি
+                </td>
+            </tr>
+            <tr>
+                <td class="width-15">নাম</td>
+                <td class="border width-35"></td>
+                <td class="width-15">জন্ম তারিখ </td>
+                <td class="border width-35"></td>
+            </tr>
+            <tr>
+                <td class="width-15">ভর্তির তারিখ</td>
+                <td class="border width-35"></td>
+                <td class="width-15">অবসরের তারিখ</td>
+                <td class="border width-35"></td>
+            </tr>
+            <tr>
+
+                <td class="width-15">অবসরের প্রকার</td>
+                <td class="width-35"><input type="checkbox"> স্বাভাবিক  <input type="checkbox"> অক্ষম <input type="checkbox"> অকালীন
+                    <br><input type="checkbox"> স্বেচ্ছায় <input type="checkbox"> বাধ্যতামূলক <input type="checkbox"> বরখাস্ত</td>
+                <td class="width-15">শেষ কর্তব্যরত ইউনিট</td>
+                <td class="border width-35"></td>
+            </tr>
+            <tr>
+                <td style="vertical-align: text-top" class="">অক্ষমতার কারণ</td>
+                <td style="height: 100px" colspan="3" class="border"></td>
+            </tr>
+            <tr>
+                <td class="width-15">শৃঙ্খলাবোধ</td>
+                <td class="border width-35"></td>
+                <td class="width-15">ডি এ এস বি</td>
+                <td class="border width-35"></td>
+            </tr>
+            <tr>
+
+                <td class="width-15">সংরক্ষিত সময়সীমা</td>
+                <td class="border width-35"></td>
+                <td class="width-15">লিঙ্গ</td>
+                <td class="width-35"><input type="checkbox"> পুরুষ  <input type="checkbox"> মহিলা</td>
+            </tr>
+
+            <tr>
+                <td class="width-15">মোবাইল নম্বর</td>
+                <td class="border width-35"></td>
+                <td class="width-15">ইমেইল</td>
+                <td class="border width-35"></td>
+
+            </tr>
+            <tr>
+                <td class="width-15">রক্তের গ্রুপ</td>
+                <td class="border width-35"></td>
+                <td class="width-15">ধর্ম</td>
+                <td class="border width-35"></td>
+
+            </tr>
+            <tr>
+                <td class="width-15">জাতীয়তা</td>
+                <td class="border width-35"></td>
+                <td class="width-15">জাতীয় পরিচয় পত্রের নম্বর</td>
+                <td class="border width-35"></td>
+            </tr>
+
+            <tr>
+                <td class="width-15">মৃত/জীবিত</td>
+                <td class="width-35"><input type="checkbox"> মৃত  <input type="checkbox"> জীবিত</td>
+                <td class="width-15">মৃত্যু তারিখ</td>
+                <td class="border width-35"></td>
+            </tr>
+            <tr>
+                <td class="width-15">উত্তরাধিকার নাম</td>
+                <td class="border width-35"></td>
+                <td class="width-15">সম্পর্ক</td>
+                <td class="border width-35"></td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table width-100" style="border: none; border-spacing: 10px; border-collapse: separate;">
+            <tbody>
+            <tr>
+                <td class="width-10">মুক্তিযোদ্ধা</td>
+                <td class="width-40"><input type="checkbox"> হ্যা  <input type="checkbox"> না</td>
+                <td class="width-15">বৈদেশিক মিশন</td>
+                <td class="width-35"><input type="checkbox"> হ্যা  <input type="checkbox"> না</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h4>বর্তমান ঠিকানা</h4>
+        <table class="table width-100" style="border: none; border-spacing: 10px; border-collapse: separate;">
+
+            <tbody>
+
+            <tr>
+                <td class="">গ্রাম/মহল্লা/সড়ক</td>
+                <td colspan="3" class="border"></td>
+                <td class="width-15">পোষ্ট অফিস</td>
+                <td class="border"></td>
+            </tr>
+
+            <tr>
+                <td class="width-10">পোষ্ট কোড</td>
+                <td class="border width-25"></td>
+                <td class="width-10">উপজেলা</td>
+                <td class="border width-25"></td>
+                <td class="width-10">জেলা</td>
+                <td class="border width-25"></td>
+            </tr>
+
+            </tbody>
+        </table>
+        <h4>স্থায়ী ঠিকানা</h4>
+        <table class="table width-100" style="border: none; border-spacing: 10px; border-collapse: separate;">
+
+            <tbody>
+
+            <tr>
+                <td class="">গ্রাম/মহল্লা/সড়ক</td>
+                <td colspan="3" class="border"></td>
+                <td class="width-15">পোষ্ট অফিস</td>
+                <td class="border"></td>
+            </tr>
+
+            <tr>
+                <td class="width-10">পোষ্ট কোড</td>
+                <td class="border width-25"></td>
+                <td class="width-10">উপজেলা</td>
+                <td class="border width-25"></td>
+                <td class="width-10">জেলা</td>
+                <td class="border width-25"></td>
+            </tr>
+
+            </tbody>
+        </table>
+        <h4>জরুরি যোগাযোগ</h4>
+        <table class="table width-100" style="border: none; border-spacing: 10px; border-collapse: separate;">
+
+            <tbody>
+            <tr>
+                <td class="width-10">নাম</td>
+                <td class="border width-25"></td>
+                <td class="width-10">সম্পর্ক</td>
+                <td class="border width-25"></td>
+                <td class="width-10">যোগাযোগের নম্বর</td>
+                <td class="border width-25"></td>
+            </tr>
+            <tr>
+                <td class="">ঠিকানা</td>
+                <td colspan="5" class="border"></td>
+            </tr>
+            </tbody>
+
+
+        </table>
+        <h4>পিতামাতার তথ্য</h4>
+        <table class="table_edu width-100">
+            <thead>
+            <tr>
+                <th class="width-20">নাম</th>
+                <th class="width-10">সম্পর্ক</th>
+                <th class="width-10">এনওকে %</th>
+                <th class="width-15">জন্ম তারিখ</th>
+                <th class="width-15">যোগাযোগের নম্বর</th>
+                <th class="width-10">পেশা</th>
+                <th class="width-20">ঠিকানা</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+
+
+        </table>
+        <h4>স্ত্রী ও সন্তানাদির তথ্য</h4>
+        <table class="table_edu width-100">
+            <thead>
+            <tr>
+                <th class="width-20">নাম</th>
+                <th class="width-10">সম্পর্ক</th>
+                <th class="width-10">এনওকে %</th>
+                <th class="width-15">জন্ম তারিখ</th>
+                <th class="width-15">যোগাযোগের নম্বর</th>
+                <th class="width-10">পেশা</th>
+                <th class="width-20">ঠিকানা</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            </tbody>
+
+
+        </table>
+        <h4>শিক্ষাগত যোগ্যতা (বেসামরিক/সামরিক)</h4>
+        <table class="table_edu width-100">
+            <thead>
+            <tr>
+                <th>সনদ</th>
+                <th>শিক্ষা প্রতিষ্ঠান</th>
+                <th>গ্রেড/বিভাগ</th>
+                <th>পাসের সন</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td class="width-20">অষ্টম শ্রেণী</td>
+                <td class="width-40"></td>
+                <td class="width-20"></td>
+                <td class="width-20"></td>
+            </tr>
+            <tr>
+                <td class="width-20">এসএসসি/সমমান</td>
+                <td class="width-40"></td>
+                <td class="width-20"></td>
+                <td class="width-20"></td>
+            </tr>
+            <tr>
+                <td class="width-20">এইচএসসি/সমমান</td>
+                <td class="width-40"></td>
+                <td class="width-20"></td>
+                <td class="width-20"></td>
+            </tr>
+            <tr>
+                <td class="width-20">স্নাতক(পাস/সম্মান)/সমমান</td>
+                <td class="width-40"></td>
+                <td class="width-20"></td>
+                <td class="width-20"></td>
+            </tr>
+            <tr>
+                <td class="width-20">মাস্টার্স/সমমান</td>
+                <td class="width-40"></td>
+                <td class="width-20"></td>
+                <td class="width-20"></td>
+            </tr>
+            <tr>
+                <td class="width-20">উচ্চতর</td>
+                <td class="width-40"></td>
+                <td class="width-20"></td>
+                <td class="width-20"></td>
+            </tr>
+
+            </tbody>
+
+
+        </table>
+        <h4>বিশেষ রোগ</h4>
+        <table class="table_edu width-100">
+            <thead>
+            <tr>
+                <th>রোগের নাম</th>
+                <th>আক্রান্ত হবার তারিখ</th>
+                <th>রোগ নিরুপনকারী কর্তৃপক্ষ</th>
+                <th>চিকিৎসা</th>
+                <th>মন্তব্য</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td style="height: 100px" class="width-20"></td>
+                <td class="width-40"></td>
+                <td class="width-20"></td>
+                <td class="width-20"></td>
+                <td class="width-20"></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+{% endblock %}
+

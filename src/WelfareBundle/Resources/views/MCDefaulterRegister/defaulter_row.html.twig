@@ -1,0 +1,22 @@
+<tr>
+    {% if checkable is same as(true) %}
+    <td>
+        <input value="{{ application.id }}" name="chkDefaulters[]" type="checkbox">
+        <input value="{{ application.id }}" name="hdnDefaulters[]" type="hidden">
+    </td>
+    {% endif %}
+    <td>{{ application.office.name }}</td>
+    <td>{{ application.meeting.subject }}</td>
+    <td>
+        {{ application.serviceMan.name }}<br/>
+        {{ application.serviceMan.rank.name }}<br/>
+        {{ application.serviceMan.identityNumber }}
+    </td>
+    <td>{{ application.microCreditDetail.projectType.id }}</td>
+    <td>{{ application.amount|number_format }}</td>
+    <td>{{ application.microCreditDetail.installmentAmount|number_format }}</td>
+    <td>{{ application.microCreditDetail.totalPaid|number_format }}</td>
+    <td>{{ (application.amount - application.microCreditDetail.totalPaid)|number_format }}</td>
+    <td><a class="btn btn-primary btn-xs" href="{{ path('welfare_micro_credit_payment_history', {id: application.id}) }}">View</a></td>
+</tr>
+

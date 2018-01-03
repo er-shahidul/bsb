@@ -1,0 +1,170 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Account Dashboard' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+        {% include '@App/layout-component/flash.html.twig' %}
+
+        {% if is_granted('DASB_USER') or is_granted('ROLE_ACCOUNT') %}
+        <div class="col-md-12">
+            <div class="portlet box blue">
+
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption">Accounts</span>
+                    </div>
+                </div>
+
+                <div class="portlet-body">
+                    <div class="row">
+                            <div class="col-lg-2 col-md-4 col-xs-12">
+                                <div class="mt-element-ribbon bg-grey-steel">
+                                    <div class="ribbon ribbon-color-default uppercase">Receive Payment</div>
+                                    <p class="ribbon-content text-right">
+                                        <a href="{{ path('account_sanction_receive_index') }}" class="btn btn-success">View</a>
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-2 col-md-4 col-xs-12">
+                                <div class="mt-element-ribbon bg-grey-steel">
+                                    <div class="ribbon ribbon-color-default uppercase">Miscellaneous Payment</div>
+                                    <p class="ribbon-content text-right">
+                                        <a href="{{ path('account_sanction_miscellaneous_index') }}" class="btn btn-success">View</a>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-4 col-xs-12">
+                                <div class="mt-element-ribbon bg-grey-steel">
+                                    <div class="ribbon ribbon-color-default uppercase">Sanction Register</div>
+                                    <p class="ribbon-content text-right">
+                                        <a href="{{ path('account_sanction_entry_index') }}" class="btn btn-success">View</a>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-4 col-xs-12">
+                                <div class="mt-element-ribbon bg-grey-steel">
+                                    <div class="ribbon ribbon-color-default uppercase">Cheque Issue</div>
+                                    <p class="ribbon-content text-right">
+                                        <a href="{{ path('account_cheque_issue_list') }}" class="btn btn-success">View</a>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-4 col-xs-12">
+                                <div class="mt-element-ribbon bg-grey-steel">
+                                    <div class="ribbon ribbon-color-default uppercase">Payment Vouchers</div>
+                                    <p class="ribbon-content text-right">
+                                        <a href="{{ path('account_payment_vouchers_index') }}" class="btn btn-success">View</a>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-4 col-xs-12">
+                                <div class="mt-element-ribbon bg-grey-steel">
+                                    <div class="ribbon ribbon-color-default uppercase">Reconciliation</div>
+                                    <p class="ribbon-content text-right">
+                                        <a href="{{ path('account_reconciliation_index') }}" class="btn btn-success">View</a>
+                                    </p>
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Cheque Return</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('account_cheque_return_index') }}" class="btn btn-success">View</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Bank Accounts</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('account_bank_account_index') }}" class="btn btn-success">View</a>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="portlet box blue">
+
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption">Ledger / Report</span>
+                    </div>
+                </div>
+
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Receive</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('account_ledger_receive') }}" class="btn btn-success">View</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Payment</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('account_ledger_payment') }}" class="btn btn-success">View</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Bank Reconciliation</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('account_report_bank_reconciliation') }}" class="btn btn-success">View</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Payment Voucher</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('account_report_payment_voucher') }}" class="btn btn-success">View</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Receive Voucher</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('account_report_receive_voucher') }}" class="btn btn-success">View</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <div class="col-md-12 text-center">
+                <h2>You don't have permission to access account module</h2>
+            </div>
+        {% endif %}
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}

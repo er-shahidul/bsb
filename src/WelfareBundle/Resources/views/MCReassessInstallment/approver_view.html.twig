@@ -1,0 +1,32 @@
+{% extends "WelfareBundle:MCReassessInstallment:view.html.twig" %}
+
+{% block reset_installment %}
+    {% if (setInstallment is defined)  %}
+        <div class="col-md-12">
+            {% if (not reassessInstallment.installmentAmount)  %}
+                <label class="control-label col-md-2"><strong>Per Installment (TK)</strong>:</label>
+                <div class="col-md-2">
+                    <form id="formSetInstallment" method="post" action="{{ path('welfare_mc_reassess_installment_set', {id: reassessInstallment.id}) }}">
+                        <div class="input-group">
+                            <input class="form-control amount" name="installmentAmount" value="{{ reassessInstallment.installmentAmount }}" type="text">
+                            <span class="input-group-btn">
+                                <button id="setInstallment" class="btn btn-success" type="button">Save</button>
+                            </span>
+                        </div>
+                        <input type="hidden" id="redirectUrl" name="redirectUrl" />
+                    </form>
+                </div>
+            {% else %}
+                <form id="formSetInstallment" method="post" action="{{ path('welfare_mc_reassess_installment_set', {id: reassessInstallment.id}) }}">
+                    <div class="form-group">
+                        <label class="control-label col-md-2"><strong>Per Installment (TK)</strong>:</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"> {{ reassessInstallment.installmentAmount|number_format }} &nbsp;&nbsp;<a id="setInstallment" href="#">Reset Amount</a> </p>
+                        </div>
+                    </div>
+                    <input type="hidden" id="redirectUrl" name="redirectUrl" />
+                </form>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}

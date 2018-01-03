@@ -1,0 +1,335 @@
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="height:30px; text-align:center; vertical-align:middle">
+            <h1>সেনা কল্যান সংস্থা</h1>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px; text-align:center; vertical-align:middle">রাওয়া কমপ্লেক্স&nbsp; ৬ষ্ঠ তলা</td>
+    </tr>
+    <tr>
+        <td style="height:30px; text-align:center; vertical-align:middle">ভিআইপি&nbsp; রোড , মহাখালী , ঢাকা -১২০৬</td>
+    </tr>
+    <tr>
+        <td style="height:30px; text-align:center; vertical-align:middle"><strong>সশস্ত্র&nbsp; বাহিনীর প্রধান / অবসর প্রাপ্ত&nbsp; সদস্যদের বয়োজোষ্ঠ ভাতা</strong>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="height:30px; text-align:center; vertical-align:middle"><strong>(Veteran Allowance) প্রাপ্তির আবেদনপত্র</strong>&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="height:30px; text-align:center; vertical-align:middle">&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="height:30px; text-align:center; vertical-align:middle">
+            <h2><strong>১ম পরিচ্ছেদ</strong>&nbsp;</h2>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px; text-align:center; vertical-align:middle"><strong>(সশস্ত্র বাহিনীর প্রাক্তন /অবসরপ্রাপ্ত&nbsp; সদস্য কর্তৃক পূরণ করিতে হইবে)(সশস্ত্র বাহিনীর প্রাক্তন /অবসরপ্রাপ্ত&nbsp; সদস্য কর্তৃক পূরণ করিতে হইবে)</strong></td>
+    </tr>
+    </tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="height:30px; width:5%">১ |</td>
+        <td style="height:30px; width:10%">আবেদনকারীর নং:</td>
+        <td style="height:30px; width:30%">&nbsp;{{ personnel.identityNumber|default('N/A') }}</td>
+        <td style="height:30px; width:10%">পদবীঃ</td>
+        <td style="height:30px; width:45%">&nbsp;{{ personnel.rank|default('N/A') }}</td>
+    </tr>
+    <tr>
+        <td style="height:30px; width:5%">&nbsp;</td>
+        <td style="height:30px; width:10%">নাম:</td>
+        <td style="height:30px; width:30%">&nbsp;{{ personnel.name|default('N/A') }}</td>
+        <td style="height:30px; width:10%">কোর / রেজিমেন্ট :</td>
+        <td style="height:30px; width:45%">&nbsp;{{ personnel.corp.name|default('N/A') }}</td>
+    </tr>
+    <tr>
+        <td style="height:25px; width:5%">২ |</td>
+        <td colspan="4" rowspan="1" style="height:25px; width:5%">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:35%">সেনা / নৌ / বিমান বাহিনী / এম ও ডি সিতে ভর্তির তারিখ :</td>
+                    <td style="height:30px; width:65%">&nbsp;{{ personnel.joiningDate|date('jS F, Y')|default('N/A') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="width:5%">৩ |</td>
+        <td colspan="4" rowspan="1" style="height:25px; width:5%">
+            <table border="0" cellpadding="0" cellspacing="0" style="height:25px; width:863px">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:20%">সেনাঅবসর গ্রহণের তারিখ :</td>
+                    <td style="height:30px; width:80%">&nbsp;{{ personnel.retirementDate|date('jS F, Y')|default('N/A') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:25px; width:5%">৪ |</td>
+        <td colspan="4" rowspan="1" style="height:25px; width:5%">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:20%">অবসর গ্রহণের কারণ :</td>
+                    <td style="height:30px; width:80%">&nbsp;{{ personnel.retirementReason|default('N/A') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:25px; width:5%">৫ |</td>
+        <td colspan="4" rowspan="1" style="height:25px; width:5%">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:10%">জন্ম তারিখ :</td>
+                    <td style="height:30px; width:30%">&nbsp;{{ personnel.dateOfBirth|date('jS F, Y')|default('N/A') }}</td>
+                    <td style="height:30px; text-align:right; width:25%">আবেদনপত্রে স্বাক্ষরিত তারিখে বর্তমান বয়স:</td>
+                    <td style="height:30px; width:25%">&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align:top; width:5%">৬ |</td>
+        <td colspan="4" rowspan="1">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:15%">স্থায়ী ঠিকানা :</td>
+                    <td colspan="3" rowspan="1" style="height:30px; width:25%">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="height:30px">গ্রাম :</td>
+                    <td style="height:30px; width:40%">&nbsp;{{ personnel.permanentVillage|default('N/A') }}</td>
+                    <td style="height:30px; text-align:right; width:10%">ডাকঘর:</td>
+                    <td style="height:30px; width:30px">&nbsp;{{ personnel.permanentPostOffice|default('N/A') }}</td>
+                </tr>
+                <tr>
+                    <td style="height:30px">থানা/উপজেলাঃ</td>
+                    <td style="height:30px">&nbsp;{{ personnel.permanentUpazila|default('N/A') }}</td>
+                    <td style="height:30px; text-align:right">জেলাঃ</td>
+                    <td style="height:30px">&nbsp;{{ personnel.permanentDistrict|default('N/A') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align:top; width:5%">৭ |</td>
+        <td colspan="4" style="height:25px; width:5%">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:10%">বর্তমান ঠিকানাঃ</td>
+                    <td colspan="2" rowspan="1" style="height:30px; width:10%">&nbsp;{{ personnel.fullPostalAddress }}</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="height:30px">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2" rowspan="1" style="height:30px; width:10%">টেলিফোন / মোবাইল নম্বর (যদি থাকে):</td>
+                    <td style="height:30px; width:75%">&nbsp;{{ personnel.mobileNumber|default('N/A') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:25px; width:5%">৮ |</td>
+        <td colspan="4" rowspan="1" style="height:25px; width:5%">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:20%">আবেদনকারীর বর্তমান পেশা :</td>
+                    <td style="height:30px; width:80%">&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px; width:5%">৯ |</td>
+        <td colspan="4" rowspan="1" style="height:30px; width:5%">আবেদনকারীর পাসপোর্ট সাইজের সত্যায়িত ছবি এবং অবসর প্রাপ্তির সনদপত্রের (ডিসচার্জ বাহির) সত্যায়িত&nbsp; কপি সংযুক্ত&nbsp; করিতে হইবে প্রত্যায়ন পত্র ।</td>
+    </tr>
+    </tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="text-align:center">
+            <h1><strong>প্রত্যায়ন পত্র</strong></h1>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>এই মর্মে আমি........................................................ঘোষণা করিতেছি যে, উপরোল্লোখিত বর্ণনা/তথ্যাদি সম্পূর্ন সত্য এবং কোন প্রকার তথ্যাদি গোপন করি নাই। প্রদত্ত তথ্য মিথ্যা / ভুয়া&nbsp; প্রমাণিত&nbsp; হইলে আবেদনপত্র বাতিল বলিয়া গণ্য হইবে এবং আইন অনুযায়ী কর্তৃপক্ষ যে কোন শাস্তিমূলক ব্যবস্থা গ্রহণ করিলে তাহা মানিয়া নিতে বাধ্য থাকিব ।</p>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="height:30px; width:5%">স্থানঃ</td>
+        <td style="height:30px; width:40%">&nbsp;</td>
+        <td style="height:30px; width:15%">&nbsp;</td>
+        <td style="height:30px; width:40%">&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="height:30px">তারিখঃ</td>
+        <td style="height:30px">&nbsp;</td>
+        <td style="height:30px">&nbsp;</td>
+        <td style="height:30px">আবেদনকারীরর সাক্ষর অথবা বৃদ্ধাঙ্গুলির ছাপ</td>
+    </tr>
+    </tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="height:30px; text-align:center; vertical-align:middle">
+            <h1>২য় পরিচ্ছেদ</h1>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px; text-align:center; vertical-align:middle">(সংশ্লিষ্ট রেকর্ডস অফিস কর্তৃক পূরণ করিতে হইবে )</td>
+    </tr>
+    <tr>
+        <td style="height:30px; text-align:center; vertical-align:middle">&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="height:60px; text-align:left; vertical-align:middle">১০| &nbsp; &nbsp; অত্র রেকর্ডস অফিসে রক্ষিত আবেদনকারী প্রাক্তন/অবসরপ্রাপ্ত&nbsp; অফিসার/সৈনিকের দলিল দস্তাবেজ, আবেদনকারীর প্রদত্ত তথ্যাদি, আবেদনের সহিত সংযুক্ত সনদপত্র ও অন্যান্য নথিপত্র সমূহ যথাযথভাবে পরীক্ষা নিরীক্ষা করিয়া নিম্নবর্ণিত বিষয়ের উপর মতামত প্রদান করা হইল।&nbsp;</td>
+    </tr>
+    </tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="height:40px; vertical-align:top; width:8%">&nbsp;</td>
+        <td style="height:40px; vertical-align:top; width:3%">ক |</td>
+        <td style="height:40px; vertical-align:top">আবেদনকারী প্রাক্তন/অবসরপ্রাপ্ত অফিসার/সৈনিকের কি না&nbsp;</td>
+        <td style="height:40px; vertical-align:top; width:2%">:</td>
+        <td style="height:40px; vertical-align:top; width:50%">&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td style="text-align:left; vertical-align:top">খ |</td>
+        <td style="vertical-align:top">আবেদনকারী প্রাক্তন/অবসরপ্রাপ্ত অফিসার/সৈনিকের সশস্ত্র বাহিনী হইতে............বৎসর চাকুরী করার পর স্বাভাবিক নিয়মে/ স্বইচ্ছায়/মেডিকেল বোর্ড আউট/অন্য কোন কারণে শৃংখলাজনিত কারণে অবসর/অব্যাহতি প্রাপ্ত তাহার সংক্ষিপ্ত বিবরণ&nbsp;</td>
+        <td style="vertical-align:top">:</td>
+        <td style="vertical-align:top">&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="height:30px; vertical-align:top">&nbsp;</td>
+        <td style="height:30px; vertical-align:top">গ |</td>
+        <td style="height:30px; vertical-align:top">ডিসচার্জ বহি/দলিল দস্তাবেজ অনুযায়ী জন্ম তারিখ&nbsp;</td>
+        <td style="height:30px; vertical-align:top">:</td>
+        <td style="height:30px; vertical-align:top">&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="height:30px; vertical-align:top">&nbsp;</td>
+        <td style="height:30px; vertical-align:top">ঘ |</td>
+        <td style="height:30px; vertical-align:top">জন্ম তারিখ অনুযায়ী আবেদনপত্রে স্বাক্ষরিত তারিখে বয়স&nbsp;</td>
+        <td style="height:30px; vertical-align:top">:</td>
+        <td style="height:30px; vertical-align:top">&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="height:30px; vertical-align:top">&nbsp;</td>
+        <td style="height:30px; vertical-align:top">ঙ |</td>
+        <td style="height:30px; vertical-align:top">বয়োজ্যোষ্ঠ&nbsp; ভাতা প্রাপ্তির যোগ্য/যোগ্য নহে&nbsp;</td>
+        <td style="height:30px; vertical-align:top">:</td>
+        <td style="height:30px; vertical-align:top">&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="height:30px; vertical-align:top">&nbsp;</td>
+        <td style="height:30px; vertical-align:top">চ |</td>
+        <td style="height:30px; vertical-align:top">অন্যান্য মতামত&nbsp; যদি থাকে&nbsp;</td>
+        <td style="height:30px; vertical-align:top">:</td>
+        <td style="height:30px; vertical-align:top">&nbsp;</td>
+    </tr>
+    </tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="height:30px; width:5%">স্থানঃ</td>
+        <td style="height:30px; width:40%">&nbsp;</td>
+        <td style="height:30px; width:15%">&nbsp;</td>
+        <td style="height:30px; width:40%">&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="height:30px">তারিখঃ</td>
+        <td style="height:30px">&nbsp;</td>
+        <td style="height:30px">&nbsp;</td>
+        <td style="height:30px">কোরো/রেকর্ডস কর্তৃপক্ষের সীলমোহর সহ স্বাক্ষর&nbsp;</td>
+    </tr>
+    </tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="height:30px; text-align:center; vertical-align:bottom">
+            <h1>৩য় পরিচ্ছেদ</h1>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px; text-align:center; vertical-align:middle">(অনুমোদনকারী কর্তৃপক্ষ)</td>
+    </tr>
+    <tr>
+        <td style="height:30px; text-align:center; vertical-align:middle">&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="height:60px; text-align:left; vertical-align:middle">১১| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; উপরের বর্ণিত পরিচ্ছেদ, সংযুক্ত সনদপত্র এবং রেকর্ডস অফিসের মতামত অনুযায়ী বয়সের সঠিকতায় বয়োজোষ্ঠ ভাতা অনুমোদিত হইল/হইল না।&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="height:40px; text-align:left; vertical-align:middle">&nbsp;</td>
+    </tr>
+    </tbody>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="height:30px; width:5%">স্থানঃ</td>
+        <td style="height:30px; width:40%">&nbsp;</td>
+        <td style="height:30px; width:15%">&nbsp;</td>
+        <td style="height:30px; width:40%">&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="height:30px">তারিখঃ</td>
+        <td style="height:30px">&nbsp;</td>
+        <td style="height:30px">&nbsp;</td>
+        <td style="height:30px">অনুমোদনকারী কর্তৃপক্ষের সীলমোহর সহ সাক্ষর&nbsp;</td>
+    </tr>
+    </tbody>
+</table>

@@ -1,0 +1,102 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Budget Expense' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% form_theme form '@User/_form_template/bootstrap_3_horizontal_layout_user.html.twig' %}
+
+{% block body %}
+
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    <form action="" method="post" class="budget-form form-horizontal">
+
+                        <div class="row">
+                            <div class="col-sm-6">
+
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Financial year</label>
+                                    <div class="col-sm-8 input-text">{{ budgetExpense.financialYear.label }}</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Office</label>
+                                    <div class="col-sm-8 input-text">{{ budgetExpense.office }}</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Account Head</label>
+                                    <div class="col-sm-8 input-text">{{ budgetExpense.budgetHead.code }}-{{ budgetExpense.budgetHead.titleBn }}</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Letter No.</label>
+                                    <div class="col-sm-8 input-text">{{ budgetExpense.letterNo }}</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Letter Date</label>
+                                    <div class="col-sm-8 input-text">{{ budgetExpense.letterDate|date('Y-m-d') }}</div>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-6">
+
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Amount Demanded</label>
+                                    <div class="col-sm-8 input-text">{{ budgetExpense.amount|number_format(2) }}</div>
+                                </div>
+
+                                {{ form_row(form.totalAmount) }}
+                                {{ form_row(form.chequeLipiNo) }}
+                                {{ form_row(form.chequeLipiDate) }}
+
+                            </div>
+                        </div>
+
+                        <div class="form-actions margin-top-20">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    {{ form_widget(form.save) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        {{ form_rest(form) }}
+                        <input type="hidden" name="_referrer" value="{{ app.request.server.get('HTTP_REFERER')|default(path('budget_expense_bill_sanction_list')) }}">
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+
+    {{ include('@App/Jsformvalidator-javascripts.html.twig') }}
+
+    <script src="{{ asset('bundles/budget/js/budget_expense.js') }}"></script>
+{% endblock include_javascripts %}
+{% block document_ready %}
+    {{ parent() }}
+
+    BudgetExpense.init();
+
+{% endblock %}

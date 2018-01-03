@@ -1,0 +1,98 @@
+{% extends "@App/base-meeting.html.twig" %}
+{% set pageTitle = meeting.subject %}
+{% block page_title %}{{ parent() }} | {{ meeting.type|upper }} Meeting: {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+
+            {% include '@App/layout-component/flash.html.twig' %}
+
+            <div class="portlet light">
+
+                <div class="portlet-body">
+
+                    {% include 'WelfareBundle:BoardMeeting:meeting_info.html.twig' %}
+
+                    <div class="row ">
+                        <div class="col-sm-12">
+                            <h4><strong> Nominated Application List - {{ meeting.createdAt|date('M Y') }}</strong></h4>
+                            <h5>Application Date from {{ dateRange['start']|date('d M Y') }}
+                                to {{ dateRange['end']|date('d M Y') }}</h5>
+                            <h5>Number of applications: {{ applicationCount }}</h5>
+                        </div>
+                        <div class="col-sm-12">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    {% include 'WelfareBundle:BoardMeeting:_meeting_list_header.html.twig' %}
+                                </thead>
+                                <tbody>
+                                    {% include 'WelfareBundle:BoardMeeting:_meeting_list.html.twig' %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {% if isChairman is same as(true) and meetingClosed is defined and not meetingClosed %}
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="#close-meeting" class="btn green" data-toggle="modal">Close Meeting</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade bs-modal-lg modal-scroll" id="close-meeting" tabindex="-1" role="dialog"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <form action="{{ path('board_meeting_close') }}" method="post" class="form-inline">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                        <h4 class="modal-title">Close Meeting</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div style="margin-left: 35px;margin-bottom: 20px;">
+                                                Are you sure you want to close the meeting now? It can not be undone.
+                                            </div>
+                                            <input name="_csrf_token" type="hidden" value="{{ csrf_token("meeting" ~ meeting.id) }}">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn green">Close Meeting</button>
+                                    </div>
+                                    </form>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+
+    <div class="modal fade bs-modal-lg modal-scroll" id="application-comments" tabindex="-1" role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                Please wait...
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/welfare/js/welfare.js') }}" ></script>
+
+{% endblock %}

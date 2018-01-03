@@ -1,0 +1,43 @@
+{% extends '@App/report-base.html.twig' %}
+
+{%- block page_size %}A4-P{%- endblock  %}
+
+{% block page_header_footer %}
+    <sethtmlpageheader name="firstPageHeader" value="on" />
+    <htmlpageheader name="firstPageHeader">
+        <table class="width-100">
+            <tr>
+                <td class="width-33"></td>
+                <td class="width-33 text-center">সীমিত</td>
+                <td class="width-33 text-right"></td>
+            </tr>
+        </table>
+    </htmlpageheader>
+
+    <htmlpageheader name="everyPageHeader">
+        <div style="text-align:center">সীমিত</div>
+    </htmlpageheader>
+    <htmlpagefooter name="everyPageFooter">
+        <div style="text-align:center">ক-{PAGENO}<br>সীমিত</div>
+    </htmlpagefooter>
+{% endblock %}
+
+{% block report_header %}
+    <div>
+        <div style="width: 50%;float: left;"></div>
+        <div style="width: 40%;float: right;">
+            <table>
+                <tr><td class="underline">ক্রোড়পত্র 'ক'</td></tr>
+                <tr><td class="underline">{{ basb }} {{  letterNo }}</td></tr>
+                <tr><td class="underline">তারিখ {{ date|date_bn('d F Y') }}</td></tr>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block report_body %}
+
+    <div id="pdf-report-page">
+        {% include '@Budget/Report/_expense-of-un-implement-body.html.twig' %}
+    </div>
+{% endblock %}

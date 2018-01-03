@@ -1,0 +1,40 @@
+{% extends "@App/base.html.twig" %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }}</span>
+                    </div>
+                </div>
+
+                <form class="form-horizontal" method="post">
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label"><strong>Personal No. : </strong></label>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                    <div>
+                                        <input class="form-control" name="personal-no" placeholder="Soldier No.">
+                                    </div>
+                                    <span class="input-group-btn">
+                                        <button id="genpassword" class="btn btn-success"><i class="fa fa-arrow-right fa-fw"></i> Search</button>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}

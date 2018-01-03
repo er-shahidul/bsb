@@ -1,0 +1,9 @@
+{% extends "WelfareBundle:BoardMeeting:base_meeting.html.twig" %}
+
+{% block list_title %}
+    <h4><strong> Recommended Application List - {{ meeting.createdAt|date('M Y') }}</strong></h4>
+{% endblock %}
+
+{% block workflowAction %}
+    {% include '@Budget/CommonViewBlock/_workflow_action.html.twig' with {entity: boardRecommendation, workflow_name: 'welfare_board_recommendation', entityClass: 'WelfareBundle:BoardRecommendation', title: 'Recommended Board Meeting'} %}
+{% endblock %}

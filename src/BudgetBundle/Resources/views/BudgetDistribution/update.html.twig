@@ -1,0 +1,139 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Budget Distribution' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }} of Financial Year {{ budgetSummary.financialYear.label }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    <form action="{{ path('budget_distribution', {id: budgetSummary.id}) }}" method="post" class="budget-form">
+
+                        <div class="fixed-header-table-container">
+                            <table class="fixed-header-table table table-striped table-bordered table-hover table-header-fixed table-checkable order-column">
+                                <thead>
+                                <tr>
+                                    <th>SL</th>
+                                    <th>Code</th>
+                                    <th>Account Head</th>
+                                    <th>FY {{ budgetYear - 2 }} - {{ budgetYear - 1 }}</th>
+                                    <th>FY {{ budgetYear - 1 }} - {{ budgetYear }}</th>
+                                    <th>FY {{ budgetYear }}-{{ budgetYear + 1 }}</th>
+                                    <th>Remaining Budget</th>
+                                    <th>Total</th>
+                                    {% for office in offices %}
+                                        <th>{{ office.name }}</th>
+                                    {% endfor %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% set sl = 1 %}
+                                {% for parentHead in budgetHead %}
+                                    <tr class="odd gradeX">
+                                        <td colspan="{{ offices|length + 7 }}" style="background-color: #c1cbd0"><strong>{{ parentHead.titleEn }}</strong></td>
+                                    </tr>
+
+                                    {% for childHead in parentHead.child %}
+                                        <tr class="odd gradeX">
+                                            <th width="50">{{ sl }}</th>
+                                            <th width="80">{{ childHead.code }}</th>
+                                            <th>{{ childHead.titleEn }}</th>
+                                            <th class="text-right" width="150">{{ previousBudgetAmount['data'][childHead.id]['amount']|default('0')|number_format(2) }}</th>
+                                            <th class="text-right" width="150">{{ currentBudgetAmount['data'][childHead.id]['amount']|default('0')|number_format(2) }}</th>
+                                            <th class="text-right allocate-head-total" width="150">{{ budgetAmount[childHead.id]['amount']|default('0')|number_format(2) }}</th>
+                                            <th class="text-right distribute-head-remaining"></th>
+                                            <th class="text-right distribute-head-total"></th>
+                                            {% for office in offices %}
+                                                <td class="text-center">
+                                                    <a data-target="#ajax" class="btn btn-xs tooltips" data-original-title="Click here to view expense detail" data-toggle="modal" href="{{ path('budget_distribution_expense_summary', {'officeId': office.id, 'id': budgetSummary.id, 'headId': childHead.id}) }}">{{ dasbBudgetData['data'][office.id]['data'][childHead.id]['requestAmount']|default('0')|number_format(2) }}</a>
+                                                    <input type="text"
+                                                           class="form-control amount input-xsmall amount-{{ office.id }}"
+                                                           rel="{{ office.id }}"
+                                                           value="{{ dasbBudgetData['data'][office.id]['data'][childHead.id]['amount']|default(0)|number_format(2) }}"
+                                                            name="dasb-budget[{{ dasbBudgetData['data'][office.id]['data'][childHead.id]['id']|default(0) }}]"/>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        {% set sl = sl + 1 %}
+                                    {% endfor %}
+                                {% endfor %}
+                                </tbody>
+
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th class="text-right">{{ previousBudgetAmount['total']['amount']|number_format(2) }}</th>
+                                    <th class="text-right">{{ currentBudgetAmount['total']['amount']|number_format(2) }}</th>
+                                    <th class="text-right allocate-head-grand-total"></th>
+                                    <th class="text-right distribute-head-grand-remaining"></th>
+                                    <th class="text-right distribute-head-grand-total"></th>
+                                    {% for office in offices %}
+                                        <th class="text-right office-{{ office.id }}-total"></th>
+                                    {% endfor %}
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="form-actions margin-top-20">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <button type="submit" class="btn yellow" name="save" value="yes">Save</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('budget_sanction_to_dasb') }}">
+                        <input type="hidden" name="_referrer" value="{{ app.request.server.get('HTTP_REFERER')|default(path('budget_summary_list')) }}">
+                    </form>
+
+                    <div class="modal fade" id="ajax" role="basic" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <img src="{{ asset('assets/global/img/loading-spinner-grey.gif') }}" alt="" class="loading">
+                                    <span> &nbsp;&nbsp;Loading... </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/budget/js/basb_budget.js') }}"></script>
+    <script src="{{ asset('assets/global/plugins/tableHeadFixer.js') }}"></script>
+{% endblock include_javascripts %}
+
+{% block document_ready %}
+    {{ parent() }}
+    BASBBudget.budgetSanctionToDasbInit();
+
+    $('.fixed-header-table').tableHeadFixer({
+        "left" : 8,
+        'z-index': 99
+    });
+
+    $(".modal").on("hidden.bs.modal", function(){
+        $(".modal-content").html('<div class="modal-body"><img src="{{ asset('assets/global/img/loading-spinner-grey.gif') }}" alt="" class="loading"><span> &nbsp;&nbsp;Loading... </span></div>');
+    });
+{% endblock %}

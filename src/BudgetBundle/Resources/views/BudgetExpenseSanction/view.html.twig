@@ -1,0 +1,106 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Expense Sanction' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    <div class="row form-horizontal">
+                        <div class="col-sm-6">
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Financial year</label>
+                                <div class="col-sm-8 input-text">{{ budgetExpense.financialYear.label }}</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Office</label>
+                                <div class="col-sm-8 input-text">{{ budgetExpense.office }}</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Account Head</label>
+                                <div class="col-sm-8 input-text">{{ budgetExpense.budgetHead.code }}-{{ budgetExpense.budgetHead.titleEn }}</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Letter No.</label>
+                                <div class="col-sm-8 input-text">{{ budgetExpense.letterNo }}</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Letter Date</label>
+                                <div class="col-sm-8 input-text">{{ budgetExpense.letterDate|date('Y-m-d') }}</div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Amount Demanded</label>
+                                <div class="col-sm-8 input-text">{{ budgetExpense.amount|number_format(2) }}</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Amount Passed</label>
+                                <div class="col-sm-8 input-text">{{ budgetExpenseSanction.totalAmount|number_format(2) }}</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Cheque Lipi No.</label>
+                                <div class="col-sm-8 input-text">{{ budgetExpenseSanction.chequeLipiNo }}</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Cheque Lipi Date</label>
+                                <div class="col-sm-8 input-text">{{ budgetExpenseSanction.chequeLipiDate|date('Y-m-d') }}</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-actions margin-top-20">
+                        <div class="row">
+
+                            <div class="col-md-12 text-right">
+
+                                {% if task is not defined %}
+                                <a class="btn btn-primary" href="{{ path('budget_expense_bill_sanction_list') }}">Go to Expense Sanction Register</a>
+                                {% endif %}
+
+                                {% if is_granted('edit:expense_sanction', budgetExpenseSanction) %}
+                                    <a class="btn btn-primary" href="{{ path('budget_expense_bill_sanction_update', {id: budgetExpenseSanction.id}) }}">Edit Payment Info</a>
+                                {% endif %}
+
+                                {% if validForm %}
+                                {% include '@Budget/CommonViewBlock/_workflow_action.html.twig' with {entity: budgetExpenseSanction, workflow_name: 'expense_sanction', entityClass: 'BudgetBundle:BudgetExpenseSanction', title: 'Expense Sanction Workflow'} %}
+                                {% endif %}
+
+                            </div>
+
+                            {% if task is defined and validForm %}
+                                {% include '@Budget/CommonViewBlock/_workflow_comments.html.twig' with {remarks: budgetExpenseSanction.stepRemarks} %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}

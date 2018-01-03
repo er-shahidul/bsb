@@ -1,0 +1,18 @@
+<tr class="odd gradeX" id="budget-detail-{{ budgetDetail.budgetHead.id|default('__head__') }}">
+    <td class="sl">{{ sl|default() }}</td>
+    <td class="code">{{ budgetDetail.budgetHead.code|default('') }}</td>
+    <td class="account-head">{{ budgetDetail.budgetHead.titleEn|default('') }}</td>
+    {#<td class="before-prev-head-amount">{{ budgetDetail.stats.beforePrev.amount|default(0) }}</td>
+    <td class="prev-head-amount">{{ budgetDetail.stats.prev.amount|default(0) }}</td>#}
+    <td class="head-amount">{{ budgetDetail.stats.current.amount|default(0) }}</td>
+    <td class="head-amendment">{{ budgetDetail.stats.revise.amount|default(0) }}</td>
+    <td class="expense">{{ budgetDetail.stats.expense|default(0) }}</td>
+    {% if readOnly is defined %}
+    <td>{{ budgetDetail.requestAmount }}</td>
+    <td>{{ budgetDetail.remark }}</td>
+    {% else %}
+    <td class="amount"><input class="form-control amount" name="data[{{ budgetDetail.budgetHead.id|default('__head__') }}][requestAmount]" value="{{ budgetDetail.requestAmount|default(0) }}"></td>
+    <td><input class="form-control" name="data[{{ budgetDetail.budgetHead.id|default('__head__') }}][remark]" value="{{ budgetDetail.remark|default('') }}"></td>
+    <td><i class="fa fa-close btn btn-xs red"></i></td>
+    {% endif %}
+</tr>

@@ -1,0 +1,19 @@
+{% extends "@Welfare/create_application.html.twig" %}
+
+{% block form_input %}
+    <div class="col-md-12">
+        {{ form_start(form) }}
+
+        {{ form_widget(form.projectName) }}
+        {{ form_widget(form.note) }}
+        {{ form_row(form.attachments) }}
+
+        <div class="form-actions margin-top-20">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn green" name="save" value="yes">Save</button>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

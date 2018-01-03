@@ -1,0 +1,8 @@
+devnet_policy_manager_form:
+    path:     /policies
+    defaults: { _controller: DevnetPolicyManagerBundle:Default:index }
+
+devnet_policy_manager_save:
+    path:     /policies/{key}/save
+    defaults: { _controller: DevnetPolicyManagerBundle:Default:savePolicy }
+    methods: [POST]

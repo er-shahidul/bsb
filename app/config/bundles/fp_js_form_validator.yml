@@ -1,0 +1,3 @@
+fp_js_form_validator:
+    routing:
+        check_unique_entity: custom_unique_controller

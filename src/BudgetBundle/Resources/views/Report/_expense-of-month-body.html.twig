@@ -1,0 +1,49 @@
+<div align="center" class="underline bold" style="font-size: 13px;">মাসিক খরচের বিবরণী-{{ ('2017-'~month)|date_bn('F') }} {{ year|bn_number }}</div><br/>
+
+<table class="table width-100 margin-bottom-10 font-size-13">
+
+    <thead>
+    <tr class="text-center">
+        <th class="code-no-size">কোড নং</th>
+        <th class="column160px">খাতের নাম</th>
+        <th class="column160px">বাজেট বরাদ্দ (সংশোধিত)</th>
+        <th class="column160px">চলতি মাসে খরচ</th>
+        <th class="column160px">সর্বমোট খরচ</th>
+        <th class="column160px">অবশিষ্ট অর্থের পরিমাণ</th>
+        <th class="column160px">মন্তব্য</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for parentHead in budgetHead %}
+        {% for childHead in parentHead.child %}
+            <tr>
+                <td class="text-left">{{ childHead.code|bn_number }}</td>
+                <td class="text-left">{{ childHead.titleEn }}</td>
+                <td class="text-right">{{ budgetAmount[childHead.id]['amount']|default('0')|decodeBudgetAmount|bn_number_format }}</td>
+                <td class="text-right">{{ expenses['month'][childHead.id]|default('0')|bn_number_format }}</td>
+                <td class="text-right">{{ expenses['total'][childHead.id]|default('0')|bn_number_format }}</td>
+                <td class="text-right">{{ (budgetAmount[childHead.id]['amount']|default(0)|decodeBudgetAmount - expenses['total'][childHead.id]|default(0))|bn_number_format }}</td>
+                <td></td>
+            </tr>
+        {% endfor %}
+        <tr class="bold">
+            <th colspan="2" class="text-left">উপ-মোট</th>
+            <th class="text-right">{{ budgetParentHead[parentHead.id]['amount']|default('0')|decodeBudgetAmount|bn_number_format }}</th>
+            <th class="text-right">{{ expenses['subMonth'][parentHead.id]|default('0')|bn_number_format }}</th>
+            <th class="text-right">{{ expenses['subTotal'][parentHead.id]|default('0')|bn_number_format }}</th>
+            <th class="text-right">{{ (budgetParentHead[parentHead.id]['amount']|default(0)|decodeBudgetAmount - expenses['subTotal'][parentHead.id]|default(0))|default('0')|bn_number_format }}</th>
+            <th></th>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr class="bold">
+        <th colspan="2" class="text-center">সর্বমোট</th>
+        <th class="text-right">{{ budgetTotalAmount['amount']|default(0)|decodeBudgetAmount|bn_number_format }}</th>
+        <th class="text-right">{{ expenses['grantMonth']|bn_number_format }}</th>
+        <th class="text-right">{{ expenses['grandTotal']|bn_number_format }}</th>
+        <th class="text-right">{{ (budgetTotalAmount['amount']|default(0)|decodeBudgetAmount - expenses['grandTotal']|default(0))|bn_number_format }}</th>
+        <th></th>
+    </tr>
+    </tfoot>
+</table>

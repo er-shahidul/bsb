@@ -1,0 +1,85 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = receiveVoucher.id ? 'Receive Entry Update' : 'Receive Entry Create' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% form_theme form _self '@User/_form_template/bootstrap_3_horizontal_layout_user.html.twig' %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }}</span>
+                    </div>
+                </div>
+
+                <div class="portlet-body">
+                    {{ form_start(form) }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Fund Type</label>
+                                <div class="col-sm-8 margin-top-10">{{ receiveVoucher.fundType.name }}</div>
+                            </div>
+                            {{ form_row(form.account) }}
+                            {{ form_row(form.receivedFrom) }}
+                            {{ form_row(form.against) }}
+                            {{ form_row(form.description) }}
+                        </div>
+                        <div class="col-md-12">
+                            <table class="table table-bordered">
+                                <tr>
+                                    {% for voucherDetail in form.voucherDetails %}
+                                        <td>{{ voucherDetail.vars.value.fundHead.name }}</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    {% for voucherDetail in form.voucherDetails %}
+                                        <td>{{ form_widget(voucherDetail.amount) }}</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td class="text-right bold" colspan="{{ form.voucherDetails|length - 1 }}">Total</td>
+                                    <td class="voucher-total bold text-right"></td>
+                                </tr>
+                            </table>
+                            <div class="hidden">{{ form_row(form.voucherDetails) }}</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        {{ form_row(form.attachments) }}
+                    </div>
+
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <input type="submit" value="Save" class="btn green" />
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="_referrer" value="{{ app.request.server.get('HTTP_REFERER')|default(path('account_sanction_entry_index')) }}">
+                    {{ form_end(form) }}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/account/js/receive-payment.js') }}"></script>
+{% endblock include_javascripts %}
+
+
+{% block document_ready %}
+    {{ parent() }}
+    ReceivePayment.init();
+{% endblock %}

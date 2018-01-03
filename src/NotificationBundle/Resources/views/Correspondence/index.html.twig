@@ -1,0 +1,44 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Correspondence' %}
+{% block page_title %}{{ parent() }} | {{pageTitle}}{% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="inbox">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="inbox-sidebar">
+                    <a href="{{url('new_correspondence')}}" data-title="Compose" class="btn red compose-btn btn-block">
+                        <i class="fa fa-edit"></i> Compose </a>
+                    {% block nav_block %}
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="inbox-body">
+                    <div class="inbox-content">
+                        {{ sg_datatables_render_html(datatable) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block stylesheets  %}
+    {{ parent() }}
+    <link href="{{ asset('assets/global/css/inbox.min.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/datatable.css') }}">
+{% endblock %}
+
+{% block include_javascripts %}
+
+    {{ parent() }}
+    <script src="{{ asset('js/datatable.js') }}"></script>
+    {{ sg_datatables_render_js(datatable) }}
+
+{% endblock %}

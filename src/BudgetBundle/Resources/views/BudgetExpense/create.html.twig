@@ -1,0 +1,108 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Budget Expense' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% form_theme form '@User/_form_template/bootstrap_3_horizontal_layout_user.html.twig' %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    <form action="{{ budgetExpense is defined ? path('budget_expense_update', {id: budgetExpense.id}) : path('budget_expense_create') }}" method="post" class="budget-form form-horizontal" enctype="multipart/form-data">
+
+                        <div class="row">
+                            <div class="col-sm-6">
+
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Financial year</label>
+                                    <div class="col-sm-8">{{ financialYear.label }}</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Budget Overview</label>
+                                    <div class="col-sm-8">
+                                    <ul>
+                                        <li>Budget Amount: <span class="budget-amount"></span></li>
+                                        <li>Budget Expense: <span class="budget-expense"></span></li>
+                                        <li>Budget Remaining: <span class="budget-remaining"></span></li>
+                                    </ul>
+                                    </div>
+                                </div>
+                                {{ form_row(form.budgetHead) }}
+
+
+                            </div>
+
+                            <div class="col-sm-6">
+
+                                {{ form_row(form.letterNo) }}
+                                {{ form_row(form.letterDate) }}
+                                {{ form_row(form.amount) }}
+                                {{ form_row(form.description) }}
+
+                            </div>
+                        </div>
+
+                        <div>
+                            {{ form_row(form.attachments) }}
+                        </div>
+
+                        <div class="form-actions margin-top-20">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    {{ form_widget(form.save) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        {{ form_rest(form) }}
+                        <input type="hidden" name="_referrer" value="{{ app.request.server.get('HTTP_REFERER')|default(path('budget_expense_list')) }}">
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block include_javascripts %}
+
+    <script>
+        var maxExpense = 0;
+        function BudgetBundleValidatorConstraintsCheckMaxExpense() {
+            this.message = 'error %string%';
+            this.validate = function(value) {
+                if (parseFloat(value) > maxExpense) {
+                    return this.message.replace('%string%', value);
+                } else {
+                    return [];
+                }
+            };
+        }
+    </script>
+    {{ parent() }}
+    {{ include('@App/Jsformvalidator-javascripts.html.twig') }}
+    <script src="{{ asset('bundles/budget/js/budget_expense.js') }}"></script>
+{% endblock include_javascripts %}
+
+{% block document_ready %}
+    {{ parent() }}
+
+    BudgetExpense.init();
+{% endblock %}

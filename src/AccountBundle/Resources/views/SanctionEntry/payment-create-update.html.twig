@@ -1,0 +1,69 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = sanctionPayment.id ? 'Payment Entry Update' : 'Payment Entry Create' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% form_theme form _self '@User/_form_template/bootstrap_3_horizontal_layout_user.html.twig' %}
+
+{% block _accountbundle_sanctionentry_uploadedFiles_row %}
+    <div class="col-sm-4"></div>
+    <div class="col-sm-8">
+        <button id="upload" class="btn blue btn-sm">Select File</button>
+        <div id="file-list-container"><ol>
+                {%- for attachement in form.parent.vars.value.attachments %}
+                    <li>{{ attachement.name }}<i rel="{{ attachement.id }}" class="fa fa-close btn btn-xs red"></i></li>
+                {% endfor %}</ol>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }}</span>
+                    </div>
+                </div>
+
+                <div class="portlet-body">
+                    {{ form_start(form, {attr: {class: 'form-horizontal'}}) }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(form.fundType) }}
+                            {{ form_row(form.amount) }}
+                            {{ form_row(form.description) }}
+                        </div>
+                    </div>
+
+                    <div>
+                        {{ form_row(form.attachments) }}
+                    </div>
+
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <input type="submit" value="Save" class="btn green" />
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="_referrer" value="{{ app.request.server.get('HTTP_REFERER')|default(path('account_sanction_entry_index')) }}">
+                    {{ form_end(form) }}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/account/js/sanction-entry.js') }}"></script>
+    {{ include('@App/Jsformvalidator-javascripts.html.twig') }}
+
+{% endblock include_javascripts %}

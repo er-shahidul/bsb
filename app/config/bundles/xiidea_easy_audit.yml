@@ -1,0 +1,6 @@
+xiidea_easy_audit:
+    entity_class : AppBundle\Entity\AuditLog
+    entity_event_resolver: app.entity_event_resolver
+    user_property : username
+    events :
+        - security.interactive_login

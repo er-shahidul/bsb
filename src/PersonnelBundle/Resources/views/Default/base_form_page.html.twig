@@ -1,0 +1,171 @@
+{% extends "@App/base.html.twig" %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% form_theme form '@Personnel/Default/_template/_collection_forms.html.twig' %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="profile">
+                        <div class="tabbable-line tabbable-full-width">
+                            {{ form_start(form, {'method': 'POST', 'attr': {'novalidate': 'novalidate', id: 'ex-serviceman-form', 'class': 'jq-validate'}}) }}
+                            <div class="row profile-account">
+                                <div class="col-md-3">
+                                    <ul class="ver-inline-menu tabbable margin-bottom-10" id="page-tab-ul">
+                                        <li class="active">
+                                            <a data-toggle="tab" href="#tab_personal_information">
+                                                <i class="fa fa-user"></i> Personal Information</a>
+                                            <span class="after"> </span>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#tab_others_information">
+                                                <i class="fa fa-user"></i> Others Information </a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#tab_profile_picture">
+                                                <i class="fa fa-picture-o"></i> Profile Picture </a>
+                                        </li>
+                                        {% block received_funds_heading %}
+                                            <li>
+                                                <a data-toggle="tab" href="#tab_received_fund">
+                                                    <i class="fa fa-money"></i> Received funds </a>
+                                            </li>
+                                        {% endblock %}
+                                        <li>
+                                            <a data-toggle="tab" href="#tab_training_info">
+                                                <i class="fa fa-book"></i> Training Information </a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#tab_careers_info">
+                                                <i class="fa fa-area-chart"></i> Career Information </a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#tab_services_info">
+                                                <i class="fa fa-cog"></i> Service Information </a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#tab_attachments">
+                                                <i class="fa fa-folder"></i> Attachments </a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#tab_additional_info">
+                                                <i class="fa fa-folder"></i> Additional Information </a>
+                                        </li>
+                                    </ul>
+                                    {{ form_widget(form.submit, { 'attr': {'class': 'btn green col-md-12'} }) }}
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="tab-content">
+                                        <div id="tab_personal_information" class="tab-pane active">
+                                            <div class="row">
+                                                {% block personal_info %}
+
+                                                {% endblock %}
+                                            </div>
+                                        </div>
+                                        <div id="tab_profile_picture" class="tab-pane">
+                                            <div class="form-group">
+                                                {{ form_widget(form.photoFile) }}
+                                            </div>
+                                        </div>
+                                        <div id="tab_address" class="tab-pane">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <h4>Permanent Address</h4>
+                                                    <hr>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    {{ form_row(form.permanentDistrict) }}
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    {{ form_row(form.permanentUpazila) }}
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    {{ form_row(form.permanentVillage) }}
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    {{ form_row(form.permanentPostOffice) }}
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    {{ form_row(form.permanentPostCode) }}
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {% block received_funds %}
+                                            <div id="tab_received_fund" class="tab-pane">
+                                                {{ form_row(form.receivedFunds) }}
+                                            </div>
+                                        {% endblock %}
+
+                                        <div id="tab_educational_info" class="tab-pane">
+                                            {{ form_row(form.educations) }}
+                                        </div>
+                                        <div id="tab_training_info" class="tab-pane">
+                                            {{ form_row(form.trainings) }}
+                                        </div>
+                                        <div id="tab_careers_info" class="tab-pane">
+                                            {{ form_row(form.careers) }}
+                                        </div>
+                                        <div id="tab_services_info" class="tab-pane">
+                                            {{ form_row(form.servicesInfo) }}
+                                        </div>
+                                        <div id="tab_families" class="tab-pane">
+                                            {{ form_row(form.families) }}
+                                        </div>
+                                        <div id="tab_attachments" class="tab-pane">
+                                            {{ form_row(form.attachments) }}
+                                        </div>
+                                        <div id="tab_employment_information" class="tab-pane">
+                                            <div class="row">
+                                                {% block employment_info %}
+
+                                                {% endblock %}
+                                            </div>
+                                        </div>
+                                        <div id="tab_others_information" class="tab-pane">
+                                            <div class="row">
+                                                {% block other_info %}
+
+                                                {% endblock %}
+                                            </div>
+                                        </div>
+                                        <div id="tab_additional_info" class="tab-pane">
+                                            <div class="row">
+                                                {% block additional_info %}
+
+                                                {% endblock %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end col-md-9-->
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/personnel/js/personnel-entry.js') }}"></script>
+{% endblock include_javascripts %}

@@ -1,0 +1,11 @@
+- name: Site down
+  become: true
+  file:
+    path: '{{PROJECT_DIR}}/var/maintenance.enable'
+    state: touch
+  tags:
+     - db
+     - code
+     - cache
+     - dependencies
+     - down

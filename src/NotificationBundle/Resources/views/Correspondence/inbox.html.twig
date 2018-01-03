@@ -1,0 +1,14 @@
+{% extends "@Notification/Correspondence/index.html.twig" %}
+
+{% block nav_block %}
+    <ul class="inbox-nav">
+        <li class="active">
+            <a href="javascript:;" data-type="inbox" data-title="Inbox"> Inbox
+                <span class="badge badge-success">{{notification_count|default(0)}}</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{url('correspondence_sent')}}" data-title="Sent"> Sent </a>
+        </li>
+    </ul>
+{% endblock %}

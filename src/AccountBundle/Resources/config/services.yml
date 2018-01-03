@@ -1,0 +1,55 @@
+services:
+#    account.example:
+#        class: AccountBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    AccountBundle\Form\DataTransformer\SanctionEntryTransformer:
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type }
+
+    AccountBundle\Datatables\:
+        resource: '../../Datatables/*'
+        autowire: true
+        autoconfigure: true
+
+    AccountBundle\Workflow\:
+        resource: '../../Workflow/*'
+        autowire: true
+        autoconfigure: true
+        public: false
+        tags:
+            - {name: app.workflow_definition}
+
+    AccountBundle\EventListener\GenerateNoteSheetNumber:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+
+    AccountBundle\EventListener\GenerateVoucherNumber:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+
+    AccountBundle\EventSubscriber\:
+        resource: '../../EventSubscriber/*'
+        autowire: true
+        autoconfigure: true
+
+    AccountBundle\Manager\:
+        resource: '../../Manager/*'
+        autowire: true
+
+    AccountBundle\Form\ChequeReconciliationForm:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags: [form.type]
+        autowire: true
+
+    AccountBundle\Form\ChequeReturnForm:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags: [form.type]
+        autowire: true
+
+    AccountBundle\Form\:
+        resource: '../../Form/*'
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type }

@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+    <h4 class="modal-title">Expense of {{ office.name }} for {{ budgetHead.label }}</h4>
+</div>
+<div class="modal-body">
+<table class="table">
+    <tr>
+        <th>Financial Year</th>
+        <th>Expense Amount</th>
+    </tr>
+    <tr>
+        <td>{{ financialYearLabel(financialYear - 3) }}</td>
+        <td>{{ beforeTwoYear|number_format(2) }}</td>
+    </tr>
+    <tr>
+        <td>{{ financialYearLabel(financialYear - 2) }}</td>
+        <td>{{ beforePrevYear|number_format(2) }}</td>
+    </tr>
+    <tr>
+        <td>{{ financialYearLabel(financialYear - 1) }}</td>
+        <td>{{ prev|number_format(2) }}</td>
+    </tr>
+</table>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn dark btn-outline">Close</button>
+</div>

@@ -1,0 +1,101 @@
+<div class="form-horizontal">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label col-md-6"><strong>Soldier No.</strong>:</label>
+                <div class="col-md-6">
+                    <p class="form-control-static"> {{ application.serviceMan.identityNumber }} </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-6"><strong>TS Number</strong>:</label>
+                <div class="col-md-6">
+                    <p class="form-control-static"> {{ application.serviceMan.tsNumber }} </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-6"><strong>Rank</strong>:</label>
+                <div class="col-md-6">
+                    <p class="form-control-static"> {{ application.serviceMan.rank.name }} </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-6"><strong>Granted(TK)</strong>:</label>
+                <div class="col-md-6">
+                    <p class="form-control-static"> {{ application.amount|number_format }} </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-6"><strong>Total Paid(TK)</strong>:</label>
+                <div class="col-md-6">
+                    <p class="form-control-static"> {{ application.microCreditDetail.totalPaid|number_format }} </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label col-md-6"><strong>Project Name</strong>:</label>
+                <div class="col-md-6">
+                    <p class="form-control-static"> {{ application.microCreditDetail.projectName }} </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-6"><strong>Soldier Name</strong>:</label>
+                <div class="col-md-6">
+                    <p class="form-control-static"> {{ application.serviceMan.name }} </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-6"><strong>Address</strong>:</label>
+                <div class="col-md-6">
+                    <p class="form-control-static"> {{ application.serviceMan.fullPostalAddress }} </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-6"><strong>Per Installment(TK)</strong>:</label>
+                <div class="col-md-6">
+                    <p class="form-control-static"> {{ application.microCreditDetail.installmentAmount|number_format }} </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-6"><strong>Installment Start Date</strong>:</label>
+                <div class="col-md-6">
+                    <p class="form-control-static"> {{ application.microCreditDetail.installmentStartDate|date('d M, Y') }} </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label col-md-6"><strong>Project Type</strong>:</label>
+                <div class="col-md-6">
+                    <p class="form-control-static"> {{ application.microCreditDetail.projectType.id }} </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-6"><strong>DASB</strong>:</label>
+                <div class="col-md-6">
+                    <p class="form-control-static"> {{ application.office.name }} </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-6"><strong>Installment free months</strong>:</label>
+                <div class="col-md-6">
+                    <p class="form-control-static"> {{ application.microCreditDetail.installmentFreeMonths }} </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-6"><strong>No of Installments</strong>:</label>
+                <div class="col-md-6">
+                    <p class="form-control-static"> {{ application.microCreditDetail.noOfInstallments }} </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-6"><a href="{{ path('welfare_micro_credit_view', {id: application.id}) }}">View Application</a></label>
+                <div class="col-md-6"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

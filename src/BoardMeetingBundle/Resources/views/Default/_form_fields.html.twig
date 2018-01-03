@@ -1,0 +1,48 @@
+{% use 'bootstrap_3_layout.html.twig' %}
+
+{% block _board_meeting_members_entry_chairman_widget %}
+    {% spaceless %}
+        <input type="checkbox"
+               data-on-text="Yes"
+               data-off-text="No"
+               data-on-color="success"
+               data-off-color="default"
+                {% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}
+                {{ block('widget_attributes') }}
+               data-size="normal">
+    {% endspaceless %}
+{% endblock %}
+
+{% block _board_meeting_members_row %}
+    <h4>{{ form.vars.label }} </h4>
+    <div class="row">
+        <div class="col-lg-12">
+            <table id="{{ form.vars.id }}"
+                   class="table collection-form-control table-striped table-bordered table-hover table-header-fixed table-checkable order-column"
+                   data-prototype="{{ form_widget(form.vars.prototype)|e }}">
+                <tr>
+                    <th width="30px">SN</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th width="200px">Mobile No.</th>
+                    <th>Designation</th>
+                    <th>Is Chairman</th>
+                    <th width="20px">
+                        <a href="javascript:;" class="add-new-collection-entry" data-ref="#{{ form.vars.id }}">
+                            <i class="fa fa-plus btn btn-sm green"></i>
+                        </a>
+                    </th>
+                </tr>
+                {% for index, member in form %}
+                    <tr>
+                        {% include "@BoardMeeting/Default/_board_members.html.twig" with {form: member, i:index+1, server: true} %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block _board_meeting_members_entry_widget %}
+    {% include "@BoardMeeting/Default/_board_members.html.twig" %}
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Budget Compilation Detail' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }} of Financial Year {{ budgetSummary.financialYear.label }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+
+                    <div class="fixed-header-table-container">
+                        <table class="fixed-header-table table table-striped table-bordered table-hover table-header-fixed table-checkable order-column">
+                            <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th>Code</th>
+                                <th>Account Head</th>
+                                <th>FY {{ budgetYear }}-{{ budgetYear + 1 }}</th>
+                                <th>Projection for FY {{ budgetYear + 2 }}</th>
+                                <th>Projection for FY {{ budgetYear + 3 }}</th>
+                                <th>Total</th>
+                                {% for office in offices %}
+                                    <th>{{ office.name }}</th>
+                                {% endfor %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% set sl = 1 %}
+                            {% for parentHead in budgetHead %}
+                                <tr class="odd gradeX">
+                                    <td colspan="{{ offices|length + 7 }}" style="background-color: #c1cbd0"><strong>{{ parentHead.titleEn }}</strong></td>
+                                </tr>
+
+                                {% for childHead in parentHead.child %}
+                                    <tr class="odd gradeX">
+                                        <th width="50">{{ sl }}</th>
+                                        <th width="80">{{ childHead.code }}</th>
+                                        <th>{{ childHead.titleEn }}</th>
+                                        <th class="text-right amount" width="150" rel="total-amount">{{ budgetAmount[childHead.id]['requestAmount']|default(0)|number_format(2) }}</th>
+                                        <th class="text-right amount" width="150" rel="next-year-projection-total-amount">{{ budgetAmount[childHead.id]['nextYearProjectionAmount']|default(0)|number_format(2) }}</th>
+                                        <th class="text-right amount" width="150" rel="after-next-year-projection-total-amount">{{ budgetAmount[childHead.id]['afterNextYearProjectionAmount']|default(0)|number_format(2) }}</th>
+                                        <th><strong>{{ dasbBudgetData['total'][childHead.id]['requestAmount']|default('0')|number_format(2) }}</strong></th>
+                                        {% for office in offices %}
+                                            <td title="{{ dasbBudgetData['data'][office.id]['data'][childHead.id]['remark']|default('') }}">{{ dasbBudgetData['data'][office.id]['data'][childHead.id]['requestAmount']|default('0')|number_format(2) }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                    {% set sl = sl + 1 %}
+                                {% endfor %}
+                            {% endfor %}
+                            </tbody>
+
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th class="text-right total-amount"></th>
+                                <th class="text-right next-year-projection-total-amount"></th>
+                                <th class="text-right after-next-year-projection-total-amount"></th>
+                                <th class="text-right requested-amount-total">{{ dasbBudgetData['grandTotal']['requestAmount']|default('0')|number_format(2) }}</th>
+                                {% for office in offices %}
+                                    <th>{{ dasbBudgetData['data'][office.id]['total']['requestAmount']|default('0')|number_format(2) }}</th>
+                                {% endfor %}
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="form-actions margin-top-20">
+                        {% block workflow_content %}
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+
+                                    {% if is_granted('edit:budget_compilation:draft', budgetSummary) %}
+                                        <a class="btn btn-primary" href="{{ path('budget_summary_update', {id: budgetSummary.id}) }}">Edit</a>
+                                    {% endif %}
+
+                                    {% if 'allocation' not in budgetSummary.status and 'distribution' not in budgetSummary.status %}
+                                    {% include '@Budget/CommonViewBlock/_workflow_action.html.twig' with {entity: budgetSummary, workflow_name: 'budget_compilation', entityClass: 'BudgetBundle:BudgetSummary', title: 'Budget Workflow'} %}
+                                    {% endif %}
+                                </div>
+
+                                {% include '@Budget/CommonViewBlock/_workflow_comments.html.twig' with {remarks: budgetSummary.stepRemarks} %}
+
+                            </div>
+                        {% endblock workflow_content %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/budget/js/basb_budget.js') }}"></script>
+    <script src="{{ asset('assets/global/plugins/tableHeadFixer.js') }}"></script>
+{% endblock include_javascripts %}
+
+{% block document_ready %}
+    {{ parent() }}
+    BASBBudget.budgetCompilationInit();
+
+    $('.fixed-header-table').tableHeadFixer({
+        "left" : 7,
+        'z-index': 99
+    });
+{% endblock %}

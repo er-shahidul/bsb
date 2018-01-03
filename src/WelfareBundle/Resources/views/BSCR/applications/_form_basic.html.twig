@@ -1,0 +1,332 @@
+<table border="0" cellpadding="0" cellspacing="0" style="height:25px; width:100%">
+    <tbody>
+    <tr>
+        <td style="height:30px; text-align:center; width:100%">সীমিত</td>
+    </tr>
+    <tr>
+        <td style="height:30px; text-align:center; width:100%"><h3>বাংলাদেশ সার্ভিসম্যান চ্যারিটেবল রিলিফ ফান্ড হতে সাহায্য মঞ্জরীর আবেদনপত্র</h3></td>
+    </tr>
+    <tr>
+        <td style="height:30px; text-align:center; width:100%">১ম পরিচ্ছেদ</td>
+    </tr>
+    <tr>
+        <td style="height:30px; text-align:center; width:100%">(প্রাক্তন সৈনিকের চাকুরীর পূর্ণ বিবরণ)</td>
+    </tr>
+    </tbody>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="width:5%">১।</td>
+        <td style="width:95%">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:25px; width:5%">নামঃ</td>
+                    <td style="height:25px; width:45%">&nbsp;{{ formData['name'] }}</td>
+                    <td style="height:25px; text-align:right; width:5%">বয়স:</td>
+                    <td style="height:25px; width:45%">&nbsp;
+                        {% if (formData['deceasedDate'] is not null and formData['dateOfBirth'] is not null) %}
+                            {{ formData['dateOfBirth']|time_span(formData['deceasedDate']) }}
+                        {% else %}
+                            {{ (formData['dateOfBirth'] is not null) ? formData['dateOfBirth']|age }}
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>২।</td>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:25px; width:10%">পিতার নামঃ</td>
+                    <td style="height:25px; width:90%">&nbsp;{{ formData['fathersName'] }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>৩।</td>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:25px; width:10%">মাতার নামঃ&nbsp;&nbsp;</td>
+                    <td style="height:25px; width:85%">&nbsp;{{ formData['mothersName'] }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align:top">৪।</td>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" style="height:29px; width:876px">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:5%">ঠিকানাঃ&nbsp;</td>
+                    <td style="height:30px; text-align:right; width:5%">&nbsp;&nbsp; গ্রামঃ</td>
+                    <td style="height:30px; width:40%">&nbsp;{{ formData['presentAddress']['village'] }}</td>
+                    <td style="height:30px; text-align:right; width:5%">পোষ্ট:</td>
+                    <td style="height:30px; width:40%">&nbsp;{{ formData['presentAddress']['postOffice'] }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" rowspan="1" style="height:30px; text-align:right; width:5%">থানা:</td>
+                    <td style="height:30px; width:40%">&nbsp;{{ formData['presentAddress']['upazila'] }}</td>
+                    <td style="height:30px; text-align:right; width:5%">জেলাঃ</td>
+                    <td style="height:30px; width:40%">&nbsp;{{ formData['presentAddress']['district'] }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align:top">৫।</td>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" style="height:25px; width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:10%">&nbsp;রেজিমেন্টাল নম্বর:</td>
+                    <td style="height:30px; width:20%">&nbsp;{{ formData['regimentalNumber']|default('N/A') }}</td>
+                    <td style="height:30px; width:5%">পদবীঃ</td>
+                    <td style="height:30px; width:20%">&nbsp;{{ formData['rank']|default('N/A') }}</td>
+                    <td style="height:30px; width:20%">অথবা অন্য কোন সনাক্তকরণ চিহ্ন</td>
+                    <td style="height:30px; width:20%">&nbsp;{{ formData['identificationMark']|default('N/A') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align:top">৬।</td>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:15%">শেষ চাকুরীর ইউনিট/স্থানঃ&nbsp;</td>
+                    <td style="height:30px; width:40%">&nbsp;{{ formData['lastServedUnit']|default('N/A') }}</td>
+                    <td style="height:30px; width:10%">চাকুরীর মেয়াদকালঃ</td>
+                    <td style="height:30px; width:30%">&nbsp;{{ formData['joiningDate']|time_span(formData['retirementDate'])|default('N/A') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="width:5%">৭।</td>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:15%">ভর্তির তারিখঃ&nbsp;</td>
+                    <td style="height:30px; width:40%">&nbsp;{{ formData['joiningDate']|date('jS F, Y') }}</td>
+                    <td style="height:30px; width:10%">অব্যাহতির তারিখঃ</td>
+                    <td style="height:30px; width:30%">&nbsp;{{ formData['retirementDate']|date('jS F, Y') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="width:5%">৮।</td>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:15%">অব্যাহতির কারণ:</td>
+                    <td style="width:85%">&nbsp;{{ formData['retirementReason']|default('N/A') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="width:5%">৯।</td>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:20%">পেনশন ভাতার হার (যদি থাকে)</td>
+                    <td style="height:30px; width:40%">&nbsp;{{ formData['pensionRate']|default('N/A') }}</td>
+                    <td style="height:30px; text-align:right; width:10%">টি এস নং</td>
+                    <td style="height:30px; width:25%">{{ formData['tsNumber']|default('N/A') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="width:5%">১০।</td>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:40%">কম্যুটেশন কত টাকা পেয়েছে এবং কোমুটেশন টাকা দিয়ে কি করেছে:</td>
+                    <td style="height:30px; width:60%">&nbsp;{{ formData['commutationInfo']|default('N/A') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="width:5%">১১।</td>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:15%">বিদেশ মিশন করেছে কিনা</td>
+                    <td style="height:30px; width:40%">&nbsp;{{ formData['hasUNMission']|default('N/A') }}</td>
+                    <td style="height:30px; width:15%">মিশনে কত টাকা পেয়েছে</td>
+                    <td style="height:30px; width:30%">&nbsp;{{ formData['missionIncome']|default('N/A') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="width:5%">১২।</td>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:20%">&nbsp;স্থাবর/অস্থাবর সম্পত্তি আছে কিনা</td>
+                    <td style="height:30px; width:30%">&nbsp;{{ formData['fixedOrCurrentAsset']|default('N/A') }}</td>
+                    <td style="height:30px; width:50%">যদি থাকে তাহলে বিবরণসহ পরিমাণসহ উল্লেখ:</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="width:5%"></td>
+        <td style="height:30px">&nbsp;{{ formData['assetInfo']|default('N/A') }}</td>
+    </tr>
+    <tr>
+        <td style="vertical-align:top; width:5%">১৩।</td>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td colspan="3" rowspan="1" style="height:30px; width:35%">ইতিপূর্বে উক্ত ফান্ড হতে কোন আর্থিক সাহায্য পেয়েছেন কিনা হ্যাঁ/না যদি পেয়ে থাকে তাহলে টাকার পরিমাণ:</td>
+                    <td style="width:20%">&nbsp;{{ formData['hasBSCRGrant']|default('N/A') }}</td>
+                </tr>
+                <tr>
+                    <td style="height:30px">&nbsp;</td>
+                    <td style="height:30px; width:10%">এবং তারিখ:</td>
+                    <td colspan="2" rowspan="1" style="height:30px">&nbsp;{{ formData['BSCRGrantAmount']|default('N/A') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align:top; width:5%">১৪।</td>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:12%">পরিবারের বিবরণ:</td>
+                    <td style="height:30px; width:85%">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="height:30px; width:10%">ক। স্ত্রীর নামঃ</td>
+                    <td style="height:30px; width:85%">&nbsp;{{ formData['spouseName']|default('N/A') }}</td>
+                </tr>
+                <tr>
+                    <td style="height:30px; width:10%">খ। সন্তানাদির বিবরণঃ</td>
+                    <td style="height:30px; width:85%">&nbsp;{{ formData['childrenInfo']|default('N/A') }}</td>
+                </tr>
+                <tr>
+                    <td style="height:30px; width:10%">গ। উত্তরাধিকার:</td>
+                    <td style="height:30px; width:85%">&nbsp;{{ formData['inheritName']|default('N/A') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style="width:5%">&nbsp;</td>
+    </tr>
+    <tr>
+        <td colspan="2" style="width:5%">&nbsp;</td>
+    </tr>
+
+    </tbody>
+</table>
+{#end completed#}
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="height:30px; text-align:center; width:100%"><strong>২য় পরিচ্ছেদ</strong></td>
+    </tr>
+    <tr>
+        <td style="height:30px; text-align:center; width:100%"><strong>(সৈনিকের মৃত হলে নির্ভরশীল ব্যক্তির বিবরণ)</strong></td>
+    </tr>
+    </tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="width:5%">১।</td>
+        <td style="width:95%">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:25px; width:5%">নামঃ</td>
+                    <td style="height:25px; width:45%"> {{ formData['successorName']|default('N/A') }}</td>
+                    <td style="height:25px; width:25%">২। সৈনিকের সাথে সম্পর্ক (নথিপত্র মোতাবেক)</td>
+                    <td style="height:25px; width:15%">&nbsp;{{ formData['relationshipWithSoldier']|default('N/A') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align:top; width:5%">২।</td>
+        <td style="width:95%">
+            <table border="0" cellpadding="0" cellspacing="0" style="height:29px; width:876px">
+                <tbody>
+                <tr>
+                    <td rowspan="2" style="height:30px; vertical-align:top; width:5%">ঠিকানাঃ&nbsp;</td>
+                    <td style="height:30px; text-align:right; width:5%">&nbsp;&nbsp; গ্রামঃ</td>
+                    <td style="height:30px; width:40%">&nbsp;{{ formData['inheritAddress']['village']|default('N/A') }}</td>
+                    <td style="height:30px; text-align:right; width:5%">পোষ্ট:</td>
+                    <td style="height:30px; width:40%">&nbsp;{{ formData['inheritAddress']['postOffice']|default('N/A') }}</td>
+                </tr>
+                <tr>
+                    <td style="height:30px; text-align:right; width:5%">থানা:</td>
+                    <td style="height:30px; width:40%">&nbsp;{{ formData['inheritAddress']['upazila']|default('N/A') }}</td>
+                    <td style="height:30px; text-align:right; width:5%">জেলাঃ</td>
+                    <td style="height:30px; width:40%">&nbsp;{{ formData['inheritAddress']['district']|default('N/A') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="width:5%">৩।</td>
+        <td style="width:95%">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:15%">&nbsp;সৈনিকের মৃত্যুর তারিখঃ</td>
+                    <td style="height:30px; width:20%">&nbsp;{{ formData['deceasedDate']|date('jS F, Y') }}</td>
+                    <td style="height:30px; width:5%">&nbsp; স্থান</td>
+                    <td style="height:30px; width:20%">&nbsp;{{ formData['deceasedPlace']|default('N/A') }}</td>
+                    <td style="height:30px; width:15%">&nbsp;মৃত্যুর কারণ</td>
+                    <td style="height:30px; width:20%">&nbsp;{{ formData['deceasedReason']|default('N/A') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>

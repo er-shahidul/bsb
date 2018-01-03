@@ -1,0 +1,10 @@
+- name: Clear production cache
+  command: "php bin/console cache:clear --env=prod"
+  args:
+    chdir: "{{PROJECT_DIR}}"
+  when: PRODUCTION_MODE == "true"
+  notify:
+     - change permission
+     - site up
+  tags:
+     - cache

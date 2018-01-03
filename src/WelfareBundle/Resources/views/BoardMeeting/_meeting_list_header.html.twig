@@ -1,0 +1,30 @@
+{% if meeting.type|lower == 'micro-credit' %}
+<tr>
+    <th>DASB</th>
+    <th>Applicant</th>
+    <th>Project Type</th>
+    <th>Requested(TK)</th>
+    <th>Granted(TK)</th>
+    <th>Per Installment(TK)</th>
+    <th>No. of <br/> installments</th>
+    <th>Installment <br/> Free Months</th>
+    {% if commentable is defined %}
+        <th>Your Comment</th>
+    {% endif %}
+    <th></th>
+</tr>
+{% else %}
+<tr>
+    <th>Personal No.</th>
+    <th>Rank</th>
+    <th>Applicant/Spouse Name</th>
+    <th>Core/Reg.</th>
+    <th>DASB</th>
+    <th>Date</th>
+    <th>Grant Amount(TK)</th>
+    {% if commentable is defined %}
+        <th>Your Comment</th>
+    {% endif %}
+    <th></th>
+</tr>
+{% endif %}

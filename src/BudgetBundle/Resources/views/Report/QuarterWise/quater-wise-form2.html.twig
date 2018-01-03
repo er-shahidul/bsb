@@ -1,0 +1,187 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Pre Budget Implementation Plan' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+{% block page_id %}pdf-report-page{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        {% include '@App/report.css.twig' %}
+    </style>
+{% endblock %}
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <style>
+        @media print {
+            .number{
+                border: 0;
+            }
+        }
+    </style>
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    <div class="hidden-print">
+                        <form class="form">
+                            <div class="form-group col-md-2">
+                                <label>Financial Year</label>
+                                {% include('@Budget/Report/_financial-year.html.twig') %}
+                                <input type="hidden" name="type" value="{{ app.request.query.get('type') }}">
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label>&nbsp;&nbsp;</label><br>
+                                <button class="btn blue">Show Quarter Wise Pre Budget Summary</button>
+                                {% if year is not null %}
+                                <button type="submit" formtarget="_blank" name="print" class="btn blue">Print</button>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+
+                    {% if year is null %}
+                        <div class="col-md-12">
+                            <table class="table table-striped table-bordered table-hover table-header-fixed table-checkable order-column">
+                                <tr>
+                                    <th>Please select a financial year</th>
+                                </tr>
+                            </table>
+                        </div>
+
+                    {% else %}
+
+                    <form method="post">
+                        <table class="table table-striped table-bordered table-hover table-header-fixed table-checkable order-column">
+
+                            <thead>
+                            <tr>
+                                <th rowspan="2" width="70">অর্থনেতিক<br>কোড</th>
+                                <th rowspan="2" width="180">আইটেম</th>
+                                <th colspan="4" class="th-border-bottom text-center">প্রাক্কলিত ব্যয়</th>
+                                <th rowspan="2">মোট বাজেট বরাদ্দ/<br>প্রাক্কলিত ব্যয়</th>
+                                <th rowspan="2" width="200">মন্তব্য</th>
+                            </tr>
+                            <tr>
+                                <th width="150">প্রথম কোয়ার্টার</th>
+                                <th width="150">দ্বিতীয় কোয়ার্টার</th>
+                                <th width="150">তৃতীয় কোয়ার্টার</th>
+                                <th width="150">চতুর্থ কোয়ার্টার</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td></td>
+                                <td>রাজস্ব ব্যয়</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            {% for parentHead in budgetHead %}
+
+                                {% if type=='parent-head' %}
+
+                                    {% include '@Budget/Report/QuarterWise/_quater-wise-parent-row-form2.html.twig' with {head: parentHead, data: parent, type: 'parent'} %}
+                                {% endif %}
+                                {% if type == 'child-head' %}
+                                    {% include '@Budget/Report/QuarterWise/_quater-wise-parent-head-row-form2.html.twig' with {head: parentHead, data: parent, type: 'parent'} %}
+                                    {% for childHead in parentHead.child %}
+                                        {% include '@Budget/Report/QuarterWise/_quater-wise-row-form2.html.twig' with {head: childHead, data: child, type: 'child'} %}
+                                    {% endfor %}
+                                {% endif %}
+
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr class="bold">
+                                <th></th>
+                                <th class="text-left">মোট-অনুন্নয়ন ব্যয়</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            <tr class="bold">
+                                <td></td>
+                                <td class="text-left">প্রাক্কলিত ব্যয়</td>
+                                <td class="text-right grand_total_first">{{ firstQuarterTotal|default(0)|bn_number_format }}</td>
+                                <td class="text-right grand_total_second">{{ secondQuarterTotal|default(0)|bn_number_format }}</td>
+                                <td class="text-right grand_total_third">{{ thirdQuarterTotal|default(0)|bn_number_format }}</td>
+                                <td class="text-right grand_total_fourth">{{ fourthQuarterTotal|default(0)|bn_number_format }}</td>
+                                <td class="text-right">
+                                    {{(firstQuarterTotal|default(0) +
+                                    secondQuarterTotal|default(0) +
+                                    thirdQuarterTotal|default(0) +
+                                    fourthQuarterTotal|default(0))|bn_number_format
+                                    }}
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr class="bold">
+                                <th></th>
+                                <th class="text-left">প্রকৃত</th>
+                                <th class="text-right"></th>
+                                <th class="text-right"></th>
+                                <th class="text-right"></th>
+                                <th class="text-right"></th>
+                                <th class="text-right"></th>
+                                <th></th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        {% if(app.request.query.get('type')!='parent-head') %}
+                        <div class="form-actions margin-top-20 text-right hidden-print">
+                            <button name="save" type="submit" class="btn green btn-">Save</button>
+                        </div>
+                        {% endif %}
+
+                    </form>
+                    {% endif %}
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/budget/js/quater_wise_budget.js') }}"></script>
+    <script>
+        $('.number').inputmask({
+            groupSeparator: ",",
+            alias: "numeric",
+            placeholder: "0",
+            autoGroup: !0,
+            digits: 2,
+            digitsOptional: !1,
+            clearMaskOnLostFocus: !1,
+            allowMinus: false
+        });
+    </script>
+{% endblock %}
+
+{% block document_ready %}
+    {{ parent() }}
+    QUATERBudget.quaterWiseBudgetInit();
+
+{% endblock %}

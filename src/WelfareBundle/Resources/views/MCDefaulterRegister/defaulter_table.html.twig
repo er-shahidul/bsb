@@ -1,0 +1,19 @@
+<table id="defaulter-list" class="table table-striped table-bordered table-advance">
+    <thead>
+        <tr>
+            {% if checkable is same as(true) %}
+            <th></th>
+            {% endif %}
+            <th>DASB</th>
+            <th>Meeting</th>
+            <th>Applicant</th>
+            <th>Project Type</th>
+            <th>Granted(TK)</th>
+            <th>Per Installment(TK)</th>
+            <th>Total Paid(TK)</th>
+            <th>Total Due(TK)</th>
+            <th></th>
+        </tr>
+    </thead>
+{{ rows|raw }}
+</table>

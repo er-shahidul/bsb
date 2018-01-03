@@ -1,0 +1,7 @@
+{% extends "@Leave/Default/base_list_page.html.twig" %}
+ {% block action_block %}
+     {% if is_granted('ROLE_DASB_CLERK') or (is_granted('ROLE_ESTABLISHMENT_CLERK') and pageTitle != "Secretary") %}
+         <a class="btn green" href="{{ createLink }}"><i class="fa fa-plus"></i> Create
+             New {{ pageTitle }} Leave</a>
+     {% endif %}
+ {% endblock %}

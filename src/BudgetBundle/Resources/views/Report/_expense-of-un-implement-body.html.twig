@@ -1,0 +1,54 @@
+<div align="center" class="underline bold" style="font-size: 14px;">অনন্নয়ন ব্যয় প্রতিবেদন-{{ ('2017-'~month)|date_bn('F') }} {{ year|bn_number }}</div><br/>
+
+<table class="table width-100 margin-bottom-10 font-size-13">
+    <thead>
+    <tr class="text-center bold">
+        <th rowspan="2" class="code-no-size">মন্ত্রনালয়/বিভাগ</th>
+        <th rowspan="2" class="code-no-size">বাস্তবায়নকারী সংস্থা</th>
+        <th rowspan="2" class="code-no-size">অর্থনেতিক কোড</th>
+        <th rowspan="2" class="column160px">বিবরন</th>
+        <th rowspan="2" class="column160px">চলতি অর্থ বছরের বরাদ্দ</th>
+        <th class="column160px" colspan="2">
+            {{ ('2017-'~month)|date_bn('F') }} {{ year|bn_number }} মাস পর্যন্ত
+        </th>
+        <th rowspan="2" class="column160px">মন্তব্য</th>
+    </tr>
+    <tr class="text-center bold">
+        <th style="width: 150px;">প্রকৃত ব্যয়</th>
+        <th style="width: 150px;">শতকরা হার (%)</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set i = 1 %}
+    {% for parentHead in budgetHead %}
+
+        {% if(parentHead.code not in ['4500','4600','4700']) %}
+            <tr>
+                <td colspan="8" class="underline">{{ parentHead.code|bn_number }} {{ parentHead.titleEn }}</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;" rowspan="{{ parentHead.child|length +1 }}">{{ i==4?'প্রতিরক্ষা':'' }}</td>
+                <td style="vertical-align: top;" rowspan="{{ parentHead.child|length +1 }}">{{ i==4?'বিএএসবি':'' }}</td>
+            </tr>
+            {% for childHead in parentHead.child %}
+                <tr>
+                    <td class="text-center">{{ childHead.code|bn_number }}</td>
+                    <td class="text-left">{{ childHead.star|head_star }}{{ childHead.titleEn }}</td>
+                    <td class="text-right">{{ budgetAmount[childHead.id]['amount']|default('0')|decodeBudgetAmount|bn_number_format }}</td>
+                    <td style="width: 150px;" class="text-right">{{ expenses['month'][childHead.id]|default('0')|bn_number_format }}</td>
+                    <td style="width: 150px;" class="text-right">{{ expenses['month'][childHead.id]|default('0') ? (((expenses['month'][childHead.id])/(budgetAmount[childHead.id]['amount']|decodeBudgetAmount)*100)|number_format(2))|bn_number_format : '' }}</td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+            <tr class="bold">
+                <td colspan="4" class="text-left">মোট ({{ parentHead.code|bn_number }} {{ parentHead.titleEn }}):</td>
+                <td class="text-right">{{ budgetParentHead[parentHead.id]['amount']|default('0')|decodeBudgetAmount|bn_number_format }}</td>
+                <td class="text-right">{{ expenses['subMonth'][parentHead.id]|default('0')|bn_number_format }}</td>
+                <td class="text-right">{{ expenses['subMonth'][parentHead.id]|default('0') ? (((expenses['subMonth'][parentHead.id])/(budgetParentHead[parentHead.id]['amount']|decodeBudgetAmount)*100)|number_format(2))|bn_number_format : '' }}</td>
+                <td></td>
+            </tr>
+        {% endif %}
+        {% set i = i + 1 %}
+    {% endfor %}
+    </tbody>
+</table>

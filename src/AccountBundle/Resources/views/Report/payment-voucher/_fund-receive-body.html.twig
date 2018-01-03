@@ -1,0 +1,44 @@
+<table class="table width-100">
+    <thead>
+    <tr class="text-center">
+        <th width="50">Serial No.</th>
+        <th width="150">Date</th>
+        <th width="100">Payment To</th>
+        <th width="100">Amount</th>
+    </tr>
+    </thead>
+
+    {% for receiveFor, receiveVouchers in vouchers %}
+    <tbody>
+        <tr>
+            <td colspan="4">{{ receiveFor }}</td>
+        </tr>
+        {% for voucher in receiveVouchers %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ voucher.voucherDate|date('Y-m-d') }}</td>
+                <td>{{ voucher.toOrFrom }}</td>
+                <td class="text-right">{{ voucher.amount|bn_number_format }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="3" class="text-right">Sub Total</td>
+            <td class="text-right">{{ vouchersSubTotal[receiveFor]|bn_number_format }}</td>
+        </tr>
+    </tbody>
+
+    <tfoot>
+        <tr class="bold">
+            <td class="text-right" colspan="3">Total</td>
+            <td class="text-right">{{ vouchersTotal|bn_number_format }}</td>
+        </tr>
+    </tfoot>
+    {% else %}
+
+        <tr>
+            <td colspan="5" class="text-center">No Vouchers Found</td>
+        </tr>
+
+    {% endfor %}
+
+</table>

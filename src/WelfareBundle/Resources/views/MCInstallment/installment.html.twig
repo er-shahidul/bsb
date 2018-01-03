@@ -1,0 +1,23 @@
+<table class="table table-striped table-bordered no-footer">
+    <thead>
+    <tr>
+        <th>Installment</th>
+        <th>Received Date</th>
+        <th>Installment Amount</th>
+        <th>Cheque Date</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for installment in installments %}
+        <tr>
+            <td>{{ installment.installmentNumber }}</td>
+            <td></td>
+            <td>{{ installment.installmentAmount }}</td>
+            <td></td>
+            <td></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+

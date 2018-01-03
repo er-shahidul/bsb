@@ -1,0 +1,109 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Cheque Issue' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block header_title %}{{ pageTitle }}{% endblock header_title %}
+
+{% block body %}
+
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">Cheque Issue</span>
+                    </div>
+                </div>
+
+                <div class="portlet-body">
+
+                    <div class="col-md-6">
+                        <div class="col-md-4">
+                            <strong>Fund Type</strong>
+                        </div>
+                        <div class="col-md-8">
+                            {{ fundType.name|default() }}
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="col-md-6">
+                        {#<strong>Note Sheet Information</strong>
+                        <table class="table table-bordered">
+                            <tr><th>Note Sheet Number</th><th>Amount</th></tr>
+                            {% for sanction in chequeIssue.sanctions %}
+                                <tr><td>{{ sanction.noteSheetNumber }}</td><td>{{ sanction.amount|en_number_format }}</td></tr>
+                            {% endfor %}
+                            <tr><td class="text-right">Total</td><td>{{ chequeIssue.noteSheetTotalAmount|en_number_format }}</td></tr>
+                        </table>#}
+                    </div>
+
+                    <table class="table table-bordered" id="voucher-detail">
+                        <thead>
+                        <tr>
+                            <th>SL</th>
+                            <th>Cheque Number</th>
+                            <th>To</th>
+                            <th>Against</th>
+                            <th>Amount</th>
+                            <th>Account</th>
+                            <th>Description</th>
+                            {% for fundHead in fundHeads %}
+                                <th>{{ fundHead.name }}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <thead>
+                        {% for index, voucher in sanction.vouchers %}
+                        <tr>
+                            <td>{{ index + 1 }}</td>
+                            <td>{{ voucher.chequeNumber|default('') }}</td>
+                            <td>{{ voucher.paymentTo|default('') }}</td>
+                            <td>{{ voucher.paymentAgainst|default('') }}</td>
+                            <td class="text-right">{{ voucher.amount|en_number_format }}</td>
+                            <td>{{ bankAccounts[voucher.bankAccount]|default('') }}</td>
+                            <td>{{ voucher.description|default('') }}</td>
+                            {% for fundHead in fundHeads %}
+                                <td class="text-right">{{ voucher.vd[fundHead.id]|default('')|en_number_format }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                        </thead>
+                    </table>
+
+                    <div class="form-actions margin-top-20">
+                        {% block workflow_content %}
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+
+                                    {% if is_granted('edit:account_integration_workflow', ai) %}
+                                        <a class="btn btn-primary" href="{{ path('account_integration_edit', {id: ai.id}) }}">Edit</a>
+                                    {% endif %}
+
+                                    {% include '@Budget/CommonViewBlock/_workflow_action.html.twig' with {entity: ai, workflow_name: 'account_integration_workflow', entityClass: 'AccountBundle:AccountIntegration', title: 'Account Issue Workflow'} %}
+                                </div>
+
+                            </div>
+
+                            {% include '@Budget/CommonViewBlock/_workflow_comments.html.twig' with {remarks: ai.stepRemarks} %}
+
+                        {% endblock workflow_content %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/account/js/check-issue.js') }}"></script>
+{% endblock include_javascripts %}
+
+{% block document_ready %}
+    {{ parent() }}
+    CheckIssue.init();
+{% endblock %}

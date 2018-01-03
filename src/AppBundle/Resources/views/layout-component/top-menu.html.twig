@@ -1,0 +1,62 @@
+<div class="top-menu">
+    <ul class="nav navbar-nav pull-right">
+        {% set notifications = get_notifications()  %}
+        {% if notifications.count > 0 %}
+        <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_inbox_bar">
+            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                <span class="circle">{{ notifications.count }}</span>
+                <span class="corner"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li class="external">
+                    <h3>You have
+                        <strong>{{notifications.count}} New</strong> Notifications</h3>
+                    <a href="{{ path('correspondence_inbox') }}">view all</a>
+                </li>
+                <li>
+                    <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
+                        {% for item in notifications.items %}
+                        <li>
+                            <a class="notification-item" href="{{ item.link is empty ? '#' : item.link }}" data-id="{{ item.id }}">
+                                                                <span class="photo">
+                                                                    <img src="{{ asset(item.sender.image) }}" class="img-circle" alt=""> </span>
+                                <span class="subject">
+                                                                    <span class="from"> {{item.sender.name}} </span>
+                                                                    <span class="time time-elapsed" data-time="{{ item.time|date('c')  }}">{{item.time|date('Y-m-d')}} </span>
+                                                                </span>
+                                <span class="message">
+                                    {{ item.subject|raw  }}
+                                </span>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        {% endif %}
+        <li class="dropdown dropdown-user dropdown-dark">
+            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                <img alt="" class="img-circle" src="{{ asset(app.user.photo) }}">
+                <span class="username username-hide-mobile">{{ app.user ? app.user.name : '' }} ({{ app.user ? app.user.groups[0].name : '' }})</span>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-default">
+                <li>
+                    <a href="#">
+                        <i class="icon-user"></i> My Profile </a>
+                </li>
+                <li class="divider"> </li>
+                <li>
+                    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                        <a href="{{ path('homepage', {'_switch_user': '_exit'}) }}"><i class="icon-key"></i>Exit impersonation</a>
+                    {% else %}
+                    <a href="{{ path('fos_user_security_logout') }}"><i class="icon-key"></i> Log Out </a>
+                    {% endif %}
+                </li>
+
+            </ul>
+        </li>
+        <!-- END USER LOGIN DROPDOWN -->
+    </ul>
+</div>

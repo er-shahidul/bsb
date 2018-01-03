@@ -1,0 +1,27 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+        @page {
+            sheet-size: {%- block page_size %}{%- endblock  %};
+            header: html_everyPageHeader;
+            footer: html_everyPageFooter;
+        }
+    </style>
+
+    {% block stylesheets %}
+    <style>
+        {% include '@App/report.css.twig' %}
+    </style>
+    {% endblock %}
+</head>
+<body>
+
+{% block page_header_footer %}{% endblock %}
+
+{% block report_header %}{% endblock %}
+
+{% block report_body %}{% endblock %}
+
+</body>
+</html>

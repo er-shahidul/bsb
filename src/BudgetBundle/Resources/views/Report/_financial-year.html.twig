@@ -1,0 +1,5 @@
+<select name="year" class="form-control">
+    {% for i in range(date()|date('Y')+1, 2015) %}
+        <option value="{{ i }}" {{ i == year ? ' selected="selected"' : '' }}>{{ i }} - {{ i + 1 }}</option>
+    {% endfor %}
+</select>

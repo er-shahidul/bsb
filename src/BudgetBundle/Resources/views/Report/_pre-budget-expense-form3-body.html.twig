@@ -1,0 +1,136 @@
+<table class="table width-100 margin-bottom-10">
+
+    <thead>
+    <tr class="text-center">
+        <th rowspan="3" width="120">দপ্তর/সংস্থা</th>
+        <th rowspan="3" width="100">অংশ ৬.২ এ<br>বর্ণিত<br>কার্যক্রমের<br>ক্রমিক নম্বর </th>
+        <th colspan="6">হাজার টাকায়</th>
+        <th rowspan="3" width="150">বরাদ্দের কত % দারিদ্র্য<br>নিরসনে ব্যবহার হবে **</th>
+        <th rowspan="3" width="150">বরাদ্দের কত % নারী<br>উন্নয়নে ব্যবহার হবে **</th>
+        <th rowspan="3" width="100">ব্যাখ্যামূলক মন্তব্য</th>
+    </tr>
+    <tr class="text-center">
+        <th colspan="2">প্রকৃত ব্যয়</th>
+        <th rowspan="2" width="70">বাজেট <br>{{ financialYearLabel(year - 1)|bn_number }}</th>
+        <th rowspan="2" width="70">প্রাক্কলন <br>{{ financialYearLabel(year)|bn_number }}</th>
+        <th colspan="2">প্রক্ষেপন</th>
+    </tr>
+    <tr class="text-center">
+        <th width="70">{{ financialYearLabel(year - 3)|bn_number }}</th>
+        <th width="70">{{ financialYearLabel(year - 2)|bn_number }}</th>
+        <th width="70">{{ financialYearLabel(year + 1)|bn_number }}</th>
+        <th width="70">{{ financialYearLabel(year + 2)|bn_number }}</th>
+    </tr>
+    <tr class="text-center">
+        <td>১</td>
+        <td>২</td>
+        <td>৩</td>
+        <td>৪</td>
+        <td>৫</td>
+        <td>৬</td>
+        <td>৭</td>
+        <td>৮</td>
+        <td>৯</td>
+        <td>১০</td>
+        <td>১১</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="text-left">
+        <td>সংশ্লিষ্ট দপ্তর/সংস্থার জন্য<br>নির্ধারিত ব্যয়সীমা</td>
+        <td ></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="text-left">
+        <td>অনুন্নয়ন ব্যয়</td>
+        <td ></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr class="text-left">
+        <td>১-সাধারণ অনুন্নয়ন ব্যয় ***</td>
+        <td ></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    {% for parentHead in budgetHead %}
+
+        <tr class="odd gradeX">
+            <th class="text-left">{{ parentHead.titleEn }}</th>
+            <th></th>
+            <th class="text-right">{{ expenses['beforePrev']['subTotal']['amount']|default('')|encodeBudgetAmount|bn_number_format }}</th>
+            <th class="text-right">{{ expenses['prev']['subTotal']['amount']|default('')|encodeBudgetAmount|bn_number_format }}</th>
+            <th class="text-right">{{ prevBudgetInfo['parentHead'][parentHead.id]['amount']|default('')|bn_number_format }}</th>
+            <th class="text-right">{{ budgetInfo['parentHead'][parentHead.id]['requestAmount']|default('')|bn_number_format }}</th>
+            <th class="text-right">{{ budgetInfo['parentHead'][parentHead.id]['nextYearProjectionAmount']|default('')|bn_number_format }}</th>
+            <th class="text-right">{{ budgetInfo['parentHead'][parentHead.id]['afterNextYearProjectionAmount']|default('')|bn_number_format }}</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    {% endfor %}
+    <tr class="bold">
+        <th class="bold text-right">উপমোট</th>
+        <th></th>
+        <th class="text-right">{{ expenses['beforePrev']['grandTotal']['amount']|default(0)|encodeBudgetAmount|bn_number_format }}</th>
+        <th class="text-right">{{ expenses['prev']['grandTotal']['amount']|default(0)|encodeBudgetAmount|bn_number_format }}</th>
+        <th class="text-right">{{ prevBudgetInfo['totalAmount']['amount']|default(0)|bn_number_format }}</th>
+        <th class="text-right">{{ budgetInfo['totalAmount']['requestAmount']|default(0)|bn_number_format }}</th>
+        <th class="text-right">{{ budgetInfo['totalAmount']['nextYearProjectionAmount']|default(0)|bn_number_format }}</th>
+        <th class="text-right">{{ budgetInfo['totalAmount']['afterNextYearProjectionAmount']|default(0)|bn_number_format }}</th>
+        <th class="text-right"></th>
+        <th class="text-right"></th>
+        <th class="text-right"></th>
+    </tr>
+    <tr class="bold">
+        <th class="bold text-right">মোট উন্নয়ন ব্যয়</th>
+        <th></th>
+        <th class="text-right">{{ 0|bn_number_format }}</th>
+        <th class="text-right">{{ 0|bn_number_format }}</th>
+        <th class="text-right">{{ 0|bn_number_format }}</th>
+        <th class="text-right">{{ 0|bn_number_format }}</th>
+        <th class="text-right">{{ 0|bn_number_format }}</th>
+        <th class="text-right">{{ 0|bn_number_format }}</th>
+        <th class="text-right"></th>
+        <th class="text-right"></th>
+        <th class="text-right"></th>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr class="bold">
+        <th class="bold text-right">সর্বমোট ব্যয়</th>
+        <th></th>
+        <th class="text-right">{{ expenses['beforePrev']['grandTotal']['amount']|default(0)|encodeBudgetAmount|bn_number_format }}</th>
+        <th class="text-right">{{ expenses['prev']['grandTotal']['amount']|default(0)|encodeBudgetAmount|bn_number_format }}</th>
+        <th class="text-right">{{ prevBudgetInfo['totalAmount']['amount']|default(0)|bn_number_format }}</th>
+        <th class="text-right">{{ budgetInfo['totalAmount']['requestAmount']|default(0)|bn_number_format }}</th>
+        <th class="text-right">{{ budgetInfo['totalAmount']['nextYearProjectionAmount']|default(0)|bn_number_format }}</th>
+        <th class="text-right">{{ budgetInfo['totalAmount']['afterNextYearProjectionAmount']|default(0)|bn_number_format }}</th>
+        <th class="text-right"></th>
+        <th class="text-right"></th>
+        <th class="text-right"></th>
+    </tr>
+    </tfoot>
+</table>

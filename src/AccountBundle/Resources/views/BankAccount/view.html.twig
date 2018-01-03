@@ -1,0 +1,70 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Bank Account View' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{ pageTitle }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    <table class="table table-bordered table-advance">
+
+                        <tr>
+                            <th>Name</th>
+                            <td>{{ bankAccount.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Account Number</th>
+                            <td>{{ bankAccount.accountNumber }}</td>
+                        </tr>
+                        <tr>
+                            <th>Bank Name</th>
+                            <td>{{ bankAccount.bankBranch.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Branch Name</th>
+                            <td>{{ bankAccount.bankBranch.bank.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Fund Type</th>
+                            <td>{{ bankAccount.fundType.name }}</td>
+                        </tr>
+
+                    </table>
+
+                    <div class="form-actions margin-top-20">
+                        {% block workflow_content %}
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+
+                                    {% if is_granted('edit:accounts_bank_account:draft', bankAccount) %}
+                                        <a class="btn btn-primary" href="{{ path('account_bank_account_edit', {id: bankAccount.id}) }}">Edit</a>
+                                    {% endif %}
+
+                                    {% include '@Budget/CommonViewBlock/_workflow_action.html.twig' with {entity: bankAccount, workflow_name: 'accounts_bank_account', entityClass: 'AccountBundle:BankAccount', title: 'Bank Account Workflow'} %}
+                                </div>
+
+                            </div>
+
+                            {% include '@Budget/CommonViewBlock/_workflow_comments.html.twig' with {remarks: bankAccount.stepRemarks} %}
+
+                        {% endblock workflow_content %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}

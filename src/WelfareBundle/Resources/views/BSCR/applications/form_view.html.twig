@@ -1,0 +1,342 @@
+{% include '@Welfare/BSCR/applications/_form_basic.html.twig' %}
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="height:30px; text-align:center; width:100%"><strong>৩য় পরিচ্ছেদ</strong></td>
+    </tr>
+    <tr>
+        <td style="height:30px; text-align:center; width:100%"><strong>(ইউপি চেয়ারম্যন কর্তৃক প্রদত্ত তথ্যাবলী)</strong></td>
+    </tr>
+    </tbody>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="height:25px; width:5%">&nbsp;&nbsp; ক।</td>
+        <td style="height:25px; width:95%">&nbsp; আবেদনকারীর পরিবারের সদস্য বিবরণ:</td>
+    </tr>
+    <tr>
+        <td style="width:5%"></td>
+        <td style=" width:95%">
+            <table border="1" cellpadding="0" cellspacing="0" style="width:80%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; text-align:center; width:3%">সম্পর্ক</td>
+                    <td style="height:30px; text-align:center; width:25%">নাম</td>
+                    <td style="height:30px; text-align:center; width:20%">বয়স</td>
+                    <td style="height:30px; text-align:center; width:20%">যোগ্যতা/যোগ্য&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="height:30px; text-align:center;">পিতাঃ&nbsp;</td>
+                    <td style="height:30px">&nbsp;{{ formData['extra']['fathersName'] }}</td>
+                    <td style="height:30px">&nbsp;{{ formData['extra']['fathersAge'] }}</td>
+                    <td style="height:30px">&nbsp;{{ formData['extra']['fathersQualified'] }}</td>
+                </tr>
+                <tr>
+                    <td style="height:30px; text-align:center;">মাতা</td>
+                    <td style="height:30px">&nbsp;{{ formData['extra']['mothersName'] }}</td>
+                    <td style="height:30px">&nbsp;{{ formData['extra']['mothersAge'] }}</td>
+                    <td style="height:30px">&nbsp;{{ formData['extra']['mothersQualified'] }}</td>
+                </tr>
+                <tr>
+                    <td style="height:30px; text-align:center;">স্ত্রীঃ</td>
+                    <td style="height:30px">&nbsp;{{ formData['extra']['spouseName'] }}</td>
+                    <td style="height:30px">&nbsp;{{ formData['extra']['spouseAge'] }}</td>
+                    <td style="height:30px">&nbsp;{{ formData['extra']['spouseQualified'] }}</td>
+                </tr>
+                <tr>
+                    <td style="height:30px; text-align:center;">সন্তানঃ</td>
+                    <td style="height:30px">&nbsp;</td>
+                    <td style="height:30px">&nbsp;</td>
+                    <td style="height:30px">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="height:30px; text-align:center">&nbsp;১।</td>
+                    <td style="height:30px">&nbsp;{{ formData['extra']['child1'] }}</td>
+                    <td style="height:30px">&nbsp;{{ formData['extra']['child1Age'] }}</td>
+                    <td style="height:30px">&nbsp;{{ formData['extra']['child1Qualified'] }}</td>
+                </tr>
+                <tr>
+                    <td style="height:30px; text-align:center">২।</td>
+                    <td style="height:30px">&nbsp;{{ formData['extra']['child2'] }}</td>
+                    <td style="height:30px">&nbsp;{{ formData['extra']['child2Age'] }}</td>
+                    <td style="height:30px">&nbsp;{{ formData['extra']['child2Qualified'] }}</td>
+                </tr>
+                <tr>
+                    <td style="height:30px; text-align:center">৩।</td>
+                    <td style="height:30px">&nbsp;{{ formData['extra']['child3'] }}</td>
+                    <td style="height:30px">&nbsp;{{ formData['extra']['child3Age'] }}</td>
+                    <td style="height:30px">&nbsp;{{ formData['extra']['child3Qualified'] }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="height:30px; width:5%">খ।</td>
+        <td style="height:30px; width:95%">যদি আবেদনকারীর কোন আয়ের উৎস না থাকে এবং কোন আত্মীয়ের নিকট হতে কোন সাহায্য না পায় তবে কি ভাবে জীবিকা নির্বাহ করে।&nbsp;</td>
+    </tr>
+    <tr>
+        <td style="height:30px; width:5%"></td>
+        <td style="height:30px; width:95%">&nbsp;{{ formData['extra']['howDoLiveWithoutIncomeSourceOrHelp'] }}</td>
+    </tr>
+    <tr>
+        <td style="height:30px; width:5%">গ।</td>
+        <td style="height:30px; width:95%">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:20%">&nbsp;যে কোন উৎস হতে আর্থিক পরিমাণ: </td>
+                    <td style="height:30px; width:75%">&nbsp;{{ formData['extra']['incomeFromAnySource'] }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px; vertical-align:top; width:5%">ঘ।</td>
+        <td style="height:30px; width:95%">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td colspan="2" style="height:30px">&nbsp;আবেদনকারীর তার নিকটতম আত্মীয় এর দ্বারা কোনোরূপ&nbsp; আর্থিক সাহায্য পাচ্ছে কি? সাহায্য না পেলে&nbsp; সে কিভাবে দিনাতিপাত করছে বা&nbsp;&nbsp;তার বিকল্প কি ?</td>
+                </tr>
+                <tr>
+                    <td style="height:30px; width:30%">আর্থিক সাহায্য পাওয়ার স্বপক্ষে যুক্তি</td>
+                    <td style="height:30px; width:70%">&nbsp;{{ formData['extra']['argumentToGetTheGrant'] }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px; vertical-align:top; width:5%">ঙ।</td>
+        <td style="height:30px; width:95%">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:50%">সাহায্য মঞ্জরীর সুপারিশ করার ব্যাপারে&nbsp; বিশেষ কোন হেতু আছে কি? (যাহা পূর্বে করা হয় নি )</td>
+                    <td style="height:30px; width:50%">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="height:30px">&nbsp;{{ formData['extra']['grantRecommendation'] }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px; width:5%">চ।</td>
+        <td style="height:30px; width:95%">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td style="height:30px; width:25%">&nbsp;ইউনিয়ন পরিষদ চেয়ারম্যানের মতামত:</td>
+                    <td style="height:30px; width:75%">&nbsp;{{ formData['extra']['unionChairmanRemarks'] }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style="height:30px">&nbsp;</td>
+    </tr>
+    <tr>
+        <td colspan="2" style="width:100%">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td rowspan="2" style="height:30px; width:50%">তারিখ:</td>
+                    <td style="height:30px; text-align:center; width:50%">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="height:30px; text-align:center; width:50%">চেয়ারম্যান ইউনিয়ন পরিষদ (সীলমোহর)</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="col-md-12 hidden-print">
+    <h4>Attachments</h4>
+    {% include "@App/_template/_attachments_list.html.twig" with {attachments: application.attachments} %}
+</div>
+
+<table>
+    <tr>
+        <td style="height:30px; width:5%"></td>
+        <td style="height:30px; width:95%">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td><input type="checkbox" checked readonly></td>
+                    <td style="height:30px; text-align:left;">&nbsp;&nbsp;
+                        "আমি এই মর্মে ঘোষণা  করছি যে, উপরোক্ত তথ্যাদি সম্পূর্ণ সত্য এবং কোন প্রকার তথ্য গোপন করি নাই । প্রদত্ত তথ্যাদি মিথ্যা প্রমাণিত হলে আবেদ পত্র বাতিল বলে গণ্য হবে"
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<p>&nbsp;</p>
+{% if formData['visibleSections']['secretary'] is defined %}
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="height:30px; text-align:center; width:100%"><strong>৪র্থ পরিচ্ছেদ</strong></td>
+    </tr>
+    <tr>
+        <td style="height:30px; text-align:center; width:100%"><strong>(জেলা সশস্ত্র বাহিনী বোর্ড কর্তৃক প্রদত্ত তথ্যাবলী)</strong></td>
+    </tr>
+    </tbody>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="width:30%">সচিবের সুনির্দিষ্ট মতামত&nbsp; ও&nbsp; সুপারিশঃ&nbsp;</td>
+        <td rowspan="3" style="vertical-align:top; width:70%">&nbsp;</td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="2" style="width:30%">&nbsp;{{ formData['extra']['secretaryRemark']['remark'] }}</td>
+    </tr>
+    </tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="height:30px; width:5%">স্থানঃ&nbsp;</td>
+        <td style="width:95%">{{ formData['extra']['secretaryRemark']['office'] }}</td>
+    </tr>
+    <tr>
+        <td style="height:30px; width:5%">তারিখঃ</td>
+        <td style="width:95%">{{ formData['extra']['secretaryRemark']['date'] }}</td>
+    </tr>
+    <tr>
+        <td style="vertical-align:top; width:5%"></td>
+        <td style="width:95%">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                <tbody>
+                <tr>
+                    <td rowspan="2" style="height:30px; width:50%">&nbsp;</td>
+                    <td style="height:30px; text-align:center; width:50%">সচিব/ভারপ্রাপ্ত সচিব&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="height:30px; text-align:center">সংশ্লিষ্ট জেলা সশস্ত্র বাহিনী বোর্ড&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% endif %}
+<p>&nbsp;</p>
+{% if formData['visibleSections']['ao'] is defined %}
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="text-align:center; width:100%">
+            <p><strong>৫ম পরিচ্ছেদ&nbsp;</strong></p>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="height:30px; width:5%">ক।</td>
+        <td style="height:30px; width:95%">&nbsp;প্রশাসনিক কর্মকর্তার সুপারিশ:</td>
+    </tr>
+    <tr>
+        <td style="height:30px; width:5%"></td>
+        <td style="height:30px;">&nbsp;{{ formData['extra']['aoRemark']['remark'] }}</td>
+    </tr>
+    </tbody>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="width:100%">&nbsp;</td>
+    </tr>
+    </tbody>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="text-align:right; width:70%">সাক্ষর:</td>
+        <td style="text-align:right; width:30%">&nbsp;</td>
+    </tr>
+    </tbody>
+</table>
+{% endif %}
+<p>&nbsp;</p>
+{% if formData['visibleSections']['dd'] is defined %}
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="height:30px; width:5%">খ।</td>
+        <td style="height:30px; width:95%">&nbsp;উপ-পরিচালকের মতামত (সুপারিশ করা হলো/হলো না । সুপারিশ করা হলে টাকার পরিমাণ):</td>
+    </tr>
+    <tr>
+        <td style="height:30px; width:5%"></td>
+        <td style="height:30px;">&nbsp;{{ formData['extra']['ddRemark']['remark'] }}</td>
+    </tr>
+    </tbody>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="text-align:right; width:70%">সাক্ষর:</td>
+        <td style="text-align:right; width:30%">&nbsp;</td>
+    </tr>
+    </tbody>
+</table>
+{% endif %}
+<p>&nbsp;</p>
+{% if formData['visibleSections']['director'] is defined %}
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="width:5%">গ।</td>
+        <td style="width:95%">&nbsp;পরিচালক/ ভারপ্রাপ্ত পরিচালক এর চূড়ান্ত সিদ্ধান্ত (অনুমোদিত হলো/হলো না । অনুমোদিত হলে টাকার পরিমাণ):</td>
+    </tr>
+
+    <tr>
+        <td style="height:30px; width:5%"></td>
+        <td style="height:30px;">{{ formData['extra']['directorRemark']['remark'] }}</td>
+    </tr>
+    </tbody>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <tbody>
+    <tr>
+        <td style="height:30px; text-align:right; width:70%">সাক্ষর:</td>
+        <td style="height:30px; text-align:right; width:30%">&nbsp;</td>
+    </tr>
+    </tbody>
+</table>
+{% endif %}

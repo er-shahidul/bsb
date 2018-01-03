@@ -1,0 +1,95 @@
+{% extends "@App/base.html.twig" %}
+
+{% block page_title %}{{ parent() }} | Micro-credit Defaulter Investigation {% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+
+            {% include '@App/layout-component/flash.html.twig' %}
+
+            {% if errorMessage is defined and errorMessage != '' %}
+                <div class="alert alert-danger fade in">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    {{ errorMessage }}
+                </div>
+            {% endif %}
+
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">
+                            Micro-credit Defaulter Investigation
+                        </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    {% if application != null  %}
+                    <div class="col-md-12">
+                        {% include '@Welfare/MCInstallment/recipient.html.twig' %}
+                    </div>
+                    {% endif %}
+
+                    {% if application != null  %}
+                    <div class="col-md-12  hidden-print margin-top-20">
+                        <table class="table table-striped table-bordered table-advance">
+                            <tr>
+                                <td>
+                                    {{ form_start(form) }}
+                                    <div class="form-horizontal">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group {{ form_errors(form.note) is not empty ? 'has-error' : '' }}">
+                                                    <div class="col-md-12">
+                                                        {{ form_widget(form.note) }}
+                                                        {{ form_errors(form.note) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                {{ form_row(form.attachments) }}
+                                            </div>
+                                        </div>
+                                        <div class="form-actions margin-top-20">
+                                            <div class="col-md-12 text-right">
+                                                <button type="submit" class="btn green" name="save" value="yes">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{ form_end(form) }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    {% endif %}
+
+                </div>
+
+                {% if application != null  %}
+                <div class="col-md-12">
+                    <h3>Payment History</h3>
+                    {% include '@Welfare/MicroCreditPayment/payment_history.html.twig' %}
+                </div>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .form-group {margin-bottom: auto;}
+    </style>
+{% endblock %}

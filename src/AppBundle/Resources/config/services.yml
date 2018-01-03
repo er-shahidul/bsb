@@ -1,0 +1,55 @@
+services:
+    app.twig.task_count_extension:
+        class: AppBundle\Twig\TaskCountExtension
+        autowire: true
+        tags:
+            - { name: twig.extension }
+
+    AppBundle\Twig\AppDateExtension:
+        tags:
+            - { name: twig.extension }
+
+    AppBundle\Twig\AppTranslationExtension:
+        tags:
+            - { name: twig.extension }
+
+    AppBundle\Security\:
+        resource: '../../Security/*'
+        autoconfigure: true
+        autowire: true
+
+    AppBundle\Subscriber\AuditLogEventSubscriber:
+        tags:
+            - { name: easy_audit.event_subscriber }
+
+    AppBundle\Subscriber\AttachmentUploader:
+        tags:
+            - { name: doctrine.event_subscriber}
+
+    AppBundle\Form\Type\Extension\RichFileTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }
+
+    AppBundle\Form\Type\Extension\AttachmentTypeExtension:
+        class: AppBundle\Form\Type\Extension\AttachmentTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
+    user.event_resolver:
+        class: Xiidea\EasyAuditBundle\Resolver\UserEventResolver
+        calls:
+            - [ setContainer,[ "@service_container" ] ]
+
+    app.entity_event_resolver:
+        class: AppBundle\EventLogResolver\EntityEventResolver
+        calls:
+            - [ setContainer,[ "@service_container"] ]
+
+    AppBundle\Workflow\:
+        resource: '../../Workflow/*'
+        autowire: true
+        autoconfigure: true
+        public: false
+        tags:
+            - {name: app.workflow_definition}
+

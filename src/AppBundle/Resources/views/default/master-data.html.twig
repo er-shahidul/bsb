@@ -1,0 +1,92 @@
+{% extends "@App/base.html.twig" %}
+{% set pageTitle = 'Budget Dashboard' %}
+{% block title %}{{ parent() }} | Users{% endblock %}
+{% block pageTitle %}<h1>{{ pageTitle }}</h1>{% endblock %}
+
+{% block header_title %}{{ pageTitle }}{% endblock header_title %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+
+                <div class="portlet-body">
+
+                    <div class="row">
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Budget Expense Head</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('budgethead_expense_index') }}" class="btn btn-success">View</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Budget Income Head</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('budgethead_income_index') }}" class="btn btn-success">View</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Fund Heads</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('account_fundhead_index') }}" class="btn btn-success">View</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Office</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('office_list') }}" class="btn btn-success">View</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-4 col-xs-12">
+                            <div class="mt-element-ribbon bg-grey-steel">
+                                <div class="ribbon ribbon-color-default uppercase">Medicine</div>
+                                <p class="ribbon-content text-right">
+                                    <a href="{{ path('medical_medicine_list') }}" class="btn btn-success">View</a>
+                                </p>
+                            </div>
+                        </div>
+
+                    {% endif %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+{% endblock %}
+
+{% block include_javascripts %}
+
+    {{ parent() }}
+
+    <script src="{{ asset('js/modal.js') }}"></script>
+
+{% endblock %}

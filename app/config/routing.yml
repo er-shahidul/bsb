@@ -1,0 +1,77 @@
+leave:
+    resource: "@LeaveBundle/Controller/"
+    type:     annotation
+    prefix:   /leave
+
+funeral:
+    resource: "@FuneralBundle/Controller/"
+    type:     annotation
+    prefix:   /funeral
+
+medical:
+    resource: "@MedicalBundle/Controller/"
+    type:     annotation
+    prefix:   /medical
+
+movement:
+    resource: "@MovementBundle/Controller/"
+    type:     annotation
+    prefix:   /movement
+
+board_meeting:
+    resource: "@BoardMeetingBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+welfare:
+    resource: "@WelfareBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+personnel:
+    resource: "@PersonnelBundle/Controller/"
+    type:     annotation
+    prefix:   /personnel
+
+account:
+    resource: "@AccountBundle/Controller/"
+    type:     annotation
+    prefix:   /accounts
+
+notification:
+    resource: "@NotificationBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+devnet_workflow:
+    resource: "@DevnetWorkflowBundle/Resources/config/routing.yml"
+    prefix:   /
+
+devnet_policy_manager:
+    resource: "@DevnetPolicyManagerBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+user:
+    resource: "@UserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+fp_js_form_validator:
+    resource: "@FpJsFormValidatorBundle/Resources/config/routing.xml"
+    prefix: /fp_js_form_validator
+
+sg_datatables_bundle:
+    resource: "@SgDatatablesBundle/Controller/"
+    type:     annotation
+
+budget:
+    resource: "@BudgetBundle/Controller/"
+    type:     annotation
+    prefix:   /budget

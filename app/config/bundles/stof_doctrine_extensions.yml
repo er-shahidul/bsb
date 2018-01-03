@@ -1,0 +1,8 @@
+stof_doctrine_extensions:
+    default_locale: en_US
+    class:
+        blameable: AppBundle\Utility\BlameableListener
+    orm:
+        default:
+            blameable: true
+            timestampable: true

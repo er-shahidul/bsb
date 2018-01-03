@@ -1,0 +1,130 @@
+{% extends "@App/base.html.twig" %}
+
+{% block page_title %}{{ parent() }} | Micro Credit Defaulter Investigation{% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row">
+        <div class="col-sm-12">
+
+            {% include '@App/layout-component/flash.html.twig' %}
+
+            {% if errorMessage is defined and errorMessage != '' %}
+                <div class="alert alert-danger fade in">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    {{ errorMessage }}
+                </div>
+            {% endif %}
+
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">
+                            Micro Credit Defaulter Investigation
+                        </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    {% if application == null  %}
+                    <div class="col-md-6">
+                        <form class="form-horizontal">
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><strong>Soldier No. : </strong></label>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                            <div>
+                                                <input id="newpassword" class="form-control" name="service-id" placeholder="Soldier No." value="{{ app.request.query.get('service-id') }}">
+                                            </div>
+                                            <span class="input-group-btn">
+                                            <button class="btn btn-success"><i class="fa fa-arrow-right fa-fw"></i> Search</button>
+                                        </span>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    {% endif %}
+
+                    {% if application != null  %}
+                    <div class="col-md-12">
+                        {% include '@Welfare/MCInstallment/recipient.html.twig' %}
+                    </div>
+                    {% endif %}
+
+                    {% if reassessInstallment != null  %}
+                    <div class="col-md-12">
+                        <div class="form-actions margin-top-20">
+                            <div class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2"><strong>Note</strong>:</label>
+                                            <div class="col-md-10">
+                                                <label class="control-label text-left" style="text-align: left">{{ reassessInstallment.note|raw }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    {% block reset_installment %}{% endblock %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-right">
+                        {% if (is_granted('edit:mc_reassess_installment', reassessInstallment)) %}
+                            <a class="btn btn-primary" href="{{ path('welfare_mc_reassess_installment_edit', {id: reassessInstallment.id}) }}">Investigation Information</a>
+                        {% endif %}
+                        {% include '@Budget/CommonViewBlock/_workflow_action.html.twig' with {entity: reassessInstallment, workflow_name: 'mc_reassess_installment', entityClass: 'WelfareBundle:MCReassessInstallment', title: 'Micro-credit Reassess Installment Workflow'} %}
+                    </div>
+                    <div class="col-md-12 hidden-print">
+                        <h4>Attachments</h4>
+                        {% include "@App/_template/_attachments_list.html.twig" with {attachments: reassessInstallment.attachments} %}
+
+                        {% include '@Budget/CommonViewBlock/_workflow_comments.html.twig' with {remarks: reassessInstallment.stepRemarks} %}
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+                {% if application != null  %}
+                <div class="col-md-12">
+                    <h3>Payment History</h3>
+                    {% include '@Welfare/MicroCreditPayment/payment_history.html.twig' %}
+                </div>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .form-group {margin-bottom: auto;}
+    </style>
+{% endblock %}
+
+{% block document_ready %}
+    {{ parent() }}
+    {#<script type="text/javascript">#}
+        $("#setInstallment").click(function (e) {
+            e.preventDefault();
+
+            $("#redirectUrl").val(window.location.href);
+            $("#formSetInstallment").submit();
+        });
+{% endblock %}
+

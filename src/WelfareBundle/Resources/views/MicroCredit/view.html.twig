@@ -1,0 +1,59 @@
+{% extends is_granted("BOARD_MEETING")
+? '@App/base-meeting.html.twig'
+: '@App/base.html.twig' %}
+
+{% set pageTitle = 'Micro Credit Application' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+
+            {% include '@App/layout-component/flash.html.twig' %}
+
+            <div class="portlet light">
+
+                <div class="portlet-body">
+                    <div class="col-md-12  hidden-print">
+                        <div class="form-actions margin-top-20">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+
+                                    {% if task is not defined and not is_granted("BOARD_MEETING") %}
+                                        <a class="btn btn-primary" href="{{ path('welfare_micro_credit_index') }}">Go to Micro Credit Register</a>
+                                    {% endif %}
+
+                                    {% if (is_granted('ROLE_DASB_CLERK') and 'draft' == application.status) %}
+                                        <a class="btn btn-primary" href="{{ path('welfare_micro_credit_edit', {id: application.id}) }}">Edit</a>
+                                    {% endif %}
+
+                                    {% include '@Budget/CommonViewBlock/_workflow_action.html.twig' with {entity: application, workflow_name: 'welfare_micro_credit_application', entityClass: 'WelfareBundle:MicroCreditApplication', title: 'Micro Credit Workflow'} %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 profile-content app-form-view">
+                        {% if application.note is defined %}
+                            <div class="col-sm-12">
+                                {{ application.note|raw }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-12 hidden-print">
+                        <h4>Attachments</h4>
+                        {% include "@App/_template/_attachments_list.html.twig" with {attachments: application.attachments} %}
+
+                        {% include '@Budget/CommonViewBlock/_workflow_comments.html.twig' with {remarks: application.stepRemarks} %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}

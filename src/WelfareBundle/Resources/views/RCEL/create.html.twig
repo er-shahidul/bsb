@@ -1,0 +1,78 @@
+{% extends "@App/base.html.twig" %}
+
+{% block page_title %}{{ parent() }} | {{ (application != null and application.id)  ? 'Edit' : 'New' }} RCEL Application{% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+
+            {% include '@App/layout-component/flash.html.twig' %}
+
+            {% if errorMessage is defined and errorMessage != '' %}
+                <div class="alert alert-danger fade in">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    {{ errorMessage }}
+                </div>
+            {% endif %}
+
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">
+                            {{ (application != null and application.id)  ? 'Edit' : 'New' }} RCEL Application
+                        </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    {% if application == null %}
+                        <div class="col-md-6">
+                            <form class="form-horizontal">
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label"><strong>Soldier No. : </strong></label>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+
+                                            <div>
+                                                <input id="newpassword" class="form-control" name="service-id" placeholder="Soldier No." value="{{ app.request.query.get('service-id') }}">
+                                            </div>
+                                            <span class="input-group-btn">
+                                            <button class="btn btn-success"><i class="fa fa-arrow-right fa-fw"></i> Search</button>
+                                        </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    {% endif %}
+
+                    {% if isEligible is defined and isEligible == true %}
+
+                        <div class="col-md-12">
+                            {{ form_start(form) }}
+                            {{ formTemplate|raw }}
+                            <div class="form-actions margin-top-20">
+                                <div class="col-md-12 text-right">
+                                    <button type="submit" class="btn green" name="save" value="yes">Save as draft</button>
+                                </div>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}

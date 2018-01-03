@@ -1,0 +1,65 @@
+{% macro voucher_row(fundHeads, bankAccounts, voucher, choicesOption, index) %}
+    <tr>
+        <td class="sl">{{ index }}</td>
+        <td class="form-group"><input data-rule-number="true" required="required" value="{{ voucher.chequeNumber|default('') }}" class="form-control input-sm cheque-number" name="chequeNumber[]"></td>
+        <td class="form-group">
+            <select class="form-control input-sm" name="toOrFrom[]" required>
+            {% for paymentTo in choicesOption['toOrFrom'] %}
+                <option class="form-control" {{ voucher and voucher.toOrFrom == paymentTo ? 'selected' : '' }} value="{{ paymentTo }}">{{ paymentTo }}</option>
+            {% endfor %}
+            </select>
+        </td>
+        <td class="form-group">
+            <select class="form-control input-sm" name="against[]" required>
+                {% for paymentFor in choicesOption['against'] %}
+                    <option class="form-control" {{ voucher and voucher.against == paymentFor ? 'selected' : '' }} value="{{ paymentFor }}">{{ paymentFor }}</option>
+                {% endfor %}
+            </select>
+        </td>
+        <td class="form-group">
+            <select class="form-control input-sm" name="bankAccount[]" required>
+                {% for bankAccount in bankAccounts %}
+                    <option class="form-control" {{ voucher and voucher.account == bankAccount ? 'selected' : '' }} value="{{ bankAccount.id }}">{{ bankAccount.name }}</option>
+                {% endfor %}
+            </select>
+        </td>
+        <td class="form-group"><input name="description[]" value="{{ voucher.description|default('') }}" class="form-control input-sm"></td>
+        <td class="form-group">
+            {% for fundHead in fundHeads %}
+                <div class="col-md-7 control-label text-left">{{ fundHead.name }}</div>
+                <div class="col-md-5">
+                    <input data-num="{{ index }}" data-for="{{ fundHead.id }}" class="form-control amount" name="fundHead[{{ fundHead.id }}][]" value="{{ voucher.vd[fundHead.id]|default('') }}">
+                </div>
+            {% endfor %}
+            <div class="col-md-7 control-label bold">Total Amount</div><div class="col-md-5"><div class="form-control voucher-total bold text-right"></div></div>
+        </td>
+        <td><button type="button" class="btn btn-danger btn-sm remove">x</button></td>
+    </tr>
+{% endmacro %}
+
+{% import _self as macro %}
+
+<thead>
+<tr>
+    <th>SL</th>
+    <th>Cheque Number</th>
+    <th width="150">To</th>
+    <th width="150">Against</th>
+    <th width="150">Account</th>
+    <th width="250">Description</th>
+    <th width="270">Fund Heads</th>
+    <th>
+        <a href="javascript:;" class="btn btn-icon-only green add-voucher">
+            <i class="fa fa-plus"></i>
+        </a>
+    </th>
+</tr>
+</thead>
+
+<tbody id="voucher-list">
+{% for index, voucher in chequeIssue.vouchers %}
+    {{ macro.voucher_row(fundHeads, bankAccounts, voucher, choicesOption, index + 1) }}
+{% else %}
+    {{ macro.voucher_row(fundHeads, bankAccounts, null, choicesOption, 1) }}
+{% endfor %}
+</tbody>

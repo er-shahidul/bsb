@@ -1,0 +1,47 @@
+<div class="row ">
+    <div class="col-sm-12">
+        <h4><strong>Meeting Information</strong></h4>
+        <h5>Title: {{ meeting.subject }} </h5>
+        <h5>Date: {{ meeting.date|date('d M, Y') }} </h5>
+        <h5>Type: {{ meeting.type|upper }} Board Meeting</h5>
+    </div>
+</div>
+
+<div class="row ">
+    <div class="col-sm-12">
+        <h4><strong>Meeting Members</strong></h4>
+
+        <div style="">
+            {% set breakLoop = false %}
+            {% for member in meeting.members if not breakLoop %}
+                <div class="well" style="width: 33%; float: left; margin-bottom: 10px">
+                    <span class="bold theme-font">{{ member == meeting.chairman ? 'Chairman' : 'Member-' ~ i }}</span>
+                    <div>
+                        {{ member.name|e }} <br>
+                        {{ member.designation }} <br>
+                        Mobile: {{ member.mobileNo }} <br>
+                        Email: {{ member.email }}
+                    </div>
+                </div>
+                {% if (member == meeting.chairman) %}
+                    {% set breakLoop = true %}
+                {% endif %}
+            {% endfor %}
+            {% set i = 0 %}
+            {% for member in meeting.members %}
+                {% if (member != meeting.chairman) %}
+                    <div class="well" style="width: 33%; float: left; margin-bottom: 10px">
+                        <span class="bold theme-font">{{ 'Member-' ~ i }}</span>
+                        <div>
+                            {{ member.name|e }} <br>
+                            {{ member.designation }} <br>
+                            Mobile: {{ member.mobileNo }} <br>
+                            Email: {{ member.email }}
+                        </div>
+                    </div>
+                {% endif %}
+                {% set i = i + 1 %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

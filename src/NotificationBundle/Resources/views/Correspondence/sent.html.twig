@@ -1,0 +1,45 @@
+{% extends "@Notification/Correspondence/index.html.twig" %}
+
+{% block nav_block %}
+    <ul class="inbox-nav">
+        <li>
+            <a href="{{url('correspondence_inbox')}}"> Inbox
+                <span class="badge badge-success">{{notification_count|default(0)}}</span>
+            </a>
+        </li>
+        <li class="active">
+            <a href="javascript:"> Sent </a>
+        </li>
+    </ul>
+{% endblock %}
+
+ {% block document_ready %}
+     {{ parent() }}
+     {#<script>#}
+         $('body').on('click', '.notification_sent_datatable_action', function (e) {
+             var $tr = $(this).closest('tr');
+             var id = $tr.attr('id');
+             var option = {onEscape: true, backdrop: true};
+
+             $.get(Routing.generate('notification_sent_view', {id: id}), function (data) {
+                 if (data.link && data.link !== "") {
+                     option['buttons'] = {
+                         "GO": function () {
+                             window.location.href = data['link'];
+                         }
+                     }
+                 } else {
+                     option['buttons'] = {
+                         "Close": function () {
+                         }
+                     }
+                 }
+
+                 option['className'] = 'notification-dialog';
+                 option['message'] = data['message'];
+                 option['title'] = data['subject'];
+                 bootbox.dialog(option);
+             });
+         });
+
+ {% endblock %}

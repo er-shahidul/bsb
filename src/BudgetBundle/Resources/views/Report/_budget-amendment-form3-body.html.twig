@@ -1,0 +1,74 @@
+<table class="table width-100">
+
+    <thead>
+    <tr class="text-center">
+        <th rowspan="2" width="20">অর্থনৈতিক <br>কোড</th>
+        <th rowspan="2" width="150">বিবরণ</th>
+        <th colspan="5">প্রকৃত ব্যয়</th>
+        <th rowspan="2" width="70">বাজেট <br>{{ financialYearLabel(year)|bn_number }}</th>
+        <th rowspan="2" width="70">প্রস্তাবিত সংশোধিত <br>{{ financialYearLabel(year)|bn_number }}</th>
+        <th rowspan="2" width="300">হ্রাস/বৃদ্ধির কারণ</th>
+    </tr>
+    <tr class="text-center">
+        <th width="70">{{ financialYearLabel(year - 2)|bn_number }}</th>
+        <th width="70">{{ financialYearLabel(year - 1)|bn_number }}</th>
+        <th width="70">১ম ৬ মাস <br/>{{ financialYearLabel(year - 2)|bn_number }}</th>
+        <th width="70">১ম ৬ মাস <br/>{{ financialYearLabel(year - 1)|bn_number }}</th>
+        <th width="70">১ম ৩ মাস <br/>{{ financialYearLabel(year)|bn_number }}</th>
+    </tr>
+    <tr class="text-center">
+        <td>১</td>
+        <td>২</td>
+        <td>৩</td>
+        <td>৪</td>
+        <td>৫</td>
+        <td>৬</td>
+        <td>৭</td>
+        <td>৮</td>
+        <td>৯</td>
+        <td>১০</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td></td>
+        <td class="text-center">রাজস্ব ব্যয়</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    {% set sl = 1 %}
+    {% for parentHead in budgetHead %}
+        <tr class="odd gradeX">
+            <td class="text-right">{{ parentHead.code|bn_number }}</td>
+            <td>{{ parentHead.titleEn }}</td>
+            <td class="text-right">{{ expenses['beforePrev']['subTotal'][parentHead.id]|default(0)|encodeBudgetAmount|bn_number_format }}</td>
+            <td class="text-right">{{ expenses['prev']['subTotal'][parentHead.id]|default(0)|encodeBudgetAmount|bn_number_format }}</td>
+            <td class="text-right">{{ expenses['beforePrev1stSixMonth']['subTotal'][parentHead.id]|default(0)|encodeBudgetAmount|bn_number_format }}</td>
+            <td class="text-right">{{ expenses['prev1stSixMonth']['subTotal'][parentHead.id]|default(0)|encodeBudgetAmount|bn_number_format }}</td>
+            <td class="text-right">{{ expenses['current']['subTotal'][parentHead.id]|default(0)|encodeBudgetAmount|bn_number_format }}</td>
+            <td class="text-right">{{ budgetInfo['parentHead'][parentHead.id]['sanctionAmount']|default(0)|bn_number_format }}</td>
+            <td class="text-right">{{ amendmentInfo['parentHead'][parentHead.id]['amendmentSanctionAmount']|default(0)|bn_number_format }}</td>
+            <td></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr class="bold">
+        <th colspan="2">মোট:</th>
+        <th class="text-right">{{ expenses['beforePrev']['grandTotal']|default(0)|encodeBudgetAmount|bn_number_format }}</th>
+        <th class="text-right">{{ expenses['prev']['grandTotal']|default(0)|encodeBudgetAmount|bn_number_format }}</th>
+        <th class="text-right">{{ expenses['beforePrev1stSixMonth']['grandTotal']|default(0)|encodeBudgetAmount|bn_number_format }}</th>
+        <th class="text-right">{{ expenses['prev1stSixMonth']['grandTotal']|default(0)|encodeBudgetAmount|bn_number_format }}</th>
+        <th class="text-right">{{ expenses['current']['grandTotal']|default(0)|encodeBudgetAmount|bn_number_format }}</th>
+        <th class="text-right">{{ budgetInfo['totalAmount']['sanctionAmount']|default(0)|bn_number_format }}</th>
+        <th class="text-right">{{ amendmentInfo['totalAmount']['amendmentSanctionAmount']|default(0)|bn_number_format }}</th>
+        <th class="text-right"></th>
+    </tr>
+    </tfoot>
+</table>

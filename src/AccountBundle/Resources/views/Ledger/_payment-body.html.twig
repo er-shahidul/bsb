@@ -1,0 +1,72 @@
+<table class="table width-100">
+    <thead>
+    <tr class="text-center">
+        <th rowspan="2" width="70">তারিখ</th>
+        <th rowspan="2" width="70">ভাউচার নং</th>
+        <th rowspan="2" width="150">কাহকে দেয়া</th>
+        <th rowspan="2" width="150">কোন খাতে</th>
+        <th rowspan="2" width="70">নগদ</th>
+        <th rowspan="2" width="70">ব্যাংক</th>
+        <th colspan="{{ fundHeads|length }}" width="300">খতিয়ানের জমা/ঋণ হিসাব</th>
+    </tr>
+    <tr class="text-center">
+        {% for fundHead in fundHeads %}
+            <th width="70">{{ fundHead.name }}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for voucher in vouchers %}
+        <tr>
+            <td>{{ voucher.voucherDate|date('Y-m-d')|date_bn('d-m-Y') }}</td>
+            <td>{{ voucher.voucherNumber }}</td>
+            <td>{{ voucher.toOrFrom }}</td>
+            <td>{{ voucher.against }}</td>
+            <td></td>
+            <td class="text-right">{{ voucher.amount|bn_number_format }}</td>
+            {% for fundHead in fundHeads %}
+                {% for voucherDetail in voucher.voucherDetails if fundHead.id == voucherDetail.fundHead.id %}
+                    <th class="text-right" width="70">{{ voucherDetail.amount|bn_number_format }}</th>
+                {% else %}
+                    <th width="70"></th>
+                {% endfor %}
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr class="bold">
+        <th class="text-right"></th>
+        <th class="text-right"></th>
+        <th class="text-right"></th>
+        <th class="text-right">মোট</th>
+        <th class="text-right">০</th>
+        <th class="text-right">{{ currentMonthGrandTotal|bn_number_format }}</th>
+        {% for fundHead in fundHeads %}
+            <th class="text-right" width="70">{{ currentMonthTotal[fundHead.id]|default(0)|bn_number_format }}</th>
+        {% endfor %}
+    </tr>
+    <tr class="bold">
+        <th class="text-right"></th>
+        <th class="text-right"></th>
+        <th class="text-right"></th>
+        <th class="text-right">স্থিতি</th>
+        <th class="text-right">০</th>
+        <th class="text-right">{{ previousGrandTotal|bn_number_format }}</th>
+        {% for fundHead in fundHeads %}
+            <th class="text-right" width="70">{{ previousTotal[fundHead.id]|default(0)|bn_number_format }}</th>
+        {% endfor %}
+    </tr>
+    <tr class="bold">
+        <th class="text-right"></th>
+        <th class="text-right"></th>
+        <th class="text-right"></th>
+        <th class="text-right">সর্বমোট</th>
+        <th class="text-right">০</th>
+        <th class="text-right">{{ (currentMonthGrandTotal+previousGrandTotal)|bn_number_format }}</th>
+        {% for fundHead in fundHeads %}
+            <th class="text-right" width="70">{{ (currentMonthTotal[fundHead.id]|default(0) + previousTotal[fundHead.id]|default(0))|bn_number_format }}</th>
+        {% endfor %}
+    </tr>
+    </tfoot>
+</table>

@@ -1,0 +1,101 @@
+{% extends "@App/base.html.twig" %}
+
+{% block page_title %}{{ parent() }} | {% endblock %}
+
+{% block body %}
+    {% trans_default_domain 'SgDatatablesBundle' %}
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+
+            {% include '@App/layout-component/flash.html.twig' %}
+
+            {% if errorMessage is defined and errorMessage != '' %}
+                <div class="alert alert-danger fade in">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    {{ errorMessage }}
+                </div>
+            {% endif %}
+
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">
+                            {{  (application != null) ? 'Edit' : 'New' }}
+                            {% block application_title %}{% endblock %}
+                        </span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+
+                    <div class="col-md-6">
+                        <form class="form-horizontal">
+                            {% block sks_application_type %}{% endblock %}
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><strong>Soldier No. : </strong></label>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        {% if application == null  %}
+                                        <div>
+                                            <input id="newpassword" class="form-control" name="service-id" placeholder="Soldier No." value="{{ app.request.query.get('service-id') }}">
+                                        </div>
+                                        <span class="input-group-btn">
+                                            <button id="genpassword" class="btn btn-success"><i class="fa fa-arrow-right fa-fw"></i> Search</button>
+                                        </span>
+                                        {% else %}
+                                            <div class="form-control-static">{{ application.serviceMan.identityNumber }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    {% if isEligible is defined and isEligible == true %}
+
+                    {% block form_input %}
+                        <div class="col-md-12">
+                            {{ form_start(form) }}
+
+                            {% if form.microCreditDetail.projectName is defined %}
+                                {{ form_row(form.microCreditDetail.projectType) }}
+                                {{ form_row(form.microCreditDetail.projectName) }}
+                                {{ form_row(form.microCreditDetail.requestAmount) }}
+                            {% endif %}
+                            {{ form_widget(form.note) }}
+                            {{ form_row(form.attachments) }}
+
+                            <div class="form-actions margin-top-20">
+                                <div class="col-md-12 text-right">
+                                    <button type="submit" class="btn green" name="save" value="yes">Save</button>
+                                </div>
+                            </div>
+
+                            {{ form_end(form) }}
+                        </div>
+                    {% endblock %}
+
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- END PAGE CONTENT INNER -->
+{% endblock %}
+
+{% block document_ready %}
+    {{ parent() }}
+    if (typeof CKEDITOR !== 'undefined') {
+        CKEDITOR.on('instanceReady', function( evt ) {
+            var editor = evt.editor;
+            editor.execCommand('maximize');
+        });
+    }
+{% endblock %}

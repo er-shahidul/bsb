@@ -1,0 +1,136 @@
+{% if applications|length > 0 %}
+    {% for application in applications %}
+
+        {% if meeting.type|lower == 'micro-credit' %}
+
+        <tr
+                {% if commentable is defined %}
+                    style="background-color: {{ application.amount > 0 ? 'yellowgreen' : '' }}"
+                {% endif %}
+        >
+            <td>{{ application.office.name }}</td>
+            <td>
+                {{ application.serviceMan.identityNumber }}<br/>
+                {{ application.serviceMan.rank.name }}<br/>
+                {% if application.serviceMan.deceased == true %}
+                    {% for member in application.serviceMan.families %}
+                        {% if member.relationType == 'Spouse' %}
+                            {{ member.name }} <br>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                {{ application.serviceMan.name }}
+                {% if application.serviceMan.deceased == true %} (মৃত){% endif %}
+            </td>
+            <td>{{ application.microCreditDetail.projectType.id }}</td>
+            <td>{{ application.microCreditDetail.requestAmount|number_format }}</td>
+            <td>{{ application.amount|number_format }}</td>
+            <td>{{ application.microCreditDetail.installmentAmount|number_format }}</td>
+            <td>{{ application.microCreditDetail.noOfInstallments }}</td>
+            <td>{{ application.microCreditDetail.installmentFreeMonths }}</td>
+            {% if commentable is defined %}
+                <td>{{ application.memberComments[boardMemberId] is defined ? application.memberComments[boardMemberId]['comment'] : '' }}</td>
+            {% endif %}
+            <td>
+                <a class="btn btn-xs blue"
+                   href="{{ path(applicationPath, {'id': application.id}) }}">
+                    Details </a>
+
+                {% if commentable is defined %}
+                    <a class="btn btn-xs green leave-a-comment" data-toggle="modal"
+                       data-target="#application-comments"
+                       href="{{ path('welfare_member_application_comments', {application: application.id}) }}">
+                        Comments </a>
+                {% endif %}
+            </td>
+        </tr>
+
+        {% else %}
+
+            <tr
+                    {% if commentable is defined %}
+                        style="background-color: {{ application.amount > 0 ? 'yellowgreen' : '' }}"
+                    {% endif %}
+            >
+                <td>{{ application.serviceMan.identityNumber }}</td>
+                <td>{{ application.serviceMan.rank.name }}</td>
+                <td>
+                    {% if application.serviceMan.deceased == true %}
+                        {% for member in application.serviceMan.families %}
+                            {% if member.relationType == 'Spouse' %}
+                                {{ member.name }} <br>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    {{ application.serviceMan.name }}
+                    {% if application.serviceMan.deceased == true %} (মৃত){% endif %}
+                </td>
+                <td>{{ application.serviceMan.corp.name|default('N/A') }}</td>
+                <td>{{ application.office.name }}</td>
+                <td>{{ application.createdAt|date('d-m-y') }}</td>
+                <td>{{ application.amount|number_format }}</td>
+                {% if commentable is defined %}
+                    <td>{{ application.memberComments[boardMemberId] is defined ? application.memberComments[boardMemberId]['comment'] : '' }}</td>
+                {% endif %}
+                <td>
+                    <a class="btn btn-xs blue"
+                       href="{{ path(applicationPath, {'id': application.id}) }}">
+                        Details </a>
+
+                    {% if commentable is defined %}
+                        <a class="btn btn-xs green leave-a-comment" data-toggle="modal"
+                           data-target="#application-comments"
+                           href="{{ path('welfare_member_application_comments', {application: application.id}) }}">
+                            Comments </a>
+                    {% endif %}
+
+                </td>
+            </tr>
+
+        {% endif %}
+
+
+
+    {% endfor %}
+{% else %}
+    <tr style="text-align: center">
+        <td colspan="9">No record found</td>
+    </tr>
+{% endif %}
+
+{#{% if applications %}#}
+    {#{% for application in applications %}#}
+        {#<tr>#}
+
+            {#<td>{{ application.serviceMan.identityNumber }}</td>#}
+            {#<td>{{ application.serviceMan.rank.name }}</td>#}
+            {#<td>#}
+                {#{% if application.serviceMan.deceased == true %}#}
+                    {#{% for member in application.serviceMan.families %}#}
+                        {#{% if member.relationType == 'Spouse' %}#}
+                            {#{{ member.name }} <br>#}
+                        {#{% endif %}#}
+                    {#{% endfor %}#}
+                {#{% endif %}#}
+                {#{{ application.serviceMan.name }}#}
+                {#{% if application.serviceMan.deceased == true %} (মৃত) {% endif %}#}
+            {#</td>#}
+            {#<td>{{ application.serviceMan.corp.name }}</td>#}
+            {#<td>{{ application.office.name }}</td>#}
+            {#<td>{{ application.createdAt|date('d-m-y') }}</td>#}
+            {#{% if application.type == 'micro-credit' %}#}
+            {#<td>{{ application.microCreditDetail.requestAmount|number_format }}</td>#}
+            {#{% endif %}#}
+            {#<td>{{ application.amount|number_format }}</td>#}
+            {#<td>#}
+                {#<a class="btn btn-xs blue"#}
+                   {#href="{{ path(applicationPath, {'id': application.id}) }}">#}
+                    {#Details </a>#}
+            {#</td>#}
+        {#</tr>#}
+    {#{% endfor %}#}
+{#{% else  %}#}
+    {#<tr style="text-align: center">#}
+        {#<td colspan="7">No record found</td>#}
+    {#</tr>#}
+{#{% endif  %}#}

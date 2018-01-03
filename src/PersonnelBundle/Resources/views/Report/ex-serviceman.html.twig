@@ -1,0 +1,177 @@
+{% extends "@Personnel/Default/base_form_page.html.twig" %}
+{% set pageTitle = 'Ex-Serviceman Report' %}
+{% block page_title %}{{ parent() }} | {{ pageTitle }}{% endblock %}
+
+{% block page_id %}pdf-report-page{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        {% include '@App/report.css.twig' %}
+    </style>
+{% endblock %}
+{% block body %}
+    <style>
+        .identityNumber span.twitter-typeahead {
+            width: 100% !important;
+        }
+    </style>
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row" id="volume-list-page">
+        <div class="col-sm-12">
+            {% include '@App/layout-component/flash.html.twig' %}
+            <div class="portlet light">
+                <div class="portlet-title hidden-print">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font hide"></i>
+                        <span class="caption-subject theme-font bold uppercase">{{  pageTitle }}</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+
+                        <form class="form hidden-print" novalidate="novalidate">
+
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    {{ form_row(form.service) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_row(form.rank) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_row(form.corp) }}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    {{ form_row(form.religion) }}
+                                </div>
+                                <div class="col-md-4 identityNumber">
+                                    {{ form_row(form.identityNumber) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_row(form.tsNumber) }}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    {{ form_row(form.gender) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_row(form.deceasedFromDate) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_row(form.deceasedToDate) }}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    {{ form_row(form.freedomFighter) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_row(form.exFromDate) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_row(form.exToDate) }}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    {{ form_row(form.permanentDistrict) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_row(form.permanentUpazila) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_row(form.office) }}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    {{ form_row(form.reEmployment) }}
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form_row(form.trade) }}
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <button class="btn blue">Show Report</button>
+                                {% if exServiceMans is not null %}
+                                    <a data-toggle="modal" href="#print-dialog" class="btn blue" target="_blank">Generate Report</a>
+                                    <h4 class="inline">{{ exServiceMans|length }} record(s) found</h4>
+                                {% endif %}
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="modal fade" id="print-dialog" tabindex="-1" role="print-dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                    <h4 class="modal-title">Download Report</h4>
+                                </div>
+
+                                <form name="personnel_report_form" method="post" target="_blank" class="form-horizontal">
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label required" for="budget_request_report_form_section">Title</label>
+                                            <div class="col-sm-10">
+                                                <input required="required" name="title" class="form-control" type="text"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn green" data-dismiss="modal" onclick="this.form.submit()">Generate Report</button>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+
+                    <div class="col-md-12">
+                        {% include '@Personnel/Report/_ex-serviceman-body.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+
+{% endblock %}
+
+{% block document_ready %}
+    {#<script>#}
+
+    var personalno = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    prefetch: "{{path('ex_cervice_man_personal_no_auto_complete')}}",
+    remote: {
+    url: "{{path('ex_cervice_man_personal_no_auto_complete')}}",
+    wildcard: '%QUERY'
+    }
+    });
+
+    $('.identityNumber .typeahead').typeahead(null, {
+    minLength : 2,
+    name: 'identityNumber',
+    display: 'value',
+    source: personalno,
+    limit: 2
+    });
+
+{% endblock %}
+
+{% block include_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/global/plugins/typeahead.bundle.js') }}"></script>
+{% endblock include_javascripts %}
